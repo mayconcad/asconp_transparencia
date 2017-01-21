@@ -1,0 +1,2080 @@
+div.alert {
+	border-radius: 2px 2px 2px 2px;
+    color: white;
+    float: right;
+    font-size: 10px;
+    height: 14px;
+    line-height: 14px;
+    margin-left: 8px;
+    opacity: 1;
+    padding: 2px 4px;
+    float:left;
+}
+
+.noBorder {
+    border-bottom-style: none;
+	border-top-style: none;
+	border-radius: 0px;
+}
+
+.expired {
+   background-color: #FF0000;	
+}
+
+.normal {
+	background-color: #0000FF;
+}
+
+.breakText{
+	overflow: hidden;    
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+
+.ui-state-disabled, 
+.ui-widget-content .ui-state-disabled, 
+.ui-widget-header .ui-state-disabled {
+	opacity: 1;
+	filter: Alpha(Opacity=100);
+	background-image: none;
+/* 	background-color: #fbfbfb !important; */
+	background-color: none !important;
+	color: #666 !important;
+}
+
+.ui-widget-content label.ui-state-disabled {
+/* 	background-color: transparent !important; */
+	background-color: none !important;
+}
+
+@charset "utf-8";
+/* CSS Document */
+
+
+/* FONTS FOR ALL SITE	:::::::::::::::::::::::::  */
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+body {
+	/*  antes */
+/* 	background-color: #F5F5F5; */
+	background-color: none !important;
+	font-family: "Calibri Light", Calibri, Arial, sans-serif;
+	font-size: 0.7em;
+	padding: 10px !important;
+}
+
+.coordinates .degrees, .coordinates .minutes, .coordinates .seconds, .coordinates label {
+	width: 40px; 
+	display: inline; 
+	float: left;
+}
+.labelBold{
+/* 	font-weight: bold; */
+}
+.ui-icon {    
+	overflow: inherit !important;
+}
+
+span.ui-autocomplete:after {
+	content: '';
+	clear:both;
+}
+
+.coordinates .seconds {
+	width: 80px;
+}
+
+.coordinates label {
+	width: auto;
+	margin: 0 4px 0 0;
+}
+
+.ui-datatable .ui-datatable-even {
+    background: repeat-X scroll #FDF9E1;
+}
+
+.buttonsGroup .ui-button {
+    margin: 10px 5px;
+    /*MAYCON */
+/* 	font-weight: normal; */
+}
+
+.buttonsGroup {
+    text-align: center;
+    width: 100%
+}
+
+.columnRight label {
+    text-align: right;
+    float: right;
+}
+
+.columnsOptions2 {
+    text-align: center;
+    width: 100px
+}
+
+.columnsOptions2 .ui-button {
+    margin: 0px 2x 0px 2px
+}
+
+.columnsOptions3 {
+    text-align: center;
+    width: 140px
+}
+
+.columnsOptions3 .ui-button {
+    margin: 0px 2px 0px 2px
+}
+
+.image-upload.label {
+    font-size: 16px;
+}
+
+.image-upload .fileupload-content {
+    display: none;
+}
+
+.image-upload .fileupload-buttonbar {
+    border: none;
+    background: none;
+}
+
+.panel-upload {
+    height: 250px;
+    margin-top: -5px;
+    margin-right: 0px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.ui-picklist-list {
+    width: 100% !important;
+}
+.ui-picklist td {
+	width: 48%;
+}
+.ui-picklist td:nth-child(2) {
+	width: 4%;
+}
+.ui-picklist .ui-button {
+	margin: 0 auto 0.4em;
+}
+
+.ui-picklist-filter {
+    width: 100% !important;
+}
+
+.ui-picklist {
+    width: 100% !important;
+}
+
+.ui-inputfield.ui-selectmanymenu,
+.ui-widget-content .ui-inputfield.ui-selectmanymenu,
+.ui-widget-header .ui-inputfield.ui-selectmanymenu {
+	width: auto;
+	display: inline-block;
+	border: none;
+	background: none;
+	box-shadow: none;
+}
+.ui-selectonelistbox .ui-selectlistbox-item,
+.ui-selectmanymenu .ui-selectlistbox-item {
+	display: inline-block;
+	float: left;
+	margin-right: 15px;
+	background: none;
+	vertical-align: middle;
+}
+.ui-selectmanycheckbox.ui-widget label {
+	margin: 0 20px 0 5px;
+}
+.ui-selectoneradio.ui-widget label {
+	padding-left: 14px;
+	margin-right: 0px;
+}
+.ui-selectonelistbox .ui-state-highlight,
+.ui-selectmanymenu .ui-state-highlight {
+	background: none;
+}
+
+.ui-selectmanymenu .ui-chkbox {
+	margin-right: 0px;
+}
+
+/*FIM CONTEÃšDO DO ARQUIVO style.css*/
+label[class^="w"] {
+    text-align: right;
+    right: 6px;
+}
+
+span.ui-autocomplete>input.ui-autocomplete-input, .hasDatepicker {
+    width: 100%;
+    border-radius: 6px;
+}
+
+span.ui-autocomplete, .hasDatepicker {
+    display: block;
+    width: 100%;
+}
+
+.ui-confirm-dialog .ui-dialog-buttonpane button {
+	/* MAYCON - Remoção da cor preta no texto dos botões da popup de remoção dos dados*/
+/*     color: black !important; */
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: center !important;
+}
+
+span.ui-autocomplete>button.ui-button-icon-only,
+span[class^="w"]>button.ui-button-icon-only,
+button.ui-datepicker-trigger {
+    width: 2em;
+	height: 2em;
+	margin: 0px;
+	float: right;
+	top: 0;
+	right: 0em;
+	position: absolute;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger {
+	width: 1.55em;
+}
+.ui-datepicker-trigger {
+	border-radius: 0 4px 4px 0 !important;
+	margin: 0;
+}
+
+table.ui-selectoneradio {
+    height: 2em;
+}
+
+table.ui-selectoneradio tbody tr td {
+    display: inline-block;
+    vertical-align: text-top;
+    /*font-weight: bold;*/
+    padding-left: 11px;
+}
+
+button.ui-button-text-only {
+    margin-right: 0;
+}
+
+div.ui-fieldset-content div:first-child {
+    margin-right: 0.73%;
+}
+
+div.ui-fieldset-content div.col5:first-child {
+    margin-right: 0.5%;
+}
+
+fieldset>div.ui-fieldset-content {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8,.w9,.w10,input,label[class^="w"] {
+    vertical-align: bottom;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 5px;
+    border-collapse: separate;
+    border-spacing: 2;
+    box-sizing: border-box;
+    -moz-box-sizing: padding-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.col6,.col5,.col4 {
+    display: inline-table;
+    position: relative;
+}
+
+.col6 {
+    width: 67.3%
+}
+
+.col5 {
+    width: 48.3%
+}
+
+.col4 {
+    width: 31.4%
+}
+
+.w1 {
+    width: 10%
+}
+
+.w2 {
+    width: 20%
+}
+
+.w3 {
+    width: 30%
+}
+
+.w4 {
+    width: 40%
+}
+
+.w5 {
+    width: 50%
+}
+
+.w6 {
+    width: 60%
+}
+
+.w7 {
+    width: 70%
+}
+
+.w8 {
+    width: 80%
+}
+
+.w9 {
+    width: 90%
+}
+
+.w10 {
+    width: 100%
+}
+
+span.both.w1>input.hasDatepicker {
+    width: 67%;
+}
+
+span.both.w2>input.hasDatepicker {
+    width: 83%;
+}
+
+span.both.w3>input.hasDatepicker {
+    width: 89%;
+}
+
+span.both.w4>input.hasDatepicker {
+    width: 91.5%;
+}
+
+span.both.w5>input.hasDatepicker {
+    width: 93.3%;
+}
+
+span.both.w6>input.hasDatepicker {
+    width: 94.5%;
+}
+
+span.both.w7>input.hasDatepicker {
+    width: 95.2%;
+}
+
+span.both.w8>input.hasDatepicker {
+    width: 95.8%;
+}
+
+span.both.w9>input.hasDatepicker {
+    width: 96.3%;
+}
+
+span.both.w10>input.hasDatepicker {
+    width: 96.7%;
+}
+
+.col4 span.both.w1>input.hasDatepicker {
+    width: 0%;
+}
+
+.col4 span.both.w2>input.hasDatepicker {
+    width: 46%;
+}
+
+.col4 span.both.w3>input.hasDatepicker {
+    width: 64%;
+}
+
+.col4 span.both.w4>input.hasDatepicker {
+    width: 73.5%;
+}
+
+.col4 span.both.w5>input.hasDatepicker {
+    width: 78.3%;
+}
+
+.col4 span.both.w6>input.hasDatepicker {
+    width: 81.5%;
+}
+
+.col4 span.both.w7>input.hasDatepicker {
+    width: 84.2%;
+}
+
+.col4 span.both.w8>input.hasDatepicker {
+    width: 86.8%;
+}
+
+.col4 span.both.w9>input.hasDatepicker {
+    width: 88.3%;
+}
+
+.col4 span.both.w10>input.hasDatepicker {
+    width: 89.7%;
+}
+
+.col5 span.both.w1>input.hasDatepicker {
+    width: 30%;
+}
+
+.col5 span.both.w2>input.hasDatepicker {
+    width: 65%;
+}
+
+.col5 span.both.w3>input.hasDatepicker {
+    width: 77%;
+}
+
+.col5 span.both.w4>input.hasDatepicker {
+    width: 82.5%;
+}
+
+.col5 span.both.w5>input.hasDatepicker {
+    width: 86.3%;
+}
+
+.col5 span.both.w6>input.hasDatepicker {
+    width: 88.5%;
+}
+
+.col5 span.both.w7>input.hasDatepicker {
+    width: 90.2%;
+}
+
+.col5 span.both.w8>input.hasDatepicker {
+    width: 91.2%;
+}
+
+.col5 span.both.w9>input.hasDatepicker {
+    width: 92.3%;
+}
+
+.col5 span.both.w10>input.hasDatepicker {
+    width: 93%;
+}
+
+.col6 span.both.w1>input.hasDatepicker {
+    width: 48%;
+}
+
+.col6 span.both.w2>input.hasDatepicker {
+    width: 74%;
+}
+
+.col6 span.both.w3>input.hasDatepicker {
+    width: 83%;
+}
+
+.col6 span.both.w4>input.hasDatepicker {
+    width: 86.6%;
+}
+
+.col6 span.both.w5>input.hasDatepicker {
+    width: 89.6%;
+}
+
+.col6 span.both.w6>input.hasDatepicker {
+    width: 91.5%;
+}
+
+.col6 span.both.w7>input.hasDatepicker {
+    width: 92.7%;
+}
+
+.col6 span.both.w8>input.hasDatepicker {
+    width: 93.6%;
+}
+
+.col6 span.both.w9>input.hasDatepicker {
+    width: 94.3%;
+}
+
+.col6 span.both.w10>input.hasDatepicker {
+    width: 94.9%;
+}
+
+.r1 {
+    left: 10%
+}
+
+.r2 {
+    left: 20%
+}
+
+.r3 {
+    left: 30%
+}
+
+.r4 {
+    left: 40%
+}
+
+.r5 {
+    left: 50%
+}
+
+.r6 {
+    left: 60%
+}
+
+.r7 {
+    left: 70%
+}
+
+.r8 {
+    left: 80%
+}
+
+.r9 {
+    left: 90%
+}
+
+.r10 {
+    left: 100%
+}
+
+[class*="span"] {
+    float: left;
+    margin-left: 20px;
+}
+
+.clear {
+    margin-left: -20px;
+    *zoom: 1;
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+}
+
+.clear:after {
+    clear: both;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ' ';
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+
+.columnRight label {
+    text-align: right;
+    /*font-weight: bold !important;*/
+    float: right !important;
+}
+
+.ui-selectonemenu label {
+    float: left !important;
+    font-weight: normal !important;
+    text-align: left;
+}
+
+/** Adicionado para resolver o alinhamento dos campos no visualizar*/
+.clearfix label {
+    float: left;
+}
+
+.columnLeft {
+    text-align: left;
+    font-weight: none !important;
+}
+
+.columnShow td {
+    font-weight: normal;
+    text-align: left;
+}
+
+.columnShow label {
+    text-align: right;
+    font-weight: bold !important;
+    float: right;
+}
+
+.noBorders tr,.noBorders td {
+    background: none !important;
+    border: none !important;
+}
+
+.ui-autocomplete .ui-icon-triangle-1-s {
+    background-position: -160px -112px !important
+}
+
+.ui-icon-bullet {
+    background-position: -82px -146px;
+}
+
+.ui-radiobutton {
+    line-height: 16px;
+    margin: 3px 0;
+    position: relative;
+    width: 4px;
+}
+
+.ui-radiobutton .ui-radiobutton-box {
+    border-radius: 10px 10px 10px 10px;
+    bottom: 0;
+    height: 13px;
+    left: 0;
+    line-height: 16px;
+    position: relative;
+    width: 13px;
+}
+
+
+.ui-radiobutton .ui-radiobutton-box.ui-state-focus .ui-icon,
+.ui-state-highlight .ui-icon, 
+.ui-chkbox .ui-chkbox-box.ui-state-focus .ui-icon {
+	background-image: url("#{resource['primefaces-adaptado3:images/ui-icons_222222_256x240.png']}");
+}
+
+/* Não estava implementado o padrão para combobox.
+
+label do combobox em negrito
+
+@author rafael  */
+.ui-chkbox .ui-chkbox-label {/*font-weight: bold !important;*/
+}
+
+/* Não estava implementado o padrão para combobox.
+
+distancia do topo de 5px
+
+@author rafael  */
+.ui-chkbox {
+    padding-top: 5px;
+}
+
+.dataPicker {
+    margin-right: 100%;
+}
+
+.ui-autocomplete.state {
+    margin-left: -10px; ! important;
+    margin-right: -2px;
+    !
+    important;
+}
+
+.stateP {
+    margin-left: -40px;
+    !
+    important;
+}
+
+.required {
+    text-align: right !important;
+    color: red !important;
+}
+
+.panel {
+    margin-bottom: 1em;
+}
+
+.center-align {
+    text-align: center;
+}
+
+.fill-all-width {
+    width: 100%;
+}
+
+.fill-almost-all-width,.fill-almost-all-width input {
+    width: 90%;
+}
+
+.ui-panelmenu .ui-panelmenu-header a {
+    display: block;
+    font-size: 0.89em;
+    padding: 0.5em 0.5em 0.5em 2.2em;
+}
+.ui-menubar .ui-menu-child .ui-menuitem-link {
+	width: 98%;
+}
+
+.user {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-right: -2px;
+    border-radius: 4px 4px 0px 4px !important;
+}
+
+.user:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.logout {
+    border-radius: 0px 4px 4px 4px !important;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.logout:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+input::-webkit-input-placeholder {
+    color: #A9A9A9 !important;
+}
+
+input:-moz-placeholder {
+    color: #A9A9A9 !important;
+}
+
+input:-ms-input-placeholder {
+    color: #A9A9A9 !important;
+}
+
+.menu-icon-search {
+    position: absolute !important;
+    top: 5px !important;
+    float: left !important;
+}
+
+.div-menu-search {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+.menuContent .ui-layout-unit-content {
+    overflow: hidden !important;
+}
+
+.menuInputText {
+    text-indent: 10px;
+}
+
+.ui-panel-content .grid_1,
+.ui-panel-content .grid_2,
+.ui-panel-content .grid_3,
+.ui-panel-content .grid_4,
+.ui-panel-content .grid_5,
+.ui-panel-content .grid_6,
+.ui-panel-content .grid_7,
+.ui-panel-content .grid_8,
+.ui-panel-content .grid_9,
+.ui-panel-content .grid_10,
+.ui-panel-content .grid_11,
+.ui-panel-content .grid_12,
+.ui-panel-content .grid_13,
+.ui-panel-content .grid_14,
+.ui-panel-content .grid_15,
+.ui-panel-content .grid_16,
+.ui-panel-content .grid_17,
+.ui-panel-content .grid_18,
+.ui-panel-content .grid_19,
+.ui-panel-content .grid_20,
+.ui-panel-content .grid_21,
+.ui-panel-content .grid_22,
+.ui-panel-content .grid_23,
+.ui-panel-content .grid_24 {
+	margin-bottom: 5px;
+}
+
+.grid_1>label,.grid_2>label,.grid_3>label,.grid_4>label,.grid_5>label,.grid_6>label,.grid_7>label,.grid_8>label,.grid_9>label,.grid_10>label,.grid_11>label,.grid_12>label,.grid_13>label,.grid_14>label,.grid_15>label,.grid_16>label,.grid_17>label,.grid_18>label,.grid_19>label,.grid_20>label,.grid_21>label,.grid_22>label,.grid_23>label,.grid_24>label {
+    padding-top: 5px;
+}
+
+.ui-outputlabel.ui-state-error {
+    background: transparent;
+    color: #B81900
+}
+
+.buttonsAction {
+    text-align: center !important;
+    margin: 10px 0 !important;
+    background: none !important;
+}
+
+.fileDownload {
+	  text-align: center !important;
+	  background: none !important;
+}
+
+/* O tamanho do botÃ£o não de ser 120,  pois nÃ£o
+da certo com o botÃ£o limpar que Ã© muito grande.
+Fora do padrÃ£o!
+
+@author felipealfaville  */
+.buttonsAction button {
+    margin: 5px 5px 5px 5px;
+}
+
+/* Foi adicionado o estilo para botÃµes com a
+funcionalidade de Adicionar itens em uma tabela
+
+@author rafael  */
+.buttonsAddAction {
+    text-align: center !important;
+    margin: 20px 0 !important;
+}
+
+.buttonsAddAction button {
+    margin: 0px 5px 5px 5px;
+}
+
+.ui-panel {
+    margin-bottom: 5px;
+}
+
+/* EspaÃ§amento dos botÃµes de exportar PDF e XLS */
+.reportButton {
+    padding: 1px 0px !important;
+}
+
+/* Coluna de opÃ§Ãµes */
+.buttonsOptions {
+    width: 120px;
+    text-align: center;
+}
+
+/* Antigo style.css*/
+.font_bold {
+    font-weight: bold;
+}
+
+.image-upload.label {
+    font-size: 16px;
+}
+
+.image-upload .fileupload-content {
+    display: none;
+}
+
+.image-upload .fileupload-buttonbar {
+    border: none;
+    background: none;
+}
+
+.panel-upload {
+    height: 250px;
+    margin-top: -5px;
+    margin-right: 0px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.ui-wizard-step-title {
+    font-size: 12px;
+}
+
+/*  Remover as bordas dos paineis, retirando as linhas que ficavam entre as sections */
+.ui-layout-unit {
+    border: 0px solid #DDDDDD !important;
+    background: none;
+}
+.ui-layout-unit .ui-layout-unit-content {
+	padding: 0 !important;
+}
+
+/* ajustar largura do menu */
+.ui-layout-pane-west {
+    width: 220px !important;
+}
+
+/* ajustar botÃ£o de esconder menu */
+.ui-layout-resizer-west-open {
+    left: 234px !important;
+}
+
+/*
+Alinhamento do titulo da tabela de resultados(Tela de Consultar)
+
+@autor felipealfaville
+*/
+th.ui-datatable-header span {
+    float: left;
+}
+
+/* DefiniÃ§Ãµes para ajustas o painel de notificaÃ§Ã£o que irÃ¡ conter o nome da tela */
+.ui-notificationbar {
+    width: 100%;
+    height: 0px !important;
+    font-size: 30px;
+    background: transparent;
+    text-align: center;
+    border: none;
+    /*font-weight: bold;*/
+    color: #1C94C4;
+}
+
+/*
+RemoÃ§Ã£o dos botÃµes do componente de upload
+
+@autor maycon francis
+*/
+.ui-button-icon-only {
+	width: 2.2em;
+}
+
+.fileupload-buttonbar .ui-button-text-icon-left .ui-icon {
+	margin-left: 1px;
+}
+
+.fileupload-buttonbar .ui-button, .actions-column .ui-button {
+	margin-right: 0;
+}
+
+.fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
+	padding: 1.3em;
+}
+
+.fileupload-buttonbar .ui-button .ui-button-text {
+	line-height: 1em;
+}
+
+.fileupload-buttonbar, .actions-column {
+	padding: 0;
+	text-align: center;
+}
+
+.ui-widget-content th.ui-state-default.actions-column, .ui-datatable tbody td.actions-column {
+	padding: 2px 7px;
+}
+
+.uploadFile .fileupload-buttonbar {
+    padding: 0px 0px !important;
+    border: none;
+}
+
+.fileupload-buttonbar {
+    font-size: 11px;
+}
+
+.uploadFile table {
+    display: none !important;
+}
+
+.uploadFile .fileupload-content {
+    display: none !important;
+}
+
+.preview {
+    display: none !important;
+}
+
+.ui-selectonemenu {
+    display: inline;
+    float: right;
+    position: relative;
+    margin-left: 5%;
+    margin-right: -1%;
+}
+
+/*****************************************************************
+ *
+ *    CSS-API		: CUSTOM FOR Jquery-UI and Primefaces-UI
+ *    Document		: SIMULANET - Telcom;
+ *    Author		: Gilberto Coelho (gilbertocoelho@gmail.com);
+ *    Description 	: Purpose of the stylesheet follows;
+ *    Created on	: 05/05/2013;
+ *
+ ****************************************************************/
+a {
+  color: #0088cc;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #005580;
+  text-decoration: underline;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
+}
+
+/* HEADER	::::::::::::::::::::::::::::::: */
+.header {
+	height: 114px;
+/*MAYCON*/
+/* 	background: #8691a8; Old browsers */
+/* 	background: -moz-linear-gradient(top,  #8691a8 0%, #d6dce4 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8691a8), color-stop(100%,#d6dce4)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top,  #8691a8 0%,#d6dce4 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top,  #8691a8 0%,#d6dce4 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top,  #8691a8 0%,#d6dce4 100%); IE10+ */
+/* 	background: linear-gradient(to bottom,  #8691a8 0%,#d6dce4 100%); W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8691a8', endColorstr='#d6dce4',GradientType=0 ); /* IE6-9 */
+
+		-moz-border-radius-topleft: 10px;
+	/*MAYCON - Remoção do raio da borda do canto superior esquerdo*/ 
+/* 	-webkit-border-top-left-radius: 10px; */
+			/* border-top-left-radius: 10px; */
+
+		-moz-border-radius-topright: 10px;
+	/*MAYCON - Remoção do raio da borda do canto superior direito*/
+/* 	-webkit-border-top-right-radius: 10px; */
+			/* border-top-right-radius: 10px; */
+
+	-webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, .2), inset 0 0 1px rgba(0, 0, 0, .2);
+	   -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, .2), inset 0 0 1px rgba(0, 0, 0, .2);
+			box-shadow: inset 0 0 1px rgba(0, 0, 0, .2), inset 0 0 1px rgba(0, 0, 0, .2);
+}
+
+/* HEADER WEAVES OVERLAY	::::::::::::::::::::: */
+.header {
+  position: relative;
+  z-index: 2;
+}
+.header:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: url(#{resource['images/header-weaves-back.png']}) top right no-repeat;
+	opacity: 1;
+}
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1) {
+
+  .header:after {
+    background-size: 631px 114px;
+  }
+}
+
+/* BRAND	::::::::::::::::::::: */
+h1.brand { margin: 0px; padding: 0px; }
+
+/*
+h1.brand a {
+    text-indent: -9999px;
+	display: block;
+	background: transparent url(#{resource['images/brand.png']}) top left no-repeat scroll;
+	height: 112px;
+	width: 235px;
+}
+*/
+
+/* editado pro simulanet */
+h1.brand a {
+    text-indent: 40px;
+
+	text-align: center;
+	vertical-align: top;
+	line-height: 120px;
+
+    display: block;
+	height: 112px;
+	width: 1000px;
+	color: #395A85;
+	font-family: Arial;
+	font-size: 18pt;
+	letter-spacing: 0pt;
+	background: transparent url(#{resource['images/ASCONP.png']}) top left no-repeat scroll;
+}
+
+/* USER-BOX	::::::::::::::::::::: */
+.user-box-container {
+	z-index: 3;
+} 
+
+.user-box {
+	*background-color: #fff; /*Ie7 */
+	background-color: #fff;
+	background-color: rgba(255, 255, 255, .75);
+	border: 1px solid #9DA0A9;
+	margin: 10px 0px;
+	padding: 8px;
+	line-height: 18px;
+
+	-webkit-box-shadow: 0 0 15px 1px rgba(51, 81, 126, .5);
+	   -moz-box-shadow: 0 0 15px 1px rgba(51, 81, 126, .5);
+			box-shadow: 0 0 15px 1px rgba(51, 81, 126, .5);
+
+	   -moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+			border-radius: 7px;
+
+}
+.user-box label {
+	color: #6179A1;
+	font-size: 12px;
+}
+.user-box hr {
+	border-style: dotted;
+}
+
+/* BREADCRUMBS	::::::::::::::::::::::::::::: */
+.breadcrumb {
+	padding: 8px 20px;
+/*	margin: 0 0 20px; */
+	list-style: none;
+}
+
+.breadcrumb > li {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+.breadcrumb > li a {
+	color: #577093;
+}
+.breadcrumb > li a:hover {
+	text-decoration: none;
+}
+.breadcrumb > li > .divider {
+	padding: 0 5px;
+	color: #333;
+}
+
+.breadcrumb > .active {
+	color: #454545;
+}
+
+/* Footer	:::::::::::::::::::::::::::::::::::: */
+.ui-layout-center .ui-layout-unit-content.ui-widget-content {
+	margin-bottom: 0;
+}
+.ui-layout-south.footer .ui-layout-unit-content {
+	height: 22px;
+	padding: 6px 10px;
+/*MAYCON - Remoção da cor azul do rodapá */
+/* 	background: #577093; Old browsers */
+/* 	background: -moz-linear-gradient(top,  #758CC0 0%, #33517E 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#758CC0), color-stop(100%,#33517E)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top,  #758CC0 0%,#33517E 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top,  #758CC0 0%,#33517E 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top,  #758CC0 0%,#33517E 100%); IE10+ */
+/* 	background: linear-gradient(to bottom,  #758CC0 0%,#33517E 100%); W3C */
+/* 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#758CC0', endColorstr='#33517E',GradientType=0 ); IE6-9 */
+
+/* 	border-top: 1px solid #577093; */
+/* 	border-bottom: 1px solid #577093; */
+
+}
+.footer p {
+  margin: 6px 12px;
+  /*MAYCON - Remoção da cor branca do texto do rodape */
+/*   color: #fff; */
+}
+.footer p span {
+	float:right;
+}
+
+/* ::::::::::::::::::::::::::::::::::::::::::::	*/
+/* LOGIN PAGE									*/
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+body.login-page {
+	background: #254970 url(#{resource['images/login-page-bg.png']}) top left repeat-x;
+}
+
+/* This class must be inserted into the form.  */
+.login-container, .info-container {
+	position: absolute;
+	width: 470px;
+	height: 325px;
+	left: 50%;
+	top: 50%;
+	margin-top: -200px;
+	margin-left: -235px;
+}
+
+.info-container .ui-panel {
+	height: 300px;
+}
+
+.info-text {
+	text-align: center;
+	
+}
+
+.login-container {
+	-webkit-border-radius: 6px;
+			border-radius: 6px;
+
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .25);
+	   -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .25);
+			box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .25);
+}
+.login {
+}
+.login-top {
+	background: transparent url(#{resource['images/login-top-bg2.jpg']}) top left no-repeat;
+	width: 470px;
+	height: 215px;
+}
+.login-form {
+	background: transparent url(#{resource['images/login-bottom-bg.png']}) bottom left no-repeat;
+	height: 110px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 10pt;
+	padding: 0px 0px 0px 20px;
+
+}
+.login-form label {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 5px;
+}
+
+.login-form .login-label {
+	float: left;
+	padding-top: 5px;
+/*	text-align: right; */
+	width: 60px;
+}
+
+.login-form p {
+	padding: 10px 0px;
+	margin: 0;
+}
+.login-form .input-form {
+	border-color: #036 !important;
+	border-style:solid !important;
+	font-weight:bold !important;
+	width:225px !important;
+	border-radius: 0 !important;
+	font-size: 11px !important;
+	font-weight: normal !important;
+/* 	padding: 1px !important; */
+	margin: 2px 0 5px !important;
+	border-width: 2px !important;
+}
+.bt-small {
+	font-weight:normal;
+	font-size: 10px;
+	padding: 0px 10px;
+	width: 140px;
+	vertical-align: top;
+	margin-left: 10px
+}
+
+
+/* End	:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+
+
+/* ::::::::::::::::::::::::::::::::::::::::::::	*/
+/* PLACEHOLDER MENU								*/
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+
+.ui-menu-list.ui-menu-child {
+	border-radius: 0px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-color: #CECECE;
+	width: auto !important;
+}
+
+.ui-menu > .ui-menu-list > .ui-menuitem > .ui-menu-child {
+	top: 27px !important;
+	left: -1px !important;
+}
+
+
+.ui-menuitem, .ui.menu-list {
+	background: #FFFFFF; /* Old browsers */
+	background: -moz-linear-gradient(top,  #FFFFFF 0%, #f0f1f2 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#f0f1f2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #FFFFFF 0%,#f0f1f2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #FFFFFF 0%,#f0f1f2 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #FFFFFF 0%,#f0f1f2 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #FFFFFF 0%,#f0f1f2 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#f0f1f2',GradientType=0 ); /* IE6-9 */
+}
+
+.ui-menuitem .ui-menuitem{
+	background: none;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem {
+    border-top: 1px solid #CECECE;
+    border-left: 1px solid #CECECE;
+    border-right: 1px solid #CECECE;
+    border-radius: 1px solid #CECECE;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-left: 10px;
+    margin: 0px;
+    margin-left: 2px;
+}
+
+.ui-menu-list .ui-menu-list .ui-menuitem {
+    border: none !important;
+    margin-left: 0px !important;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem.ui-menuitem-active {
+    border-top: 5px solid #4A6695;
+}
+
+.ui-menu > .ui-menu-list > .ui-menuitem.ui-menuitem-active > .ui-menuitem-link.ui-state-hover {
+	margin-top: -4px;
+	background: none;
+}
+.ui-menubar .ui-menu-child .ui-menuitem {
+	min-width: 15em;
+}
+.ui-menu .ui-menuitem-link {
+    font-weight: bold;
+    border-top: 4px solid transparent;
+    color: #4A6695;
+    padding: 5px 5px;
+}
+
+.ui-menu-list .ui-menu-list .ui-menuitem .ui-menuitem-link {
+    border-top: 0px solid #FFF;
+}
+.ui-menuitem .ui-menuitem-active {
+	background: #577093; /* Old browsers */
+	background: -moz-linear-gradient(top,  #758CC0 0%, #33517E 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#758CC0), color-stop(100%,#33517E)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #758CC0 0%,#33517E 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #758CC0 0%,#33517E 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #758CC0 0%,#33517E 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #758CC0 0%,#33517E 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#758CC0', endColorstr='#33517E',GradientType=0 ); /* IE6-9 */
+	border-radius: 0;
+}
+.ui-menuitem .ui-menuitem-active .ui-menuitem-link.ui-state-hover {
+	color: #fff;
+	background: none;
+}
+.ui-menu .ui-menuitem-text {
+    white-space: nowrap;
+}
+.ui-menu > .ui-menu-list > .ui-menuitem:last-child {
+	float: right;
+	border: none;
+	background: none;
+}
+.ui-menu > .ui-menu-list > .ui-menuitem.ui-menuitem-active:last-child > .ui-menuitem-link.ui-state-hover {
+	margin-top: 0;
+}
+
+
+
+/* ::::::::::::::::::::::::::::::::::::::::::::	*/
+/* PLACEHOLDER NORTH							*/
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+
+.ui-layout-north {
+    z-index: 100 !important;
+    overflow: visible;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+
+.ui-menubar {
+    background: none;
+    padding: 8px 8px 0;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+}
+
+.ui-layout-unit {
+    padding: 0px;
+}
+
+.ui-layout-pane-north {
+    border-radius: 0px;
+}
+
+/* Placeholder NORTH content page	:::::::::::::::::: */
+.ui-layout-north .ui-layout-unit-content.ui-widget-content {
+    background: #F5F5F5;
+    margin: 0 auto;
+    width: 90%;
+}
+
+
+/* ::::::::::::::::::::::::::::::::::::::::::::	*/
+/* PLACEHOLDER CENTER							*/
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+/* Placeholder CENTER content page	:::::::::::::::::: */
+.ui-layout-center .ui-layout-unit-content.ui-widget-content {
+    background:  #fff;
+    /*MAYCON - Remoção da borda do formulário central*/
+	border: 1px solid #cecece;
+	margin-bottom: 5px;
+	/*MAYCON - Remoção dos raiosdos cantos inferiores direito e esquerdo do formulário */ 
+	/*border-bottom-left-radius: 6px;*/
+	/*border-bottom-right-radius: 6px;*/
+	/*MAYCON - Adição de margem zero e centralização do formulário na div e redução em 10% deste formulário*/
+	margin: 0 auto;
+	width: 90%;
+}
+
+.ui-datatable tr:nth-child(2n+1) td {
+  background: #f2f2f2;
+}
+.ui-datatable-data .ui-state-highlight, .ui-datatable .ui-state-highlight {
+   background: #758CC0 !important;
+}
+.ui-datatable-data .ui-state-highlight td, .ui-datatable .ui-state-highlight td {
+	word-wrap: break-word;
+	background: none !important;
+	border: none;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	border: none;
+}
+
+.ui-datatable,.ui-datatable-even {
+    background: #FFF0A5;
+    background: -moz-linear-gradient(top, #FDF9E1, #FFF0A5) repeat-X scroll
+    50% 50% #FDF9E1;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+	white-space: normal !important;
+}
+
+.ui-outputlabel-rfi {
+    color: #ff0000 !important;
+}
+.ui-state-highlight, .ui-widget-content td.ui-state-highlight {
+	border: 2px solid #758CC0;
+	background: #758CC0;
+}
+.ui-widget-content .ui-cell-editor-input input.ui-state-default {
+	width: 100%;
+	-webkit-border-radius: 0;
+	-mox-border-radius: 0;
+	-ms-border-radius: 0;
+	-o-border-radius: 0;
+	border-radius: 0;
+	border:none !important;
+}
+
+
+/* ::::::::::::::::::::::::::::::::::::::::::::	*/
+/* COPONENT PANEL								*/
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+
+.ui-widget-content {
+	/*MAYCON - Remoção da cor cinza claro do funda da tela e rodapé */ 
+/* 	background: #F5F5F5; */
+}
+.ui-panel {
+    margin: 10px;
+	padding: 0;
+}
+.ui-inputtextarea {
+    margin: 0px;
+}
+div.timeInit {
+    text-align: right;
+}
+div.timeInit span {
+    margin-left: 15px;
+}
+.ui-widget-header {
+	/*MAYCON*/
+/* 	background: #577093; Old browsers */
+/* 	background: -moz-linear-gradient(top,  #758CC0 0%, #33517E 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#758CC0), color-stop(100%,#33517E)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top,  #758CC0 0%,#33517E 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top,  #758CC0 0%,#33517E 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top,  #758CC0 0%,#33517E 100%); IE10+ */
+/* 	background: linear-gradient(to bottom,  #758CC0 0%,#33517E 100%); W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#758CC0', endColorstr='#33517E',GradientType=0 ); /* IE6-9 */
+	/*color: #fff; */
+	text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+	font-weight: normal;
+
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.ui-panel .ui-panel-titlebar {
+ /* MAYCON - Redução da altura da barra do painel */
+	/* padding: 6px 12px; */
+	padding: 2px 12px;
+}
+.ui-panel-title {
+	font-size: 13px;
+}
+
+
+/* PANEL : level 2	::::::::::::::::::::::::::::::::::::::: */
+
+/* TITLEBAR - level 2	----------------------------------- */
+.ui-panel .ui-panel-content {
+	padding: 0;
+}
+.ui-panel-content .ui-widget-content .ui-panel-titlebar {
+	text-align: center;
+	border-radius: 0px;
+}
+.ui-panel-content .ui-panel {
+	margin:10px -1px;
+	padding: 0;
+}
+.ui-panel-content .ui-panel .ui-panel-content {
+	border: none;
+	padding: 10px 0 0;
+}
+.ui-widget-header {
+/* 	MAYCON - ASCONP */
+/*   border: 1px solid #5b7596; */
+}
+/* ASCONP-FORMATAÇÃO - INÍCIO*/
+.ui-widget .ui-widget {
+    font-size: 1.2em;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+    border: 0 none;
+    cursor: pointer;
+    margin: 1px 0;
+    padding: 3px 5px;
+    text-align: left;
+    white-space: nowrap;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-item {
+    font-weight: normal;
+}
+.ui-corner-all {
+    border-radius: 3px;
+}
+
+/* .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight { */
+/*     background:none; */
+/*     } */
+/* ASCOP- FORMATAÇÃO -FIM */
+
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.login .ui-state-default { /* -> for login page */
+/* 	background: #577093; Old browsers */
+/*MAYCON*/
+	background: #FFFFFF; /* Old browsers */
+/* 	background: -moz-linear-gradient(top,  #758CC0 0%, #33517E 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#758CC0), color-stop(100%,#33517E)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top,  #758CC0 0%,#33517E 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top,  #758CC0 0%,#33517E 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top,  #758CC0 0%,#33517E 100%); IE10+ */
+/* 	background: linear-gradient(to bottom,  #758CC0 0%,#33517E 100%); W3C */
+	filter: progid:DXImageaTransform.Microsoft.gradient( startColorstr='#758CC0', endColorstr='#33517E',GradientType=0 ); /* IE6-9 */
+
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+/* 	border: 1px solid #5b7596; */
+}
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.login .ui-state-active { /* -> for login page */
+	background: #577093; /* Old browsers */
+	background: -moz-linear-gradient(top,  #33517E 0%, #758CC0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#33517E), color-stop(100%,#758CC0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #33517E 0%,#758CC0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #33517E 0%,#758CC0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #33517E 0%,#758CC0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #33517E 0%,#758CC0 100%); /* W3C */
+	filter: progid:DXImageaTransform.Microsoft.gradient( startColorstr='#33517E', endColorstr='#758CC0',GradientType=0 ); /* IE6-9 */
+
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	border: 1px solid #5b7596;
+}
+
+*[class^="ui-button"] {
+	/*MAYCON*/
+/* 	color: #fff; */
+}
+.ui-widget-content .ui-state-default.ui-inputtextarea,
+.ui-widget-content .ui-state-default.ui-chkbox-box,
+.ui-widget-content input.ui-state-default,
+.ui-widget-content .ui-radiobutton .ui-radiobutton-box,
+.login input.ui-state-default,
+.ui-widget-content .ui-selectonemenu {
+	background-image: none;
+	background-color: #fff;
+	/*MAYCON - Remoção dos realces das bordas das caixas de texto*/
+/* 	border: 1px solid #dcdcdc; */
+
+	-webkit-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+	   -moz-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+	   /*MAYCON - Remoção das sombras das caixas de texto*/
+/* 			box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1); */
+}
+
+.ui-widget-content .ui-inputfield.ui-selectonemenu-label{
+	-webkit-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+	   -moz-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+			box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);	
+}
+
+.ui-inputfield.ui-state-focus,
+.ui-widget-content .ui-inputfield.ui-state-focus,
+.ui-widget-header .ui-inputfield.ui-state-focus,
+.ui-widget-content .ui-chkbox .ui-chkbox-box.ui-state-focus,
+.ui-widget-content .ui-radiobutton .ui-radiobutton-box.ui-state-focus {
+	border: 1px solid #758CC0;
+
+	-webkit-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+	   -moz-box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+			box-shadow: inset 1px 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.ui-shadow {
+	-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+	   -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+	        box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+}
+
+
+/* TABLE : TH	::::::::::::::::::::::::::::::::::::::: */
+.ui-widget-content th.ui-state-default {
+	/*MAYCON - REMOÇÃO DO FUNDO CINZA DO TITULO DA TABELA */
+/* 	background: #577093; Old browsers */
+/* 	background: -moz-linear-gradient(top,  #CCCCCC 0%, #797979 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CCCCCC), color-stop(100%,#797979)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top,  #CCCCCC 0%,#797979 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top,  #CCCCCC 0%,#797979 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top,  #CCCCCC 0%,#797979 100%); IE10+ */
+/* 	background: linear-gradient(to bottom,  #CCCCCC 0%,#797979 100%); W3C */
+/* 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCCCCC', endColorstr='#797979',GradientType=0 ); IE6-9 */
+/* 	border: none; */
+/* 	padding: 8px 12px; */
+
+/* 	text-align: left; */
+/* 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); */
+/* 	font-weight: normal; */
+/* 	color: #fff; */
+/* 	border-left: 1px dotted #ccc; */
+}
+
+/* Remove frist border in TH	:::::::::::::::::::::::  */
+.ui-widget-content th.ui-state-default:first-child {
+	border-left-style: none;
+}
+
+.ui-panel .results-panel {
+	padding: 0;
+}
+
+.ui-widget-content .ui-datatable-data td, 
+.ui-widget-content .ui-datatable-data tr {
+	background-color: #fff;
+}
+
+.ui-widget-content .ui-datatable-data .ui-state-hover
+{
+	color: #000;
+}
+
+.ui-paginator.ui-paginator-bottom {
+	/*MAYCON - Remoção da cor cinza da barra de paginação das tabelas */
+/* 	background: -moz-linear-gradient(top, #CCCCCC 0%, #797979 100%); FF3.6+ */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CCCCCC), color-stop(100%,#797979)); Chrome,Safari4+ */
+/* 	background: -webkit-linear-gradient(top, #CCCCCC 0%,#797979 100%); Chrome10+,Safari5.1+ */
+/* 	background: -o-linear-gradient(top, #CCCCCC 0%,#797979 100%); Opera 11.10+ */
+/* 	background: -ms-linear-gradient(top, #CCCCCC 0%,#797979 100%); IE10+ */
+/* 	background: linear-gradient(to bottom, #CCCCCC 0%,#797979 100%); W3C */
+/* 	border: none; */
+padding: 0px 12px;
+}
+
+div.grid_1 div.ui-selectonemenu,
+div.grid_2 div.ui-selectonemenu,
+div.grid_3 div.ui-selectonemenu,
+div.grid_4 div.ui-selectonemenu,
+div.grid_5 div.ui-selectonemenu,
+div.grid_6 div.ui-selectonemenu,
+div.grid_7 div.ui-selectonemenu,
+div.grid_8 div.ui-selectonemenu,
+div.grid_9 div.ui-selectonemenu,
+div.grid_10 div.ui-selectonemenu,
+div.grid_11 div.ui-selectonemenu,
+div.grid_12 div.ui-selectonemenu,
+div.grid_13 div.ui-selectonemenu,
+div.grid_14 div.ui-selectonemenu,
+div.grid_15 div.ui-selectonemenu,
+div.grid_16 div.ui-selectonemenu,
+div.grid_17 div.ui-selectonemenu,
+div.grid_18 div.ui-selectonemenu,
+div.grid_19 div.ui-selectonemenu,
+div.grid_20 div.ui-selectonemenu,
+div.grid_21 div.ui-selectonemenu,
+div.grid_22 div.ui-selectonemenu,
+div.grid_23 div.ui-selectonemenu,
+div.grid_24 div.ui-selectonemenu{
+	width:100% !important;
+}
+.ui-panel-content{ margin-top: 10px; }
+
+ul.ui-selectlistbox-list li.ui-state-hover{
+	color : #222222 !important;	
+}
+
+button.ui-wizard-nav-next, button.ui-wizard-nav-back{
+	margin: 6px;
+}
+/* .ui-selectlistbox-item{ */
+/* 	height: 18px; */
+/* } */
+.discountStructure .ui-selectmanycheckbox.ui-widget {
+	width: 100%;
+	min-height: 215px;
+	border-right: 1px solid #cecece;
+}
+.discountStructure .ui-selectmanycheckbox.ui-widget tr {
+	width: 50%;
+	float: left;
+}
+.discountStructure .ui-layout-center.ui-layout-pane.ui-layout-pane-center .ui-widget-content td {
+  padding: 0px;
+}
+.discountStructure .ui-selectmanycheckbox.ui-widget label {
+	margin: 0 0 0 5px;
+}
+#searchForm:resultsPanel_content{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.labelLeft, .ui-selectonemenu-label{
+	text-align: left !important;
+}
+.alignRight label{
+	text-align: right;
+	padding-top : 3px;
+}
+.ui-panel-titlebar{
+	text-align: center;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+  background: none repeat scroll 0 0 #FFFFFF;
+  box-shadow: none;
+  color: #222222;
+}
+
+button.rightButton{
+	float: right;
+	margin: 5px;
+}
+button.fixedsize{
+	width: 250px;
+	display: block;
+}
+
+/* @author Lucianokelvin //  usado para ignorar a formatação da linha 901*/
+div.attachmentsFileUpload .fileupload-buttonbar{
+	width: auto;
+}
+.textContainer {
+	text-align: center;
+	width: 70%;
+	margin-bottom: 40px;
+    margin-top: 30px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+.ui-button.ui-state-disabled,
+.ui-spinner.ui-state-disabled,
+.ui-autocomplete-input.ui-state-disabled ~ .ui-button,
+.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-trigger {
+	opacity: 0.7;
+	filter: Alpha(Opacity=70);
+}
+.sub-layout .ui-layout-unit-content.ui-widget-content {
+    display:block !important;
+/*     width: 400px !important; */
+/*     height: 100%; */
+    margin-right: 10px;
+}
+.div-left{
+	float: left !important;
+	width: 35%;
+	height: 100%;
+/* 	border: 1px solid red; */
+}
+.div-right{
+	float: left !important;
+	width: 64%;
+	height: 100%;
+/* 	border: 1px solid black; */
+}
+
+.ui-tabs-nav .ui-tabs-selected a{
+/* 	color: #FFF; */
+	color: none !important;
+}
+/* rig */
+
+.ui-autocomplete {
+	white-space: nowrap;
+}
+
+.no-scroll-h div.ui-datatable-scrollable-body {
+	overflow-x: hidden !important;
+}
+
+.label-calendar input, .label-input {
+	border: none !important;
+	background: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container {
+	display: block;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container input.ui-state-default {
+	width: 100%;
+}
+
+.ui-widget-content .ui-state-active {
+	border: 1px solid #cecece;
+	background: #FFFFFF;
+}
+.ui-scroll-adjust {
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-right: 20px;
+}
+
+.ui-row-toggler {
+	display: none;
+}
+
+.bestowal-evaluation .products-table {
+	padding: 0 !important;
+}
+
+.bestowal-evaluation .approved td, .bestowal-evaluation .approved tr {
+	border: none !important;
+	background: transparent !important;
+}
+
+.bestowal-evaluation .justification textarea {
+	height: 100%;
+}
+
+@media print {
+	#messagesSystem, #growlSystem {
+		visible: none;
+	}
+	
+	.ui-layout-unit .ui-layout-unit-content {
+		overflow: visible;
+	}
+	
+	body.ui-layout-container, .ui-layout-north, .ui-layout-center, .ui-layout-south, .ui-layout-unit-content.ui-widget-content {
+		height: auto !important;
+		width: auto !important;
+		position: static !important;
+		top: auto !important;
+		bottom: auto !important;
+		left: auto !important;
+		right: auto !important;
+		border: none !important;
+	}
+	
+	.ui-menu, .ui-button, .ui-selectonemenu-trigger, .ui-panel-titlebar-icon {
+		display: none !important;
+	}
+	
+	.ui-spinner-input {
+		text-align: left;
+	}
+	
+	.ui-widget-content, 
+	.ui-panel-titlebar,
+	.ui-fieldset .ui-fieldset-legend,
+	.ui-widget-content th,
+	.ui-widget-content .ui-datatable-data td, 
+	.ui-widget-content .ui-datatable-data tr {
+/* 		background: #fff !important; */
+	background: none !important;
+	}
+	
+	.ui-widget-content .ui-datatable-data td, 
+	.ui-widget-content .ui-datatable-data tr {
+		border: 1px solid #ccc !important;
+	}
+	
+	.footer p,
+	.ui-layout-unit, 
+	.ui-panel-titlebar, 
+	.ui-fieldset .ui-fieldset-legend,
+	.ui-widget-content th {
+		border: none !important;
+		color: #000 !important;
+		font-weight: bold !important;
+		text-align: left !important;
+	}
+	
+	.ui-widget-content th {
+		border: 1px solid #ccc !important;
+/* 		background: #ddd !important; */
+		background: none !important;
+		font-weight: normal;
+	}
+	
+	.ui-layout-south,
+	.ui-inputfield, 
+	.ui-widget-content .ui-selectonemenu,
+	.ui-widget-content .ui-inputfield, 
+	.ui-widget-header .ui-inputfield, 
+	.ui-widget-content .ui-chkbox .ui-chkbox-box,
+ 	.ui-widget-content .ui-radiobutton .ui-radiobutton-box {
+		-webkit-box-shadow: none !important;
+		   -moz-box-shadow: none !important;
+				box-shadow: none !important;
+	}
+	.ui-panel-content .grid_1, 
+	.ui-panel-content .grid_2, 
+	.ui-panel-content .grid_3, 
+	.ui-panel-content .grid_4, 
+	.ui-panel-content .grid_5, 
+	.ui-panel-content .grid_6, 
+	.ui-panel-content .grid_7, 
+	.ui-panel-content .grid_8, 
+	.ui-panel-content .grid_9, 
+	.ui-panel-content .grid_10, 
+	.ui-panel-content .grid_11,
+	.ui-panel-content .grid_12,
+	.ui-panel-content .grid_13, 
+	.ui-panel-content .grid_14, 
+	.ui-panel-content .grid_15, 
+	.ui-panel-content .grid_16, 
+	.ui-panel-content .grid_17, 
+	.ui-panel-content .grid_18, 
+	.ui-panel-content .grid_19, 
+	.ui-panel-content .grid_20, 
+	.ui-panel-content .grid_21, 
+	.ui-panel-content .grid_22, 
+	.ui-panel-content .grid_23, 
+	.ui-panel-content .grid_24 {
+		
+	}
+	
+	.ui-outputlabel, 
+	.ui-selectoneradio label,
+	.ui-widget-content .ui-datatable-data td, 
+	.ui-widget-content .ui-datatable-data tr  {
+		font-weight: normal;
+	}
+	
+	body {
+		background: none !important;
+		padding: 0 !important;
+	}
+	
+	.ui-panel {
+		margin: 5px 0 0 !important;
+		page-break-inside: avoid;
+	}
+	
+	.user-box {
+		font-weight: normal;
+		-webkit-box-shadow: none;
+		   -moz-box-shadow: none;
+				box-shadow: none;
+	}
+	
+	.user-box .ui-selectonemenu, .user-box .ui-selectonemenu-label {
+		background: none;
+		border: none;
+		-webkit-box-shadow: none;
+		   -moz-box-shadow: none;
+				box-shadow: none;
+	}
+	
+	.ui-state-disabled, 
+	.ui-widget-content .ui-state-disabled, 
+	.ui-widget-header .ui-state-disabled {
+		opacity: 1;
+		filter: Alpha(Opacity=100);
+		background-image: none;
+/* 		background-color: #fff !important; */
+		background-color: none !important;
+		color: #000 !important;	
+	}
+	
+	.breadcrumb a {
+		color: #000 !important;
+	}
+
+}
+/*  Margem superior do botão de incluir nas telas de consulta */
+.includeButton {
+	margin-top: 14px;
+}
+
+.fieldMargin {
+/* 	margin-top: 14px; */
+	margin-bottom: 5px;
+}
+
+
+.ui-outputlabel .ui-outputlabel-rfi {
+    margin-left: 0.1em;
+}
+
+/* MAYCON -  Adição deste trecho para Remoção da cor de fundo e do texto da barra do componente tab*/
+.ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+/* background: #01499D url("#{resource['primefaces-simulanet:images/ui-bg_flat_35_01499D_40x100.png']}") 50% 50% repeat-x; */
+	margin: 0 auto;
+border: 1px solid #cccccc;
+border: none;
+color: #fffff;
+}
+/* MAYCON -  Adição deste trecho para diminuição da altura da barra do componente tab*/
+
+.ui-tabs .ui-tabs-nav li a {
+	float: none;
+}
+
+
+/*MAYCON - Adição de trecho para tornar a tabela com estilo zebrado*/
+.ui-datatable .ui-datatable-data .even-row td {
+	background-color: #F5F5F5;
+}
+
+.ui-datatable .ui-datatable-data .odd-row td {
+	background-color: #C0C0C0;
+}

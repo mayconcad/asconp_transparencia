@@ -1,0 +1,24 @@
+.ui-datatable .ui-datatable-even {
+	background: -moz-linear-gradient(top, #FDF9E1, #FFF0A5) repeat-X scroll
+		50% 50% #FDF9E1;
+}
+
+.buttonsGroup .ui-button {
+	margin: 20px 5px 20px 5px;
+	width: 140px;
+}
+
+.buttonsGroup {
+	text-align: center
+}
+
+.columnsOptions2 {
+	text-align: center;
+	width: 10%
+}
+
+.noBorder {
+    border-bottom-style: none;
+	border-top-style: none;
+	border-radius: 0px;
+}

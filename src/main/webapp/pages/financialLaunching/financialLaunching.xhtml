@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript name="jquery.maskMoney.js" library="javascript" />
+	<h:outputScript name="jquery.meiomask.js" library="javascript" />
+	<h:outputScript name="formatCurrency.js" library="javascript" />
+	<h:outputScript name="utils.js" library="javascript" />
+	<h:outputScript name="styleForSelectonemenu.js" library="javascript" />
+</h:head>
+
+<div class="selectedMenu">
+	<span class="headerTitle">Lançamento Financeiro</span>
+</div>
+
+<p:tabView id="launchTabView">
+
+	<p:ajax event="tabClose" process="@all" />
+	<p:ajax event="tabChange" process="@all" />
+	
+	<p:tab id="createTab" title="#{wd['tab.create']}">
+		<ui:include src="financialLaunchingCreate.xhtml" />
+	</p:tab>
+
+	<p:tab id="findTab" title="#{wd['tab.search']}">
+	</p:tab>
+
+	<p:tab id="editTab" title="#{wd['tab.change']}" rendered="false">
+	</p:tab>
+
+</p:tabView>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/" xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="criarForm" styleClass="container_24">
+		<p:messages />
+			<p:outputLabel value="Descrição" for="descricao" styleClass="grid_4" />
+			<p:inputText id="descricao" value="#{lancamentoController.lancamento.descricao}" styleClass="grid_17" maxlength="50" required="true" />
+			<div class="clear" />	
+			<p:outputLabel value="Data Vencimento" for="dataVencimento" styleClass="grid_4" />
+				<div class="grid_4">
+			<p:calendar id="dataVencimento"
+						value="#{lancamentoController.lancamento.dataVencimento}"
+						pattern="dd/MM/yyyy" locale="pt" 
+						navigator="true" effect="fadeIn" required="true"
+						showOn="button" />
+						</div>
+
+			<p:outputLabel value="Valor" for="valor" styleClass="grid_2" />
+			<p:inputText id="valor"
+							value="#{lancamentoController.lancamento.valor}"
+							onkeypress="mascara(this,currency);" required="true" styleClass="grid_4"/>
+				<p:outputLabel value="Tipo" for="tipo" styleClass="grid_2" />
+				<div class="grid_5">
+					<p:selectOneMenu id="tipo" value="#{lancamentoController.lancamento.tipo}">
+						<f:selectItems value="#{lancamentoController.getTipos()}" />
+					</p:selectOneMenu>
+				</div>
+			<div class="clear" />
+
+		<div class="buttonsGroup">
+			<p:commandButton id="createButton" value="Salvar" icon="ui-icon-disk" action="#{lancamentoController.criar}" process="@form" update="@form" onclick="javascript:window.location='#criarForm'" ajax="true"/>
+			<p:commandButton id="clearButton" value="Limpar" icon="ui-icon-arrowrefresh-1-w" action="#{lancamentoController.init}" update="@form" process="@this" >
+				<p:resetInput target="criarForm" />
+			</p:commandButton>
+			<p:blockUI block="criarForm" trigger="createButton">
+		                 #{wds['blockui.processing.txt']}<br />
+				<h:graphicImage library="images" name="ajax-loader.gif" />
+			</p:blockUI>
+		</div>
+	</h:form>
+</ui:composition>

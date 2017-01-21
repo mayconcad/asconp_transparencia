@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<!-- <h:graphicImage library="images" name="logo1.png" />
+	<h:graphicImage library="images" name="logo2.png" /> -->
+
+	<!-- <div style="color: white; position: fixed; top: 7%; left: 40%; text-align: center; font-weight: bold; font-size: xx-large; z-index: 3">#{request.contextPath.replace('/','')}</div> -->
+
+	<div class="container_24 header">
+		<div class="grid_18">
+			<h1 class="brand">
+				<a href="/">ABR telecom</a>
+			</h1>
+		</div>
+
+		<h:panelGroup rendered="#{loginController.currentUser != null}">
+			<!-- 			<div class="user-box-container grid_6"> -->
+			<h:form id="loginProviderInfoForm" styleClass="user-box-container grid_6">
+				<div class="user-box">
+					<div class="grid_7">Usuário:</div>
+					<div class="grid_17">#{loginController.currentUser.name}</div>
+					<div class="clear" />
+
+					<p:outputPanel styleClass="grid_7" style="line-height: 26px;" rendered="#{not empty loginController.currentUser.provider}">Empresa:</p:outputPanel>
+					<p:outputPanel styleClass="grid_17" rendered="#{not empty loginController.currentUser.provider}">
+						<p:selectOneMenu id="providerSelect" value="#{loginController.currentUser.provider}" label="#{lbl['provider']}" converter="autocompleteConverter" required="true" style="width: 100%">
+							<f:selectItems value="#{loginController.currentUser.providers}" var="var" itemLabel="#{var.fantazyName}" itemValue="#{var}" />
+							<p:ajax event="change" listener="#{loginController.changeProvider}" />
+						</p:selectOneMenu>
+					</p:outputPanel>
+					<div class="clear" />
+					<hr />
+					<span> <p:commandLink onclick="dialogAboutVar.show();" value="Sobre" />
+					</span>
+					<div style="float: right;">
+						<a href="help/index.htm" target="_blank">Ajuda</a>
+					</div>
+					<div class="clear" />
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</div>
+	<h:form>
+		<p:menubar model="#{menuController.model}" autoDisplay="false" rendered="#{loginController.currentUser != null}" />
+	</h:form>
+
+	<!-- Dialog -->
+	<p:dialog id="dialogAbout" widgetVar="dialogAboutVar" header="Sobre" width="400px" appendToBody="true" resizable="false">
+		<h:form styleClass="container_24">
+			<p:panel styleClass="clearfix">
+				<p:outputLabel value="Versão da Aplicação" for="version" styleClass="grid_8" />
+				<p:inputText id="version" value="5560C" styleClass="grid_16" disabled="true" />
+				<div class="clear" />
+
+				<p:outputLabel value="Email de Suporte" for="email" styleClass="grid_8" />
+				<p:inputText id="email" value="#{empty appController.email ? wds['system.email'] : appController.email}" styleClass="grid_16" disabled="true" />
+				<div class="clear" />
+
+				<p:outputLabel value="Telefone" for="phone" styleClass="grid_8" />
+				<p:inputText id="phone" value="#{empty appController.phone ? wds['system.phone'] : appController.phone}" styleClass="grid_16" disabled="true" />
+			</p:panel>
+		</h:form>
+		<span style="text-align: right; float: right;">ABR Telecom © 2013</span>
+	</p:dialog>
+	<p:dialog id="dialogHelp" widgetVar="dialogHelpVar" header="Ajuda" width="60%" height="400px" appendToBody="true">
+		<div class="div-left">
+			<p>Panel Left</p>
+		</div>
+		<div class="div-right">
+			<p>Panel Right</p>
+		</div>
+	</p:dialog>
+</ui:composition>

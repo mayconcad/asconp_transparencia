@@ -1,0 +1,8 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<div class="container_24">
+		<h:form id="leftForm" style="float:right;">
+			<p:panelMenu model="#{menuController.model}" autoDisplay="false" rendered="#{loginController.currentUser != null}" />
+		</h:form>
+	</div>
+</ui:composition>

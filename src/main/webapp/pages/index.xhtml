@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>#{wds['system.description']} #{inputConfigController.title}</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+</h:head>
+
+<h:body style="font-size: 12px">
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" closable="false" resizable="false" gutter="0" collapsible="true">
+			<ui:include src="/sections/header.xhtml" />
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="center" closable="false" resizable="false" id="centerLayout" rendered="true">
+			<a name="focus" />
+<!-- 			<p:messages rendered="#{appController.rendered}" id="messagesSystem" closable="true" autoUpdate="true" severity="error, fatal, warn" showDetail="true" showSummary="false" /> -->
+			<p:growl id="growlSystem" severity="info" autoUpdate="true" life="60000" />
+			<ui:include src="/sections/center.xhtml" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" resizable="false" closable="false" styleClass="footer" gutter="6">
+			<p><b>
+				ASCONP
+				<!-- (build: #{appController.buildNumber}) -->
+				<span>ASCONP&copy; 2017</span>
+			</b></p>
+		</p:layoutUnit>
+	</p:layout>
+
+	<h:outputScript name="layout.js" library="javascript" />
+	<h:outputScript name="pt_BR.js" library="javascript" />
+	<h:outputStylesheet name="grid.css" library="css" />
+	<h:outputStylesheet name="layout.css" library="css" />
+
+	<h:outputScript library="javascript" name="jquery.validateDateDM.js" />
+	<h:outputScript library="javascript" name="jquery.maskedinput.js" target="head" />
+
+</h:body>
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="searchForm" styleClass="container_24">
+		<p:messages id="messages"/>
+		<p:outputLabel value="Município" for="empresa"
+			styleClass="grid_2" />
+		<div class="grid_6">
+			<p:selectOneMenu id="empresa"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ParseForXmlController.empresaEnum}">
+				<f:selectItem itemLabel="Selecione" value="#{null}" />
+				<f:selectItems value="#{ParseForXmlController.empresas}" />
+				<p:ajax event="change" process="@this"/>
+<!-- 				<p:ajax event="change" process="@this" update=":DespesaTabView:searchForm:mes" listener="#{ParseForXmlController.selectEmpresa}"/> -->
+<!-- 				<f:ajax event="change" render="outputPanelData outputPanelTable"  -->
+<!-- 					listener="#{ParseForXmlController.selectEmpresa}" /> -->
+			</p:selectOneMenu>
+		</div>
+		<p:outputLabel value="Mês" for="mes"
+			styleClass="grid_1"/>
+		<div class="grid_5">
+			<p:selectOneMenu id="mes"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ParseForXmlController.mesEnum}">
+				<f:selectItems value="#{ParseForXmlController.meses}" />
+				<p:ajax event="change" process="@this" />
+			</p:selectOneMenu>
+		</div>
+		<hr />
+		<br />
+		<div class="clear"></div>
+		<br/>
+		<div style="text-align: center;">
+			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update="@form" action="#{ParseForXmlController.buscar}" />
+		</div>
+				<p:blockUI block="searchForm" trigger="searchBtn">
+            	#{wds['blockui.processing.txt']}<br />
+					<h:graphicImage library="images" name="ajax-loader.gif" />
+				</p:blockUI>
+				<br/><br/>
+				<fieldset>
+				<legende>Resultados da Consulta</legende>
+				<br/>
+		<p:dataTable id="searchResults" value="#{ParseForXmlController.layoutXmlList}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true" rowsPerPageTemplate="5,10,15" rows="5"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		<f:facet name="header">
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}"/>
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}" />
+            </h:commandLink>
+            </f:facet>
+            
+             <p:column>
+            <f:facet name="header">
+                <h:outputText value="Número Empenho" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.numeroEmpenho}" />
+        </p:column>
+          <p:column>
+            <f:facet name="header">
+                <h:outputText value="Descrição" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.historicoEmpenho}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Data" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.dataEmisEmpenho}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Unid.Gestora Emitente" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.codigoUnidOrcamentaria}-#{layoutXml.nomeUnidOrcamentaria}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="CNPJ/CPF" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.cpfCnpjCredor}" />
+        </p:column>
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Valor Empenho" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.valorEmpenho}" />
+        </p:column>
+        
+<!-- 		 <p:subTable var="gets" value="#{layoutXml.gestores}"> -->
+<!--             <f:facet name="header"> -->
+<!--                 <h:outputText value="CPF: #{layoutXml.cpfAgenPolitico} - CÓD.UNID.ORÇ. #{layoutXml.codigoUnidOrcamentaria}" /> -->
+<!--             </f:facet> -->
+<!--             <p:column headerText="Número"> -->
+<!--                 <h:outputText value="#{gets.numero}" /> -->
+<!--             </p:column> -->
+<!--             <p:column> -->
+<!--                 <h:outputText value="#{gets.ano}" /> -->
+<!--             </p:column> -->
+            
+<!--             </p:subTable> -->
+            </p:dataTable>
+            </fieldset>
+	</h:form>
+</ui:composition>

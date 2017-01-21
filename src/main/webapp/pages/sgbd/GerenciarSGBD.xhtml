@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="criarForm" styleClass="container_24">
+		<p:messages />
+		<p:outputLabel value="Bando de Dados" for="sgbdSelected"
+			styleClass="grid_3" />
+		<div class="grid_4">
+			<p:selectOneMenu id="sgbdSelected"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{SGBDController.sgbdSeleted}">
+				<f:selectItems value="#{SGBDController.getSdbds()}" />
+				<p:ajax event="change" process="@this" />
+
+			</p:selectOneMenu>
+		</div>
+
+
+		<div class="clear" />
+		<div class="grid_24" style="height: 100px">
+			<f:validateBean disabled="true">
+
+				<p:inputTextarea id="name" value="#{SGBDController.sql}"
+					styleClass="grid_24" required="true" />
+				<p:watermark for="name" value="Digite sua instrução SQL">
+				</p:watermark>
+				<!-- 				<br /> -->
+			</f:validateBean>
+
+
+		</div>
+		<hr />
+		<br />
+		<div class="clear"></div>
+		<p:dataTable id="searchResults" value="#{SGBDController.resultSQL}" var="item"			
+			rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx">
+			<p:column headerText="Resultado">
+				<p:outputLabel value="#{item.toString()}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</ui:composition>

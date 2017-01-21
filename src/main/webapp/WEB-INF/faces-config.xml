@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
+
+	<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+		
+		<message-bundle>ValidationMessages</message-bundle>
+		
+		<resource-bundle>
+			<base-name>br.com.asconp.asconp_transparencia.widgets</base-name>
+			<var>wds</var>
+		</resource-bundle>
+		
+		<resource-bundle>
+			<base-name>entities</base-name>
+			<var>lbl</var>		
+		</resource-bundle>
+</faces-config>

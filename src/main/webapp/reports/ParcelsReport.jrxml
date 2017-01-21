@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinancialLaunchingReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ed958fe-d5e8-456a-afc7-6b41b21084e6">
+	<property name="ireport.zoom" value="1.464100000000018"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebraEffect">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#DEDEDD"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="user" class="java.lang.String"/>
+	<parameter name="companyDescription" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<field name="descriptionLaunching" class="java.lang.String"/>
+	<field name="expirationDate" class="java.lang.String"/>
+	<field name="parcelValue" class="java.lang.String"/>
+	<field name="parcelType" class="java.lang.String"/>
+	<field name="parcelSituation" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ed3f1104-1559-4f4f-867f-f96a9650e1f0" mode="Opaque" x="111" y="1" width="444" height="77" backcolor="#D2CDCD"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Sintético de Lançamentos Financeiros]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="7fae6327-aae7-49ad-acdd-64b2e6545889" x="0" y="0" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="6bd4fd67-1048-49dc-aa61-29057e630813" x="0" y="78" width="555" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true" pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement uuid="f89ebdef-4429-42c2-8500-6141f2d81082" x="455" y="58" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a785590-fa25-488f-bb92-712e1ff73ec9" x="111" y="58" width="148" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usuário: "+$P{user}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="109fb4b7-ec06-48b4-b4de-12430696f45b" x="0" y="0" width="111" height="78"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6344811c-3c92-48ab-b816-25b57bbc482c" x="183" y="26" width="369" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="62f86339-7e7b-457f-bf7a-45d644ae2c6f" x="111" y="26" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d8cc03b0-5a3f-45ec-b8be-086b058d8403" x="355" y="58" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teresina,]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement uuid="24a7ef2b-abfa-4072-9126-aa5e8a186a4a" x="0" y="20" width="555" height="1">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#7E7979"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="846c84fb-667a-4368-ab22-dcacac7c86e1" mode="Opaque" x="153" y="1" width="210" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="0ea9f7b0-3323-45ce-b0fc-1f08c568c6a1" x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineColor="#7E7979"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="02589669-8fdb-4847-b760-ffedf25a0253" mode="Opaque" x="0" y="1" width="84" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="02589669-8fdb-4847-b760-ffedf25a0253" mode="Opaque" x="84" y="1" width="69" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a0e8008-54c1-4319-ae47-7b5b1654816e" mode="Opaque" x="500" y="1" width="55" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8dc975b1-4c6a-4fed-b9e2-4dba94e1bacf" mode="Opaque" x="411" y="1" width="89" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2dbf1b5a-d51c-47e7-b3bc-38d8cf9b8692" mode="Opaque" x="363" y="1" width="48" height="20" backcolor="#CDDCDD">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="3f15a856-2851-43c0-9987-62aa69414c3c" style="zebraEffect" positionType="Float" x="363" y="2" width="48" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parcelType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="70fcd268-048b-472a-ab7d-44a95c7c15c6" style="zebraEffect" positionType="Float" x="168" y="2" width="195" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descriptionLaunching}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b137a8c3-15c6-4fd3-a7ed-7f79c605d8fb" style="zebraEffect" positionType="Float" x="500" y="2" width="55" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parcelSituation}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6d661f38-45f3-4bde-871e-f2b6f8c2d86b" style="zebraEffect" positionType="Float" x="411" y="2" width="89" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parcelValue}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0175b684-9b71-401e-ae4f-be2331061e1a" style="zebraEffect" positionType="Float" x="84" y="2" width="84" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expirationDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0175b684-9b71-401e-ae4f-be2331061e1a" style="zebraEffect" positionType="Float" x="0" y="1" width="84" height="20">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.FALSE : Boolean.TRUE )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25">
+			<line>
+				<reportElement uuid="d4410067-8e7f-444b-ad65-06763039560a" x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="136f79ee-fa22-441a-8d93-233ffd334a8b" mode="Transparent" x="464" y="1" width="79" height="20" forecolor="#605D5C" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="html">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P&aacute;gina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="8fec63c8-1cf3-41f5-8699-060daf42fd79" mode="Transparent" x="543" y="1" width="12" height="20" forecolor="#605D5C" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="43391d43-e30b-43ad-9b5d-a37b68d5f54e" x="0" y="2" width="555" height="19" forecolor="#605D5C">
+					<printWhenExpression><![CDATA[( $P{REPORT_DATA_SOURCE} instanceof net.sf.jasperreports.engine.JREmptyDataSource ? Boolean.TRUE : Boolean.FALSE )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Não foi encontrado nenhum resultado para os filtros informados.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

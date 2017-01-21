@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="jpa-toplink">
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="toplink.ddl-generation" value="create-tables" />
+			<property name="toplink.jdbc.url" value="jdbc:postgresql://localhost/provaMaycon" />
+			<property name="toplink.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="toplink.jdbc.password" value="123456" />
+			<property name="toplink.jdbc.user" value="postgres" />
+			<!--LISTA no console o que está ocorrendo ao commitar-->
+			<property name="toplink.logging.level" value="OFF" />
+		</properties>
+	</persistence-unit>
+</persistence>

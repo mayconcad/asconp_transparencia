@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="criarForm" styleClass="container_24">
+		<p:messages id="messages"/>
+		
+		<fieldset>
+		<legend>Selecione os Itens</legend>
+		<p:outputLabel value="Município" for="empresa"
+			styleClass="grid_2" />
+		<div class="grid_6">
+			<p:selectOneMenu id="empresa"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{UploadArquivoController.empresaEnum}" required="true">
+					<f:selectItem itemLabel="Selecione" value="#{null}" />
+				<f:selectItems value="#{UploadArquivoController.getEmpresas()}" />
+				<p:ajax event="change" process="@this" />
+			</p:selectOneMenu>
+		</div>
+		<p:outputLabel value="Mês" for="mes"
+			styleClass="grid_1" />
+		<div class="grid_4">
+			<p:selectOneMenu id="mes"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{UploadArquivoController.mesEnum}" required="true">
+					<f:selectItem itemLabel="Selecione" value="#{null}" />
+				<f:selectItems value="#{UploadArquivoController.getMeses()}" />
+				<p:ajax event="change" process="@this" />
+			</p:selectOneMenu>
+		</div>
+		</fieldset>
+		<br />
+		<div class="clear"></div>
+<!-- 		<p:spacer height="30"/> -->
+		<br/>
+		<div >
+			<p:fileUpload id="arquivoUploadFile" multiple="true" label="Selecione os Arquivos" cancelLabel="Cancelar" uploadLabel="Importar Arquivos" fileUploadListener="#{UploadArquivoController.handleFileUpload}" process="empresa mes"></p:fileUpload>
+		</div>
+				<div class="clear" />				
+	</h:form>
+</ui:composition>

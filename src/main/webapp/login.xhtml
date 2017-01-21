@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<h:outputStylesheet name="grid.css" library="css" />
+	<h:outputStylesheet name="ext_960gs.css" library="css" />
+	<h:outputStylesheet name="styleForPage.css" library="css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ASCONP - Portal da Transparência</title>
+	<link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+
+	<!-- 	<script src='https://www.google.com/recaptcha/api.js'></script> -->
+</h:head>
+<style type="text/css">
+.ui-widget-header {
+	background-color: #5CCCFA;
+	color: white;
+	text-shadow: none;
+}
+
+.content_captcha {
+	/* 	width: 100%;  */
+	height: 45px;
+	/* 	background-color: #F8F8F8; */
+	background:
+		url('..#{request.contextPath}/resources/images/bg_captcha.png')
+		no-repeat;
+	margin: 0 auto;
+	line-height: 50px;
+	font-size: 30px;
+	font-family: sans-serif;
+	color: #CCC;
+	font-weight: bold;
+}
+
+.ui-dialog .ui-dialog-title {
+	text-align: center;
+	float: none;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding: 0em 0em 0em 0em;
+}
+
+#loginDialog {
+	/* margin-top: 15px; */
+	/* 	margin-bottom: 150px; */
+	
+}
+
+#messages {
+	font-size: 0.8em;
+}
+
+.teste {
+	/* background:#333; */
+	width: 450px;
+	margin: auto;
+	padding: 10px;
+	text-align: center;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 7px;
+	/*novo trecho*/
+	margin-left: 2px;
+	height: 500px
+}
+</style>
+
+<!-- 	style="background: url('..#{request.contextPath}/resources/images/fundo_azul.jpg') no-repeat center center !important; " -->
+<h:head>
+	<title>#{wds['system.description']}</title>
+</h:head>
+
+<h:body styleClass="login-page">
+	<h:form id="formLogin" styleClass="login-container">
+		<p:focus />
+		<!-- <div style="color:white;position:fixed;top:7%; left:40%;text-align: center; font-weight: bold; font-size: xx-large; z-index: 3">#{request.contextPath.replace('/','')}</div> -->
+		<div class="login">
+			<div class="login-top"></div>
+			<div class="clear" />
+			<div class="login-form">
+				<p class="">ASCONP &gt; Identificação do Usuário</p>
+
+				<p:outputLabel id="login_userName_label" value="Login" styleClass="login-label" />
+				<p:inputText id="login_userName_input" value="#{loginBean.userName}" tabindex="1" styleClass="input-form" required="true" requiredMessage="#{wds['login.userNameRequired']}" />
+				<p:commandButton id="login_loginButton_button" action="#{loginBean.login}" tabindex="3" value="Entrar" update="messages" styleClass="bt-small" />
+
+				<div class="clear" />
+				<p:outputLabel id="login_password_label" value="Senha" styleClass="login-label" />
+				<p:password id="login_password_input" value="#{loginBean.password}" tabindex="2" feedback="false" styleClass="input-form" required="true" requiredMessage="#{wds['login.passwordRequired']}" />
+				<div class="clean" />
+			</div>
+		</div>
+
+		<h:messages id="messages" layout="table" style="color:red;font-weight:bold;" />
+	</h:form>
+	<!-- 12*60*1000 -->
+	<p:idleMonitor timeout="720000" onidle="window.location.href = 'login.xhtml';" />
+
+	<h:outputStylesheet name="layout.css" library="css" />
+
+</h:body>
+<script type="text/javascript">
+	function loginFunction() {
+		if($("#errorLogin").length > 0){
+		if ($("#errorLogin").get(0).hidden)
+			$("#recuperaSenhaLink").css('display', 'none');
+		else
+			$("#recuperaSenhaLink").css('display', 'block');
+		}
+	}
+</script>
+</html>

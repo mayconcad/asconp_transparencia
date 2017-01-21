@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="categoryFindForm" prependId="false">
+
+	<p:growl id="growl" life="1500" />
+
+	<p:confirmDialog message="#{wd['parcel.remove.message']}"
+		hideEffect="explode" header="#{wd['dialog.alert.header']}" severity="alert"
+		widgetVar="confirmation" modal="true" appendToBody="true">
+		<p:commandButton id="btnSim" value="#{wd['dialog.optionYes']}"
+			oncomplete="confirmation.hide();" styleClass="r6"
+			action="#{categoryController.remove}" process="@this"
+			update="growl categoryTableFind" />
+		<p:commandButton id="btnNao" value="#{wd['dialog.optionNo']}"
+			onclick="confirmation.hide();" type="button" styleClass="r7"/>
+	</p:confirmDialog>
+
+	<p:panel header="#{wd['fieldset.filters']}" id="findPanel">
+		<p:outputLabel value="#{lb['category']} " for="categoryNameFind"
+			styleClass="w2" />
+		<p:inputText id="categoryNameFind" styleClass="w18"
+			value="#{categoryController.categoryName}" />
+
+		<p:commandButton value="#{wd['button.search']}" process="findPanel"
+			styleClass="w4 r8" action="#{categoryController.find}"
+			update="categoryTableFind">
+		</p:commandButton>
+	</p:panel>
+
+	<p:outputPanel id="categoriesFind">
+		<p:dataTable value="#{categoryController.categoriesFind}"
+			emptyMessage="#{wd['category.empty']}" var="category"
+			id="categoryTableFind" paginator="true" rows="5"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" >
+
+			<f:facet name="header" >  
+            	#{wd['fieldset.results']}
+       		</f:facet>
+
+			<p:column headerText="#{wd['table.columns.options']}"
+				style="width:15%; ; text-align: center;">
+				<p:commandButton icon="ui-icon-trash" onclick="confirmation.show()"
+					styleClass="icon"
+					title="#{wd['table.columns.options.delete.hint']}">
+					<f:setPropertyActionListener
+						target="#{categoryController.categoryRemove}" value="#{category}" />
+				</p:commandButton>
+				<p:commandButton icon="ui-icon-pencil" styleClass="icon"
+					action="#{categoryController.loadToEdit}" update=":categoryTabView"
+					process="@form" title="#{wd['table.columns.options.edit.hint']}">
+					<f:setPropertyActionListener
+						target="#{categoryController.categoryEdit}" value="#{category}" />
+				</p:commandButton>
+			</p:column>
+			
+			<p:column headerText="#{lb['category.plural']}">
+				<h:outputText value="#{category.name}" />
+			</p:column>
+			
+		</p:dataTable>
+	</p:outputPanel>
+
+</h:form>
+
+</html>

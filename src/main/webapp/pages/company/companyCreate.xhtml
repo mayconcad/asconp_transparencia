@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="companyCreateForm">
+
+	<p:growl id="growl" life="1500" />
+
+	<p:panel header="#{wd['fieldset.data']}" id="createPanel">
+
+		<p:outputLabel value="#{lb['company.cnpj']}" for="cnpj"
+			styleClass="w2" />
+		<p:inputText id="cnpj" required="true" widgetVar="cnpj" alt="cnpj"
+			value="#{companyController.company.cnpj}" styleClass="w8"
+			onfocus="setMaskInInput()" binding="#{companyController.cnpj}" />
+
+		<p:spacer styleClass="w10" />
+
+		<p:outputLabel value="#{lb['company.name']}" for="companyName"
+			styleClass="w2" />
+		<p:inputText id="companyName" required="true" widgetVar="companyName"
+			value="#{companyController.company.name}" styleClass="w8" />
+
+		<p:outputLabel value="#{lb['company.tradingName']}"
+			for="companyTradingName" styleClass="w3" style="width: 12%;" />
+		<p:inputText id="companyTradingName" required="true"
+			widgetVar="companyTradingName" style="width: 38%;"
+			value="#{companyController.company.tradingName}" styleClass="w7" />
+
+		<p:commandButton value="#{wd['button.add']}" process="createPanel"
+			action="#{companyController.addCompany}"
+			oncomplete="setFocus(companyName)" update="companyTable createPanel"
+			styleClass="r8 w4">
+			<p:collector value="#{companyController.company}"
+				addTo="#{companyController.companies}" />
+		</p:commandButton>
+
+	</p:panel>
+
+	<p:dataTable value="#{companyController.companies}" var="company"
+		id="companyTable" paginator="true" rows="5"
+		emptyMessage="#{wd['company.empty']}"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15">
+
+		<f:facet name="header">  
+            	#{wd['company.list']}
+       	</f:facet>
+
+
+		<p:column headerText="#{wd['table.columns.options']}"
+			style="width:50px; text-align: center;">
+			<p:commandButton id="createRemoveButton" icon="ui-icon-trash"
+				process="@this" update="@form" styleClass="icon"
+				title="#{wd['table.columns.options.delete.hint']}">
+				<p:collector value="#{company}"
+					removeFrom="#{companyController.companies}" />
+			</p:commandButton>
+			<p:commandButton id="createEditButton" icon="ui-icon-pencil"
+				process="@this" update="@form" styleClass="icon"
+				title="#{wd['table.columns.options.edit.hint']}">
+				<f:setPropertyActionListener target="#{companyController.company}"
+					value="#{company}" />
+				<p:collector value="#{company}"
+					removeFrom="#{companyController.companies}" />
+			</p:commandButton>
+		</p:column>
+
+		<p:column headerText="#{lb['company.cnpj']}"
+			style="width: 150px; text-align: center;">
+			<h:outputText value="#{company.cnpj}" />
+		</p:column>
+
+		<p:column headerText="#{lb['company.name']}">
+			<h:outputText value="#{company.name}" />
+		</p:column>
+
+		<p:column headerText="#{lb['company.tradingName']}">
+			<h:outputText value="#{company.tradingName}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:commandButton value="#{wd['button.create']}"
+		update="growl companyTable" process="@this"
+		actionListener="#{companyController.saveAll}" styleClass="w4 r8" />
+
+</h:form>
+</html>

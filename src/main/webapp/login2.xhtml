@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Bem vindo ao Sistema de Caixa Financeiro!</title>
+        <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
+    </h:head>
+    <h:body>
+        <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+            <h:outputText value="Usuário ou senha incorretos!" rendered="#{loginController.error}" style="color: darkred"/>
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel id="username_label" for="username_input" value="Usuário: *" /> 
+                    <h:inputText id="username_input" required="true" value="#{loginController.username}"/>
+                    <h:outputLabel id="password_label" for="password_input" value="Senha: * " />
+                    <h:inputSecret id="password_input" required="true" value="#{loginController.password}"/>
+                    <h:commandButton value="Login" action="#{loginController.login}"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
