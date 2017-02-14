@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jdt.internal.core.ModelUpdater;
+
+//import org.eclipse.jdt.internal.core.ModelUpdater;
 
 import br.com.asconp.asconp_transparencia.controllers.UtilsModel;
 
