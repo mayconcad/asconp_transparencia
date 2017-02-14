@@ -1,41 +1,25 @@
 package br.com.asconp.asconp_transparencia.controllers;
 
 import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.ServletContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.omnifaces.util.Ajax;
 import org.primefaces.event.TabChangeEvent;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import br.com.asconp.asconp_transparencia.entities.DespesaReceita;
-import br.com.asconp.asconp_transparencia.entities.GestorXml;
 import br.com.asconp.asconp_transparencia.entities.LayoutXml;
 import br.com.asconp.asconp_transparencia.entities.ReceitaCapital;
 import br.com.asconp.asconp_transparencia.entities.ReceitaCorrente;

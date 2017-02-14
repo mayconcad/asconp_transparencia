@@ -12,11 +12,17 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<repository>
-		<id>fdvsolution.public</id>
-		<url>http://archiva.fdvs.com.ar/repository/public1/</url>
-	</repository>
+<!-- 	<repository> -->
+<!-- 		<id>fdvsolution.public</id> -->
+<!-- 		<url>http://archiva.fdvs.com.ar/repository/public1/</url> -->
+<!-- 	</repository> -->
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/com.github.jsimone/webapp-runner -->
+	<dependency>
+	    <groupId>com.github.jsimone</groupId>
+	    <artifactId>webapp-runner</artifactId>
+	    <version>7.0.34.1</version>
+	</dependency>
 	<dependency>
 			<groupId>ar.com.fdvs</groupId>
 			<artifactId>DynamicJasper</artifactId>
