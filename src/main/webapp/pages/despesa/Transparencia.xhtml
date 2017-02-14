@@ -11,6 +11,17 @@
 
 	<h:form id="searchForm" styleClass="container_24">
 		<p:messages id="messages"/>
+		<p:outputLabel value="Exercício" for="exercicioSelectOM"
+			styleClass="grid_1"/>
+		<div class="grid_5">
+			<p:selectOneMenu id="exercicioSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ParseForXmlController.exercicio}">
+				<f:selectItems value="#{ParseForXmlController.exercicios}" />
+<!-- 				<p:ajax event="change" process="@this" /> -->
+			</p:selectOneMenu>
+		</div>
+		
 		<p:outputLabel value="Município" for="empresa"
 			styleClass="grid_2" />
 		<div class="grid_6">
@@ -19,20 +30,20 @@
 				value="#{ParseForXmlController.empresaEnum}">
 				<f:selectItem itemLabel="Selecione" value="#{null}" />
 				<f:selectItems value="#{ParseForXmlController.empresas}" />
-				<p:ajax event="change" process="@this"/>
+				<p:ajax event="change" process="@this :DespesaTabView:searchForm:mesSelectOM"/>
 <!-- 				<p:ajax event="change" process="@this" update=":DespesaTabView:searchForm:mes" listener="#{ParseForXmlController.selectEmpresa}"/> -->
 <!-- 				<f:ajax event="change" render="outputPanelData outputPanelTable"  -->
 <!-- 					listener="#{ParseForXmlController.selectEmpresa}" /> -->
 			</p:selectOneMenu>
 		</div>
-		<p:outputLabel value="Mês" for="mes"
+		<p:outputLabel value="Mês" for="mesSelectOM"
 			styleClass="grid_1"/>
 		<div class="grid_5">
-			<p:selectOneMenu id="mes"
+			<p:selectOneMenu id="mesSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ParseForXmlController.mesEnum}">
 				<f:selectItems value="#{ParseForXmlController.meses}" />
-				<p:ajax event="change" process="@this" />
+<!-- 				<p:ajax event="change" process="@this" /> -->
 			</p:selectOneMenu>
 		</div>
 		<hr />
@@ -40,7 +51,7 @@
 		<div class="clear"></div>
 		<br/>
 		<div style="text-align: center;">
-			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update="@form" action="#{ParseForXmlController.buscar}" />
+			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update=":DespesaTabView:searchForm:searchResult" action="#{ParseForXmlController.buscar}" />
 		</div>
 				<p:blockUI block="searchForm" trigger="searchBtn">
             	#{wds['blockui.processing.txt']}<br />
@@ -50,59 +61,73 @@
 				<fieldset>
 				<legende>Resultados da Consulta</legende>
 				<br/>
-		<p:dataTable id="searchResults" value="#{ParseForXmlController.layoutXmlList}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
-			rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true" rowsPerPageTemplate="5,10,15" rows="5"
+		<p:dataTable id="searchResult" value="#{ParseForXmlController.layoutXmlList}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true" rowsPerPageTemplate="5,10,15" rows="5" resizableColumns="true" scrollable="true" draggableColumns="true"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 		<f:facet name="header">
             <h:commandLink>
                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
-                <p:dataExporter type="xls" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}" />
+                <p:dataExporter type="xls" target="searchResult" fileName="#{ParseForXmlController.fileNameExporter}" />
             </h:commandLink>
  
             <h:commandLink>
                 <p:graphicImage value="/resources/images/pdf.png" width="24"/>
-                <p:dataExporter type="pdf" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}"/>
+                <p:dataExporter type="pdf" target="searchResult" fileName="#{ParseForXmlController.fileNameExporter}"/>
             </h:commandLink>
  
             <h:commandLink>
                 <p:graphicImage value="/resources/images/csv.png" width="24"/>
-                <p:dataExporter type="csv" target="searchResults" fileName="#{ParseForXmlController.fileNameExporter}" />
+                <p:dataExporter type="csv" target="searchResult" fileName="#{ParseForXmlController.fileNameExporter}" />
             </h:commandLink>
             </f:facet>
-            
-             <p:column>
+            <p:graphicImage value="/resources/images/excel.png" width="24"/>
+            <br></br>
+            testessss
+             <p:column style="font-size:10px;">
             <f:facet name="header">
-                <h:outputText value="Número Empenho" />
+                <h:outputText value="Nº Empenho" />
             </f:facet>
             <h:outputText value="#{layoutXml.numeroEmpenho}" />
         </p:column>
-          <p:column>
+          <p:column style="font-size:10px; white-space:normal !important;" width="200">
             <f:facet name="header">
-                <h:outputText value="Descrição" />
+                <h:outputText value="Descricao" />
             </f:facet>
-            <h:outputText value="#{layoutXml.historicoEmpenho}" />
+            <h:outputText value="#{layoutXml.historicoEmpenho}"/>
         </p:column>
-        <p:column>
+        <p:column style="font-size:10px;">
             <f:facet name="header">
                 <h:outputText value="Data" />
             </f:facet>
             <h:outputText value="#{layoutXml.dataEmisEmpenho}" />
         </p:column>
-        <p:column>
+        <p:column style="font-size:10px; white-space:normal !important;" width="200">
             <f:facet name="header">
                 <h:outputText value="Unid.Gestora Emitente" />
             </f:facet>
             <h:outputText value="#{layoutXml.codigoUnidOrcamentaria}-#{layoutXml.nomeUnidOrcamentaria}" />
         </p:column>
-        <p:column>
+        <p:column style="font-size:10px; white-space:normal !important;" width="200">
             <f:facet name="header">
                 <h:outputText value="CNPJ/CPF" />
             </f:facet>
             <h:outputText value="#{layoutXml.cpfCnpjCredor}" />
         </p:column>
-         <p:column>
+         <p:column style="font-size:10px;">
             <f:facet name="header">
                 <h:outputText value="Valor Empenho" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.valorEmpenho}" />
+        </p:column>
+        <p:column style="font-size:10px;">
+            <f:facet name="header">
+                <h:outputText value="Valor Liquidado" />
+            </f:facet>
+            <h:outputText value="#{layoutXml.valorEmpenho}" />
+        </p:column>
+        <p:column style="font-size:10px;">
+            <f:facet name="header">
+                <h:outputText value="Valor Pago" />
             </f:facet>
             <h:outputText value="#{layoutXml.valorEmpenho}" />
         </p:column>

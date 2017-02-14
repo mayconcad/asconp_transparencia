@@ -122,6 +122,24 @@ public class UtilsModel {
 		}
 		return result;
 	}
+	public static boolean hasValueAll( Object... objects ) {
+		boolean result = true;
+		for ( Object object : objects ) {
+			result &= hasValue( object );
+		}
+		return result;
+	}
+
+	@SuppressWarnings( "rawtypes" )
+	public static boolean hasValue( Object object ) {
+		boolean result = true;
+		if ( object instanceof Collection ) {
+			if ( ( (Collection) object ).isEmpty() )
+				result = false;
+		} else if ( object == null || object.equals( "" ) )
+			result = false;
+		return result;
+	}
 
 	public static String gerarCaptcha(int tamanho) {
 		java.util.Random r = new java.util.Random();

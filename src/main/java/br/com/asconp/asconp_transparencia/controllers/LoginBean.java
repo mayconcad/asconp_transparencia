@@ -1,13 +1,12 @@
 package br.com.asconp.asconp_transparencia.controllers;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -15,8 +14,8 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.event.TabChangeEvent;
 
 @ManagedBean
-@RequestScoped
-// @SessionScoped
+//@RequestScoped
+@SessionScoped
 public class LoginBean extends BaseController {
 
 	private static final long serialVersionUID = 4661688222410469654L;
@@ -40,6 +39,7 @@ public class LoginBean extends BaseController {
 
 	//@ManagedProperty(value = "#{liquidacaoServiceJob}")
 	//LiquidacaoService liquidacaoServiceJob;
+	
 
 	 public String getLogin() {
 		return login;
@@ -76,30 +76,34 @@ public class LoginBean extends BaseController {
 		ExternalContext externalContext = context.getExternalContext();
 
 		String url = externalContext.getRequestContextPath();
-
+		
+		if(getUserName() != null && getUserName().equals("asconp") && getPassword() != null && getPassword().equals("asconp2017")){
+			try {
+//				if (url != null
+//						&& url.equals(File.separator.concat("pages")
+//								.concat(File.separator).concat("index.xhtml")))
+//					url = "/asconp_transparencia";
+				context.getExternalContext().redirect("/asconp_transparencia/pages/upload/Upload.xhtml");
+				System.out.println(url);
+				// context.getExternalContext().redirect(url +
+				// "/pages/index.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_ERROR, "Login ou senha inválidos", "Login ou senha inválidos"));
 		//if (!success) {
 			//this.error = true;
 
-			//FacesMessage facesMessage = new FacesMessage(
-			//		FacesMessage.SEVERITY_ERROR, "", "Login ou senha inválidos");
-			//FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			
 			
 			//return;
 			// return "falhaLogin";
 		//}
 
-		try {
-//			if (url != null
-//					&& url.equals(File.separator.concat("pages")
-//							.concat(File.separator).concat("index.xhtml")))
-//				url = "/asconp_transparencia";
-			context.getExternalContext().redirect("/asconp_transparencia/pages/upload/Upload.xhtml");
-			System.out.println(url);
-			// context.getExternalContext().redirect(url +
-			// "/pages/index.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		
 
 		return;

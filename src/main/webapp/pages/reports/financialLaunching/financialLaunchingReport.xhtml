@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet name="styleForPage.css" library="css" />
+</h:head>
+<h:form id="financialLaunchingReportForm" prependId="false"
+	target="_blank">
+	<p:growl id="growl" />
+
+		<p:inputText id="emptyReportField"
+			value="#{financialLaunchingReportController.emptyReport}"
+			type="hidden" />
+	<f:validateBean disabled="true">
+
+		<p:panel id="reportPanel" header="Filtros">
+
+			<ui:remove>
+				<p:outputLabel value="Empresa" for="companyInput" styleClass="w2" />
+				<p:inputText id="companyInput" style="width: 89.8%" required="true"
+					styleClass="w18" />
+			</ui:remove>
+
+			<p:outputLabel value="Valor Inicial" for="valueInitialInput"
+				styleClass="w2" />
+			<p:inputText id="valueInitialInput"
+				value="#{financialLaunchingReportController.initialValue}"
+				widgetVar="valueInitialInput" styleClass="w3 currency" />
+			<p:outputLabel value="Valor Final" for="valueFinalInput"
+				styleClass="w2" />
+			<p:inputText id="valueFinalInput"
+				value="#{financialLaunchingReportController.finalValue}"
+				widgetVar="valueFinalInput" styleClass="w3 currency" />
+
+			<p:outputLabel value="Data Inicial"
+				for="calendarInitialLaunchingDate" styleClass="w2" />
+			<p:calendar
+				value="#{financialLaunchingReportController.initialLaunchingDate}"
+				id="calendarInitialLaunchingDate" styleClass="w3" />
+			<p:outputLabel value="Data Final" for="calendarFinalLaunchingDate"
+				styleClass="w2" />
+			<p:calendar
+				value="#{financialLaunchingReportController.finalLaunchingDate}"
+				id="calendarFinalLaunchingDate" styleClass="w3" />
+			<p:outputLabel value="Tipo Relatório" for="reportTypeInput"
+				styleClass="w2" />
+			<p:selectOneRadio id="reportTypeInput" styleClass="w8"
+				value="#{financialLaunchingReportController.reportType}">
+				<f:selectItem itemLabel="PDF" itemValue="PDF" />
+				<f:selectItem itemLabel="HTML" itemValue="HTML" />
+				<f:selectItem itemLabel="XLS" itemValue="XLS" />
+				<f:selectItem itemLabel="CVS" itemValue="CVS" />
+				<f:selectItem itemLabel="TXT" itemValue="TXT" />
+				<f:selectItem itemLabel="RTF" itemValue="RTF" />
+			</p:selectOneRadio>
+
+			<p:outputLabel value="Relatório" for="detailedCheckBox"
+				styleClass="w2" />
+			<p:selectOneRadio id="detailedCheckBox" styleClass="w8"
+				value="#{financialLaunchingReportController.detailed}">
+				<f:selectItem itemLabel="Analítico" itemValue="true" />
+				<f:selectItem itemLabel="Sintético" itemValue="false" />
+			</p:selectOneRadio>
+		</p:panel>
+	</f:validateBean>
+	<p:commandButton value="Gerar Relatório"
+		action="#{financialLaunchingReportController.generateReportByTemplate}"
+		styleClass="w3 r8" update="reportPanel growl" ajax="false" />
+
+</h:form>
+</html>

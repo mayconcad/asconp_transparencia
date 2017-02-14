@@ -32,14 +32,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
+import br.com.asconp.asconp_transparencia.entities.DespesaReceita;
 import br.com.asconp.asconp_transparencia.entities.GestorXml;
 import br.com.asconp.asconp_transparencia.entities.LayoutXml;
+import br.com.asconp.asconp_transparencia.entities.ReceitaCapital;
+import br.com.asconp.asconp_transparencia.entities.ReceitaCorrente;
+import br.com.asconp.asconp_transparencia.entities.ReceitaTable;
+import br.com.asconp.asconp_transparencia.entities.ResumoReceita;
 import br.com.asconp.asconp_transparencia.enums.EmpresaEnum;
 import br.com.asconp.asconp_transparencia.enums.MesEnum;
 
-@ManagedBean(name = "ParseForXmlController")
+@ManagedBean(name = "ParseReceitaForXmlController")
 @ViewScoped
-public class ParseForXmlController extends BaseController {
+public class ParseReceitaForXmlController extends BaseController {
 
 	private EmpresaEnum empresaEnum;
 
@@ -57,140 +64,72 @@ public class ParseForXmlController extends BaseController {
 
 	public List<LayoutXml> layoutXmlList;
 
+	private List<ReceitaTable> receitas;
+	
+	
+	public List<ReceitaTable> getReceitas() {
+		return receitas;
+	}
+
+	public void setReceitas(List<ReceitaTable> receitas) {
+		this.receitas = receitas;
+	}
+
 	public void buscar() {
-
-		Calendar cal=Calendar.getInstance();
-		cal.setTime(new Date());
-		cal.set(Calendar.YEAR, Integer.parseInt(exercicio));
-		layoutXmlList = new ArrayList<LayoutXml>();
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder();
-
-			// String property = System.getProperty("user.home");
-			// String dir =
-			// System.getProperty("wtp.deploy")+"/asconp_transparencia";
-			ServletContext servletContext = (ServletContext) FacesContext
-					.getCurrentInstance().getExternalContext().getContext();
-			String caminho = servletContext.getRealPath(File.separator);
-
-			StringBuilder filePath = new StringBuilder();
-			filePath.append(caminho).append(cal.get(Calendar.YEAR))
-			.append(File.separator).append(empresaEnum.getCodigo())
-					.append(File.separator);
-
-			filePath.append(String.format("%02d", mesEnum.ordinal() + 1))
-					.append(File.separator);
-
-			Document document = builder.parse(filePath.toString()
-					+ "/EmpenhoseRP.xml");
-
-			/*
-			 * NodeList nodeList = document.getElementsByTagName(
-			 * "aux:ConciliacaoBancaria" );
-			 * 
-			 * for ( int i = 0; i < nodeList.getLength(); i++ ) { Element
-			 * element = (Element) nodeList.item( i ); LayoutXml layoutXml = new
-			 * LayoutXml();
-			 * 
-			 * layoutXml.setCodigoBanco( element.getElementsByTagName(
-			 * "aux:codigoBanco" ).item( 0 ).getTextContent() );
-			 * layoutXml.setCodigoAgencia( element.getElementsByTagName(
-			 * "aux:codigoAgencia" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * //NodeList childNodes = element.getChildNodes();
-			 * 
-			 * layoutXmlList.add( layoutXml ); }
-			 */
-
-			NodeList nodeList = document.getElementsByTagName("emp:Empenho");
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Element element = (Element) nodeList.item(i);
-				LayoutXml layoutXml = new LayoutXml();
-
-				layoutXml.setNumeroEmpenho(element
-						.getElementsByTagName("emp:numeroEmpenho").item(0)
-						.getTextContent());
-				layoutXml.setHistoricoEmpenho(element
-						.getElementsByTagName("emp:historicoEmpenho")
-						.item(0).getTextContent());
-				
-				try {
-					Date date = sdf.parse(element
-							.getElementsByTagName("emp:dataEmisEmpenho")
-							.item(0).getTextContent());					 
-					layoutXml.setDataEmisEmpenho(sdf2.format(date));
-					
-				} catch (DOMException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				layoutXml.setCodigoUnidOrcamentaria(element
-						.getElementsByTagName("emp:codigoUnidOrcamentaria")
-						.item(0).getTextContent());
-				layoutXml.setNomeUnidOrcamentaria(getNomeUnidadeGestora(document));
-				
-				String cpfCnpjCredor=element
-						.getElementsByTagName("emp:cpfCnpjCredor")
-						.item(0).getTextContent();
-				layoutXml.setCpfCnpjCredor(getNomeCredor(builder.parse(filePath.toString()
-						+ "/CadastrosAuxiliares.xml"),cpfCnpjCredor));
-				
-				
-				layoutXml.setValorEmpenho(UtilsModel.convertBigDecimalToString(new BigDecimal(element
-						.getElementsByTagName("emp:valorEmpenho")
-						.item(0).getTextContent())));
-				
-//				NodeList childNodes = document
-//						.getElementsByTagName("aux:numeroAtoQueNomeGestor");
-//
-//				List<GestorXml> gestores = new ArrayList<GestorXml>();
-//
-//				for (int i2 = 0; i2 < childNodes.getLength(); i2++) {
-//					Element element2 = (Element) childNodes.item(i2);
-//					GestorXml gestor = new GestorXml();
-//
-//					gestor.setNumero(element2
-//							.getElementsByTagName("gen:numero").item(0)
-//							.getTextContent());
-//					gestor.setAno(element2.getElementsByTagName("gen:ano")
-//							.item(0).getTextContent());
-//
-//					gestores.add(gestor);
-//				}
-//
-//				layoutXml.setGestores(gestores);
-				if(layoutXml.getCpfCnpjCredor() != null && !layoutXml.getCpfCnpjCredor().isEmpty() )
-				layoutXmlList.add(layoutXml);
-
-				setFileNameExporter("Despesa_empresa_ano_mes");
-			}
-
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		receitas=new ArrayList<ReceitaTable>();
+		ReceitaTable receita=new ReceitaTable();
+		List<ResumoReceita> resumos=new ArrayList<ResumoReceita>();
+		ResumoReceita resumoReceita=new ResumoReceita();
+		resumoReceita.setTipo("Novo Tipo");
+		resumoReceita.setPercentualRealizado("20%");
+		
+		resumoReceita.setValorArrecadado("12000,00");
+		resumoReceita.setValorOrcado("12000,00");
+		
+		resumos.add(resumoReceita);
+		
+		List<ReceitaCapital> receitasCap=new ArrayList<ReceitaCapital>();
+		ReceitaCapital ReceitaCapital=new ReceitaCapital();
+		ReceitaCapital.setDescricao("Novo Tipo 1");
+		ReceitaCapital.setPercentualRealizado("20%");
+		
+		ReceitaCapital.setValorArrecadado("12000,00");
+		ReceitaCapital.setValorOrcado("12000,00");
+		
+		receitasCap.add(ReceitaCapital);
+		
+		List<ReceitaCorrente> receitasCor=new ArrayList<ReceitaCorrente>();
+		ReceitaCorrente ReceitaCorrente=new ReceitaCorrente();
+		ReceitaCorrente.setDescricao("Novo Tipo 11");
+		ReceitaCorrente.setPercentualRealizado("20%");
+		
+		ReceitaCorrente.setValorArrecadado("12000,00");
+		ReceitaCorrente.setValorOrcado("12000,00");
+		
+		receitasCor.add(ReceitaCorrente);
+		
+		List<DespesaReceita> receitasRec=new ArrayList<DespesaReceita>();
+		DespesaReceita DespesaReceita=new DespesaReceita();
+		DespesaReceita.setDescricao("Novo Tipo 111");
+		DespesaReceita.setPercentualRealizado("20%");
+		
+		DespesaReceita.setValorArrecadado("12000,00");
+		DespesaReceita.setValorOrcado("12000,00");
+		
+		receitasRec.add(DespesaReceita);
+		
+		
+		receita.setResumos(resumos);
+		receita.setDespesasReceita(receitasRec);
+		receita.setReceitasCapital(receitasCap);
+		receita.setReceitasCorrentes(receitasCor);
+		
+		
+		receitas.add(receita);
+		
+		
+		
 	}
 
 	private String getNomeCredor(Document document, String cpfCnpjCredor) {

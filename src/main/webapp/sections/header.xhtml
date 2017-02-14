@@ -17,16 +17,20 @@
 			<h:form id="loginProviderInfoForm" style="float:right;" styleClass="grid_6">
 			<br/>
 				<div >
-					<div class="grid_6">Usuário:</div>
-					<div class="grid_8">Admin</div>
-					<div class="clear" />
-
-<!-- 					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Perfil:</p:outputPanel> -->
-<!-- 					<p:outputPanel styleClass="grid_12"> -->
-<!-- 						<h:outputText value="#{loginController.currentUser.profile}" style="line-height: 26px;" /> -->
-<!-- 					</p:outputPanel> -->
+<!-- 					<div class="grid_6">Usuário:</div> -->
+<!-- 					<div class="grid_8">Admin</div> -->
 <!-- 					<div class="clear" /> -->
-<!-- 					<hr /> -->
+
+					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Usuário:</p:outputPanel>
+					<p:outputPanel styleClass="grid_12">
+						<h:outputText value="#{UploadArquivoController.login}" style="line-height: 26px;" />
+					</p:outputPanel>
+					<div class="clear" />
+					<hr />
+					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Perfil:</p:outputPanel>
+					<p:outputPanel styleClass="grid_12">
+						<h:outputText value="Administrador" style="line-height: 26px;" />
+					</p:outputPanel>
 <!-- 					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Escola:</p:outputPanel> -->
 <!-- 					<p:outputPanel styleClass="grid_12"> -->
 <!-- 						<h:outputText value="#{loginController.currentUser.person eq null ? 'Todas' : loginController.currentUser.person.school.name }" style="line-height: 26px;" /> -->

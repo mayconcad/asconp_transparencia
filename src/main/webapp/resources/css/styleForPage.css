@@ -856,7 +856,7 @@ h1.brand a {
 	font-family: Arial;
 	font-size: 18pt;
 	letter-spacing: 0pt;
-	background: transparent url(#{resource['images/login-top-bg_atual.png']}) top left no-repeat scroll;
+	background: transparent url(#{resource['images/ASCONP.png']}) top left no-repeat scroll;
 }
 
 /* USER-BOX	::::::::::::::::::::: */
