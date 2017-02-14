@@ -53,5 +53,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/maycon/.m2/repository/ar/com/fdvs/DynamicJasper/4.0.1/DynamicJasper-4.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

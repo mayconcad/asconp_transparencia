@@ -23,11 +23,11 @@
 	    <artifactId>webapp-runner</artifactId>
 	    <version>7.0.34.1</version>
 	</dependency>
-	<dependency>
-			<groupId>ar.com.fdvs</groupId>
-			<artifactId>DynamicJasper</artifactId>
-			<version>4.0.1</version>
-		</dependency>
+<!-- 	<dependency> -->
+<!-- 			<groupId>ar.com.fdvs</groupId> -->
+<!-- 			<artifactId>DynamicJasper</artifactId> -->
+<!-- 			<version>4.0.1</version> -->
+<!-- 		</dependency> -->
 	<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -79,11 +79,11 @@
 		</dependency>
 
 		<!-- Driver JDBC do MySQL -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.20</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>mysql</groupId> -->
+<!-- 			<artifactId>mysql-connector-java</artifactId> -->
+<!-- 			<version>5.1.20</version> -->
+<!-- 		</dependency> -->
 
 		<!-- Bibliotecas do JSF -->
 		<dependency>
@@ -97,12 +97,12 @@
 			<version>2.1.9</version>
 		</dependency>
 		<!-- Bibliotecas primafaces -->
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.primefaces</groupId> -->
+<!-- 			<artifactId>primefaces</artifactId> -->
 <!-- 			<version>5.2</version> -->
-			<version>3.5</version>
-		</dependency>
+<!-- 			<version>3.5</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>primefaces-extensions</artifactId>
@@ -135,11 +135,11 @@
 			<artifactId>connector-api</artifactId>
 			<version>1.5</version>
 		</dependency>
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901.jdbc4</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>postgresql</groupId> -->
+<!-- 			<artifactId>postgresql</artifactId> -->
+<!-- 			<version>9.1-901.jdbc4</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
