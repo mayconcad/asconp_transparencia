@@ -11,42 +11,49 @@
 
 	<h:form id="searchForm" styleClass="container_24">
 		<p:messages id="messages"/>
+		<div style="float: left; text-align: top !important;">
+						<a href="#{ParseReceitaForXmlController.linkVoltar}"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
+					</div>
+					<br/>
+					<br/>
+		<fieldset>
+		<legend>Filtros</legend>
+		<div style="float: left;">
+		<p:outputLabel value="Município/Câmara" for="empresa"
+		styleClass="grid_3" />
+		</div>
+		<div style="float: left;" class="grid_4">
+		<p:outputLabel value="#{ParseReceitaForXmlController.getNomeEmpresa()}" id="empresa"
+		/>
+		</div>
+		<div style="float: left;">
 		<p:outputLabel value="Exercício" for="exercicioSelectOM"
-			styleClass="grid_1"/>
-		<div class="grid_5">
+			styleClass="grid_2"/>
+		</div>
+		
+		<div class="grid_5" style="float: left;">
 			<p:selectOneMenu id="exercicioSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ParseReceitaForXmlController.exercicio}">
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
 				<f:selectItems value="#{ParseReceitaForXmlController.exercicios}" />
-<!-- 				<p:ajax event="change" process="@this" /> -->
+				<p:ajax event="change" process="@this" update="@form" />
 			</p:selectOneMenu>
 		</div>
-		
-		<p:outputLabel value="Município" for="empresa"
-			styleClass="grid_2" />
-		<div class="grid_6">
-			<p:selectOneMenu id="empresa"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{ParseReceitaForXmlController.empresaEnum}">
-				<f:selectItem itemLabel="Selecione" value="#{null}" />
-				<f:selectItems value="#{ParseReceitaForXmlController.empresas}" />
-				<p:ajax event="change" process="@this :ReceitaTabView:searchForm:mesSelectOM"/>
-<!-- 				<p:ajax event="change" process="@this" update=":ReceitaTabView:searchForm:mes" listener="#{ParseReceitaForXmlController.selectEmpresa}"/> -->
-<!-- 				<f:ajax event="change" render="outputPanelData outputPanelTable"  -->
-<!-- 					listener="#{ParseReceitaForXmlController.selectEmpresa}" /> -->
-			</p:selectOneMenu>
-		</div>
+		<div style="float: left;">
 		<p:outputLabel value="Mês" for="mesSelectOM"
 			styleClass="grid_1"/>
-		<div class="grid_5">
+		</div>
+		<div class="grid_5" style="float: left;">
 			<p:selectOneMenu id="mesSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ParseReceitaForXmlController.mesEnum}">
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
 				<f:selectItems value="#{ParseReceitaForXmlController.meses}" />
 <!-- 				<p:ajax event="change" process="@this" /> -->
 			</p:selectOneMenu>
 		</div>
-		<hr />
+		</fieldset>
 		<br />
 		<div class="clear"></div>
 		<br/>
@@ -54,7 +61,7 @@
 			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update=":ReceitaTabView:searchForm:searchResult" action="#{ParseReceitaForXmlController.buscar}" />
 		</div>
 				<p:blockUI block="searchForm" trigger="searchBtn">
-            	#{wds['blockui.processing.txt']}<br />
+            	Carregando...<br />
 					<h:graphicImage library="images" name="ajax-loader.gif" />
 				</p:blockUI>
 				<br/><br/>
@@ -63,6 +70,7 @@
 				<br/>
 		<p:dataTable id="searchResult" value="#{ParseReceitaForXmlController.receitas}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 			rowIndexVar="rowIx" emptyMessage="Sem Resultados" >
+			
 		<f:facet name="header">
             <h:commandLink>
                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
@@ -80,15 +88,24 @@
             </h:commandLink>
             </f:facet>
             <p:graphicImage value="/resources/images/excel.png" width="24"/>
-            <br></br>           
-
+            <br></br>               
+            
+			<p:columnGroup type="header">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+                <p:column headerText="Percentual Realizado" />
+                
+            </p:row>
+    	    </p:columnGroup>
         
 		 <p:subTable var="gets" value="#{layoutXml.resumos}">
-            <f:facet name="header">
-                <h:outputText value="Resumos" />
+		 <f:facet name="header">
+                <h:outputText value="#{layoutXml.titulo}" />
             </f:facet>
-            <p:column headerText="Tipo">
-                <h:outputText value="#{gets.tipo}" />
+            <p:column headerText="Descrição">
+                <h:outputText value="#{gets.descricao}" />
             </p:column>
             <p:column>
                 <h:outputText value="#{gets.valorOrcado}" />
@@ -98,67 +115,111 @@
             </p:column>
             <p:column>
                 <h:outputText value="#{gets.percentualRealizado}" />
-            </p:column>
+            </p:column>            
             
+            </p:subTable> 
+                      
             
-            </p:subTable>            
+            </p:dataTable>
+           <!--  <p:dataTable id="searchResult2" value="#{ParseReceitaForXmlController.receitas}" var="layoutXml2" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" >
+		<p:columnGroup type="header">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+                <p:column headerText="Percentual Realizado" />
+                
+            </p:row>
+    	    </p:columnGroup>
+
            
-            <p:subTable var="gets" value="#{layoutXml.receitasCapital}">
+            <p:subTable var="ges" value="#{layoutXml2.receitasCapital}">
             <f:facet name="header">
                 <h:outputText value="Receitas de Capital" />
             </f:facet>
             <p:column headerText="Descrição">
-                <h:outputText value="#{gets.descricao}" />
+                <h:outputText value="#{ges.descricao}" />
             </p:column>
             <p:column>
-                <h:outputText value="#{gets.valorOrcado}" />
+                <h:outputText value="#{ges.valorOrcado}" />
             </p:column>
             <p:column>
-                <h:outputText value="#{gets.valorArrecadado}" />
+                <h:outputText value="#{ges.valorArrecadado}" />
             </p:column>
             <p:column>
-                <h:outputText value="#{gets.percentualRealizado}" />
+                <h:outputText value="#{ges.percentualRealizado}" />
             </p:column>
-                 </p:subTable>
-            <p:subTable var="gets" value="#{layoutXml.despesasReceita}">
-            <f:facet name="header">
-                <h:outputText value="Despesas da Receita" />
-            </f:facet>
-            <p:column headerText="Descrição">
-                <h:outputText value="#{gets.descricao}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.valorOrcado}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.valorArrecadado}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.percentualRealizado}" />
-            </p:column>
-            
-            </p:subTable>
-             <p:subTable var="gets" value="#{layoutXml.receitasCorrentes}">
-            <f:facet name="header">
-                <h:outputText value="Despesas da Receita" />
-            </f:facet>
-            <p:column headerText="Descrição">
-                <h:outputText value="#{gets.descricao}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.valorOrcado}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.valorArrecadado}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{gets.percentualRealizado}" />
-            </p:column>
-            
-            </p:subTable>  
+                 </p:subTable>             
                       
             
             </p:dataTable>
+            <p:dataTable id="searchResult3" value="#{ParseReceitaForXmlController.receitas}" var="layoutXml3" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" >
+		<p:columnGroup type="header">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+                <p:column headerText="Percentual Realizado" />
+                
+            </p:row>
+    	    </p:columnGroup>
+		  
+
+		 
+            <p:subTable var="gs" value="#{layoutXml3.despesasReceita}">
+            <f:facet name="header">
+                <h:outputText value="Despesas da Receita" />
+            </f:facet>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{gs.descricao}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gs.valorOrcado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gs.valorArrecadado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gs.percentualRealizado}" />
+            </p:column>            
+            </p:subTable>             
+                      
+            
+            </p:dataTable>
+            <p:dataTable id="searchResult4" value="#{ParseReceitaForXmlController.receitas}" var="layoutXml4" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" >
+		<p:columnGroup type="header">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+                <p:column headerText="Percentual Realizado" />
+                
+            </p:row>
+    	    </p:columnGroup>
+		
+		
+             <p:subTable var="g" value="#{layoutXml4.receitasCorrentes}">
+            <f:facet name="header">
+                <h:outputText value="Receitas Correntes" />
+            </f:facet>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{g.descricao}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{g.valorOrcado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{g.valorArrecadado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{g.percentualRealizado}" />
+            </p:column>            
+            </p:subTable>                     
+            
+            </p:dataTable> -->
             </fieldset>
 	</h:form>
 </ui:composition>

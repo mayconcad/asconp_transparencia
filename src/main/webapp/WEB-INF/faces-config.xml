@@ -9,8 +9,8 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
 		<message-bundle>ValidationMessages</message-bundle>
 		
 		<resource-bundle>
-			<base-name>br.com.asconp.asconp_transparencia.widgets</base-name>
-			<var>wds</var>
+			<base-name>br.com.asconp.publitec.widgets</base-name>
+			<var>wd</var>
 		</resource-bundle>
 		
 		<resource-bundle>

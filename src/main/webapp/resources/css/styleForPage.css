@@ -689,7 +689,7 @@ span[class^="w"]>input.hasDatepicker {
 }
 
 .ui-widget-header {
-	color: #FFFFFF;
+/* 	color: #FFFFFF; */
 	text-shadow: none;
 }
 

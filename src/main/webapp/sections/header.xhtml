@@ -21,21 +21,25 @@
 <!-- 					<div class="grid_8">Admin</div> -->
 <!-- 					<div class="clear" /> -->
 
-					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Usuário:</p:outputPanel>
+					<!-- <p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Usuário:</p:outputPanel>
 					<p:outputPanel styleClass="grid_12">
 						<h:outputText value="#{UploadArquivoController.login}" style="line-height: 26px;" />
 					</p:outputPanel>
 					<div class="clear" />
 					<hr />
-					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Perfil:</p:outputPanel>
-					<p:outputPanel styleClass="grid_12">
+					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold" rendered="#{loginBean.userName == 'asconp'}">Perfil:</p:outputPanel>
+					<p:outputPanel styleClass="grid_12" rendered="#{loginBean.userName == 'asconp'}">
 						<h:outputText value="Administrador" style="line-height: 26px;" />
-					</p:outputPanel>
+					</p:outputPanel> -->
 <!-- 					<p:outputPanel styleClass="grid_6" style="line-height: 26px; font-weight: bold">Escola:</p:outputPanel> -->
 <!-- 					<p:outputPanel styleClass="grid_12"> -->
 <!-- 						<h:outputText value="#{loginController.currentUser.person eq null ? 'Todas' : loginController.currentUser.person.school.name }" style="line-height: 26px;" /> -->
 <!-- 					</p:outputPanel> -->
 					<div class="clear" />
+					<div style="float: right; text-align: top !important;">
+						<p:commandButton value="Sair"  actionListener="#{loginBean.logout()}" rendered="false"/>
+					</div>
+					
 <!-- 					<span> <p:commandLink onclick="dialogAboutVar.show();" value="Sobre" /> -->
 <!-- 					</span> -->
 <!-- 					<div style="float: right;"> -->

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="searchForm" styleClass="container_24">
+		<p:messages id="messages"/>
+		<div style="float: left; text-align: top !important;">
+						<a href="#{DemonstrativoReceitaController.linkVoltar}"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
+					</div>
+					<br/>
+					<br/>
+		<fieldset>
+		<legend>Filtros</legend>
+		<div style="float: left;">
+		<p:outputLabel value="Município/Câmara: " for="empresa"
+		styleClass="grid_3" />
+		</div>
+		<div style="float: left;" class="grid_4">
+		<p:outputLabel value="#{DemonstrativoReceitaController.getNomeEmpresa()}" id="empresa"
+		 />
+		</div>
+		<div style="float: left;">
+		<p:outputLabel value="Exercício" for="exercicioSelectOM"
+			styleClass="grid_2"/>
+		</div>
+		<div class="grid_5" style="float: left;">
+			<p:selectOneMenu id="exercicioSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{DemonstrativoReceitaController.exercicio}">
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
+				<f:selectItems value="#{DemonstrativoReceitaController.exercicios}" />
+				<p:ajax event="change" process="@this" update="@form" />
+			</p:selectOneMenu>
+		</div>
+		<div style="float: left;">
+		<p:outputLabel value="Mês" for="mesSelectOM"
+			styleClass="grid_2"/>
+		</div>
+		<div class="grid_5" style="float: left;">
+			<p:selectOneMenu id="mesSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{DemonstrativoReceitaController.mesEnum}">
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
+				<f:selectItems value="#{DemonstrativoReceitaController.meses}" />
+<!-- 				<p:ajax event="change" process="@this" /> -->
+			</p:selectOneMenu>
+		</div>
+		</fieldset>
+		<br />
+		<div class="clear"></div>
+		<br/>
+		<div style="text-align: center;">
+			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update=":ReceitaTabView:searchForm:searchResult" action="#{DemonstrativoReceitaController.buscar}" />
+		</div>
+				<p:blockUI block="searchForm" trigger="searchBtn">
+            	Carregando...<br />
+					<h:graphicImage library="images" name="ajax-loader.gif" />
+				</p:blockUI>
+				<br/><br/>
+				<fieldset>
+				<legende>Resultados da Consulta</legende>
+				<br/>
+		<p:dataTable id="searchResult" value="#{DemonstrativoReceitaController.receitas}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true" rowsPerPageTemplate="5,10,15" rows="10" resizableColumns="true" scrollable="true" draggableColumns="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+			
+		<f:facet name="header">
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="searchResult" fileName="#{DemonstrativoReceitaController.fileNameExporter}" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="searchResult" fileName="#{DemonstrativoReceitaController.fileNameExporter}"/>
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="searchResult" fileName="#{DemonstrativoReceitaController.fileNameExporter}" />
+            </h:commandLink>
+            </f:facet>
+            <p:graphicImage value="/resources/images/excel.png" width="24"/>
+            <br></br> 
+            
+            <p:column headerText="Código" style="font-size:12px; white-space:normal !important;" width="100">
+                <h:outputText value="#{layoutXml.codigo}" />
+            </p:column>
+             <p:column headerText="Especificação" style="font-size:12px; white-space:normal !important;" >
+                <h:outputText value="#{layoutXml.titulo}" />
+            </p:column>
+            <p:column  headerText="Receita Prevista" style="font-size:12px; white-space:normal !important;" width="100"> 
+                <h:outputText value="#{layoutXml.receitaPrevista}" />
+            </p:column>
+            <p:column  headerText="Arrecadação Mês" style="font-size:12px; white-space:normal !important;" width="100"> 
+                <h:outputText value="#{layoutXml.arrecadacaoMes}" />
+            </p:column>
+            <p:column  headerText="Arrecadação Até o Mês" style="font-size:12px; white-space:normal !important;" width="100"> 
+                <h:outputText value="#{layoutXml.arrecadacaoAcumulada}" />
+            </p:column>
+                       <!-- <p:columnGroup type="footer">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+            
+                
+            </p:row>
+    	    </p:columnGroup>-->
+            
+			<!-- <p:columnGroup type="header">           
+            <p:row>
+                <p:column headerText="Descrição" />
+                <p:column headerText="Valor Orçado" />
+                <p:column headerText="Valor Arrecadado" />
+                <p:column headerText="Percentual Realizado" />
+                
+            </p:row>
+    	    </p:columnGroup>
+        
+		 <p:subTable var="gets" value="#{layoutXml.resumos}">
+		 <f:facet name="header">
+                <h:outputText value="#{layoutXml.titulo}" />
+            </f:facet>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{gets.descricao}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gets.valorOrcado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gets.valorArrecadado}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{gets.percentualRealizado}" />
+            </p:column>            
+            
+            </p:subTable> -->
+                      
+            
+            </p:dataTable>
+         
+            </fieldset>
+	</h:form>
+</ui:composition>

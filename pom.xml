@@ -2,13 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.asconp</groupId>
-	<artifactId>asconp_transparencia</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<artifactId>publitec</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>asconp_transparencia</name>
+	<name>publitec</name>
 	<url>http://maven.apache.org</url>
-	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,16 +17,15 @@
 <!-- 		<url>http://archiva.fdvs.com.ar/repository/public1/</url> -->
 <!-- 	</repository> -->
 	<dependencies>
-	<!-- https://mvnrepository.com/artifact/com.github.jsimone/webapp-runner -->
-	<dependency>
-	    <groupId>com.github.jsimone</groupId>
-	    <artifactId>webapp-runner</artifactId>
-	    <version>7.0.34.1</version>
-	</dependency>
 	<dependency>
 			<groupId>ar.com.fdvs</groupId>
 			<artifactId>DynamicJasper</artifactId>
 			<version>4.0.4</version>
+		</dependency>
+		<dependency>
+		<groupId>com.h2database</groupId>
+		<artifactId>h2</artifactId>
+		<version>1.4.177</version>
 		</dependency>
 	<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -39,6 +37,12 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -68,10 +72,23 @@
 			<version>3.8-beta4</version>
 		</dependency>
 		<!-- Núcleo do Hibernate -->
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.0.Final</version>
+		</dependency>
 
 		<!-- Driver JDBC do MySQL -->
-		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.20</version>
+		</dependency>
 
 		<!-- Bibliotecas do JSF -->
 		<dependency>
@@ -89,7 +106,7 @@
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 <!-- 			<version>5.2</version> -->
-			<version>4.0</version>
+			<version>3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
@@ -123,11 +140,11 @@
 			<artifactId>connector-api</artifactId>
 			<version>1.5</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>postgresql</groupId> -->
-<!-- 			<artifactId>postgresql</artifactId> -->
-<!-- 			<version>9.1-901.jdbc4</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -160,20 +177,14 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>asconp_transparencia</finalName>
-		
+		<finalName>publitec</finalName>
 		<plugins>
-<!-- 		      <plugin> -->
-<!-- 		        <groupId>com.heroku.sdk</groupId> -->
-<!-- 		        <artifactId>heroku-maven-plugin</artifactId> -->
-<!-- 		        <version>1.1.3</version> -->
-<!-- 		      </plugin> -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>

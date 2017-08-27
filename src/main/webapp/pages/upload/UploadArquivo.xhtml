@@ -14,9 +14,11 @@
 		
 		<fieldset>
 		<legend>Selecione os Itens</legend>
-		<p:outputLabel value="Município" for="empresa"
-			styleClass="grid_2" />
-		<div class="grid_6">
+		<div style="float: left;">
+		<p:outputLabel value="Município/Câmara" for="empresa"
+			styleClass="grid_3" />
+		</div>
+		<div class="grid_6" style="float: left;">
 			<p:selectOneMenu id="empresa"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{UploadArquivoController.empresaEnum}" required="true">
@@ -25,9 +27,23 @@
 				<p:ajax event="change" process="@this" />
 			</p:selectOneMenu>
 		</div>
+		<div style="float: left;">
+		<p:outputLabel value="Exercício" for="exercicioSelectOM"
+			styleClass="grid_2"/>
+		</div>
+		<div class="grid_2" style="float: left;">
+			<p:selectOneMenu id="exercicioSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{UploadArquivoController.exercicio}" required="true">
+				<f:selectItems value="#{UploadArquivoController.exercicios}" />
+				<p:ajax event="change" process="@this" />
+			</p:selectOneMenu>
+		</div>
+		<div style="float: left;">
 		<p:outputLabel value="Mês" for="mes"
 			styleClass="grid_1" />
-		<div class="grid_4">
+		</div>
+		<div class="grid_3" style="float: left;">
 			<p:selectOneMenu id="mes"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{UploadArquivoController.mesEnum}" required="true">
@@ -36,13 +52,25 @@
 				<p:ajax event="change" process="@this" />
 			</p:selectOneMenu>
 		</div>
+	
+		<div class="grid_1" style="float: left;">
+		<p:outputLabel value="Tipo" for="fileTypeOR"
+				 />
+		</div>
+		<div class="grid_5" style="float: left; font-size: 14px;">
+			<p:selectOneRadio id="fileTypeOR" 	value="#{UploadArquivoController.tipoArquivo}">
+				<f:selectItem itemLabel="Receita/Despesa" itemValue="ReceitaDespesa"  />
+				<f:selectItem itemLabel="Pessoal" itemValue="Pessoal" />	
+				<p:ajax event="change" process="@this" />			
+			</p:selectOneRadio>
+		</div>
 		</fieldset>
 		<br />
 		<div class="clear"></div>
 <!-- 		<p:spacer height="30"/> -->
 		<br/>
 		<div >
-			<p:fileUpload id="arquivoUploadFile" multiple="true" label="Selecione os Arquivos" cancelLabel="Cancelar" uploadLabel="Importar Arquivos" fileUploadListener="#{UploadArquivoController.handleFileUpload}" process="empresa mes" update="messages"></p:fileUpload>
+			<p:fileUpload id="arquivoUploadFile" multiple="true" label="Selecione os Arquivos" cancelLabel="Cancelar" uploadLabel="Importar Arquivos" fileUploadListener="#{UploadArquivoController.handleFileUpload}" process="empresa mes" update="messages" allowTypes="/(\.|\/)(xml)$/" ></p:fileUpload>
 		</div>
 				<div class="clear" />				
 	</h:form>
