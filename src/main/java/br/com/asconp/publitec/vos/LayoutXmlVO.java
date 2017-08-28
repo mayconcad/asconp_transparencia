@@ -1,59 +1,52 @@
-package br.com.asconp.publitec.entities;
+package br.com.asconp.publitec.vos;
 
-import java.util.List;
+import br.com.asconp.publitec.entities.LayoutXml;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class LayoutXmlVO extends BaseVO{
+	
 
-@Entity
-@Table(name="pub_despesa")
-public class LayoutXml extends BaseEntity{
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
-	private long id;
-	@Column
 	private String 
 	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
 	codigoUnidGestora;
-	@Column
 	private String nomeUnidGestora;
-	@Column
 	private String cpfContador;
-	@Column
 	private String cpfGestor;
-	@Column
 	private String anoReferencia;
-	@Column
 	private String mesReferencia;
 	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
-	@Column
 	private String numeroEmpenho;
-	@Column
 	private String historicoEmpenho;
-	@Column
 	private String dataEmisEmpenho;
-	@Column
 	private String codigoUnidOrcamentaria;
-	@Column
 	private String nomeUnidOrcamentaria;
-	@Column
 	private String cpfCnpjCredor;
-	@Column
 	private String nomeCredor;
-	@Column
 	private String valorEmpenho;
 	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
-	@Column
 	private String valorLiquidado;
-	@Column
-	private String valorPago;
+	private String valorPago;	
 	
-	private List<GestorXml> gestores;
+	
+
+	public LayoutXmlVO(LayoutXml entity) {
+
+		this.codigoUnidGestora = entity.getCodigoUnidGestora();
+		this.nomeUnidGestora = entity.getNomeUnidGestora();
+		this.cpfContador = entity.getCpfContador();
+		this.cpfGestor = entity.getCpfGestor();
+		this.anoReferencia = entity.getAnoReferencia();
+		this.mesReferencia = entity.getMesReferencia();
+		this.numeroEmpenho = entity.getNumeroEmpenho();
+		this.historicoEmpenho = entity.getHistoricoEmpenho();
+		this.dataEmisEmpenho = entity.getDataEmisEmpenho();
+		this.codigoUnidOrcamentaria = entity.getCodigoUnidOrcamentaria();
+		this.nomeUnidOrcamentaria = entity.getNomeUnidOrcamentaria();
+		this.cpfCnpjCredor = entity.getCpfCnpjCredor();
+		this.nomeCredor = entity.getNomeCredor();
+		this.valorEmpenho = entity.getValorEmpenho();
+		this.valorLiquidado = entity.getValorLiquidado();
+		this.valorPago = entity.getValorPago();
+	}
 
 	public String getCodigoUnidGestora() {
 		return codigoUnidGestora;
@@ -183,13 +176,4 @@ public class LayoutXml extends BaseEntity{
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
 	}
 
-	public List<GestorXml> getGestores() {
-		return gestores;
-	}
-
-	public void setGestores(List<GestorXml> gestores) {
-		this.gestores = gestores;
-	}
-
-	
 }
