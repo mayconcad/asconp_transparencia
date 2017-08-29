@@ -38,6 +38,9 @@ public class ReceitaPessoal extends BaseEntity {
 	@Column
 	private int ano;
 	
+	@Column
+	private String mes;
+	
 	
 	//private String cpfLink;
 		
@@ -114,6 +117,15 @@ public class ReceitaPessoal extends BaseEntity {
 		this.ano = ano;
 	}
 
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	
 	
 //	public long getSerialversionuid() {
 //		return serialVersionUID;

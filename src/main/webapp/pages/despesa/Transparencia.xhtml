@@ -36,7 +36,7 @@
 				value="#{ParseForXmlController.exercicio}">
 				<f:selectItem itemLabel="Selecione" value="#{null}"/>
 				<f:selectItems value="#{ParseForXmlController.exercicios}" />
-				<p:ajax event="change" process="@this" update="@form" />
+				<p:ajax event="change" process="@this" update="@form" listener="#{ParseForXmlController.disabilitaNome}"/>
 			</p:selectOneMenu>
 		</div>
 		
@@ -54,9 +54,9 @@
 <!-- 		</div> -->
 <div style="float: left;">
 		<p:outputLabel value="Mês" for="mesSelectOM"
-			styleClass="grid_2"/>
+			styleClass="grid_1"/>
 </div>
-		<div class="grid_5" style="float: left;">
+		<div class="grid_3" style="float: left;">
 			<p:selectOneMenu id="mesSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ParseForXmlController.mesEnum}">
@@ -68,7 +68,7 @@
 		<p:outputLabel value="Nome" for="nomeIT"
 			styleClass="grid_2"/>
 		<div class="grid_4">
-			<p:inputText id="nomeIT" value="#{ParseForXmlController.nome}"></p:inputText>
+			<p:inputText id="nomeIT" value="#{ParseForXmlController.nome}" binding="#{ParseForXmlController.nomeIT}"></p:inputText>
 		</div>
 	</fieldset>
 		<br />

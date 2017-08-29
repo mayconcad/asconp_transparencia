@@ -19,6 +19,9 @@ public interface DAO extends Serializable {
 			Map<String, Object> params, Class<V> voClass, boolean clausuleOR);
 	<V extends BaseVO> List<V> find(Class<? extends BaseEntity> klass,
 			 Class<V> voClass, String sqlAfteWhere);
+	
+	<V extends BaseEntity> List<V> find(Class<? extends BaseEntity> klass,
+			  String sqlAfteWhere);
 
 	<V extends BaseVO> List<V> autocomplete(String namedQuery,
 			Class<V> voClass, Object... parameters);

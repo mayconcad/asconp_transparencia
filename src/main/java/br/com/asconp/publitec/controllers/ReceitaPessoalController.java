@@ -83,14 +83,21 @@ public class ReceitaPessoalController extends BaseController {
 	public void buscar() {
 		
 		
-		
-		if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()))
+		if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
+			int mess=getMesEnum().ordinal()+1;
+			String mes = mess > 9 ? mess+"" : "0"+mess;
+			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " AND x.mes = '"+mes+"'"+" AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		}else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()))
 			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
 		else if(UtilsModel.hasValue( getNomeCPF()))
 			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%'");
 		else if(UtilsModel.hasValue(getCargo()))
 			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%'");
-		else
+		else if(UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
+			int mess=getMesEnum().ordinal()+1;
+			String mes = mess > 9 ? mess+"" : "0"+mess;
+			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " AND x.mes = '"+mes+"'");
+		}else
 			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"'");
 
 		/*Calendar cal = Calendar.getInstance();
@@ -487,7 +494,8 @@ public class ReceitaPessoalController extends BaseController {
 
 	public MesEnum[] getMeses() {
 
-		if (exercicio == null || exercicio == "" || getEmpresaEnum() == null)
+		return MesEnum.values();
+		/*if (exercicio == null || exercicio == "" || getEmpresaEnum() == null)
 			return new MesEnum[0];
 
 		Calendar cal = Calendar.getInstance();
@@ -518,7 +526,7 @@ public class ReceitaPessoalController extends BaseController {
 			mess[meses.indexOf(mesEnum)] = mesEnum;
 		}
 
-		return mess;
+		return mess;*/
 	}
 
 	public String getNomeEmpresa() {

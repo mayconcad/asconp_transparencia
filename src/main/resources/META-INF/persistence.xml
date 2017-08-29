@@ -17,10 +17,10 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost:3306/publitec_transparencia" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="mysql" />
-<!-- 			<property name="javax.persistence.jdbc.user" value="publitec_mysql" /> -->
-<!-- 			<property name="javax.persistence.jdbc.password" value="Ari0@TeC105*" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="root" /> -->
+<!-- 			<property name="javax.persistence.jdbc.password" value="mysql" /> -->
+			<property name="javax.persistence.jdbc.user" value="publitec_mysql" />
+			<property name="javax.persistence.jdbc.password" value="Ari0@TeC105*" />
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

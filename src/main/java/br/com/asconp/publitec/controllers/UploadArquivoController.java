@@ -34,6 +34,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.eclipse.jdt.internal.core.ModelUpdater;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.primefaces.component.inputtext.InputText;
@@ -45,6 +46,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 
 
 
@@ -228,7 +230,12 @@ public class UploadArquivoController extends BaseController {
 				String numeroCargo=element
 						.getElementsByTagName("numeroCargo").item(0)
 						.getTextContent();
-
+				
+				String mesReferencia=element
+						.getElementsByTagName("mesReferencia").item(0)
+						.getTextContent();
+				if(UtilsModel.hasValue(mesReferencia))
+					layoutXml.setMes( mesReferencia);
 				layoutXml.setCpf(cpf);
 				layoutXml.setAno(cal.get(Calendar.YEAR));
 				layoutXml.setNumunidadegestora(empresaEnum.getCodigo());

@@ -5,49 +5,33 @@ import br.com.asconp.publitec.entities.LayoutXml;
 public class LayoutXmlVO extends BaseVO{
 	
 
-	private String 
+	public long id;
+	public String 
 	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
 	codigoUnidGestora;
-	private String nomeUnidGestora;
-	private String cpfContador;
-	private String cpfGestor;
-	private String anoReferencia;
-	private String mesReferencia;
+	public String nomeUnidGestora;
+	public String cpfContador;
+	public String cpfGestor;
+	public String anoReferencia;
+	public String mesReferencia;
 	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
-	private String numeroEmpenho;
-	private String historicoEmpenho;
-	private String dataEmisEmpenho;
-	private String codigoUnidOrcamentaria;
-	private String nomeUnidOrcamentaria;
-	private String cpfCnpjCredor;
-	private String nomeCredor;
-	private String valorEmpenho;
+	public String numeroEmpenho;
+	public String historicoEmpenho;
+	public String dataEmisEmpenho;
+	public String codigoUnidOrcamentaria;
+	public String nomeUnidOrcamentaria;
+	public String cpfCnpjCredor;
+	public String nomeCredor;
+	public String valorEmpenho;
 	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
-	private String valorLiquidado;
-	private String valorPago;	
+	public String valorLiquidado;
+	public String valorPago;	
 	
-	
-
-	public LayoutXmlVO(LayoutXml entity) {
-
-		this.codigoUnidGestora = entity.getCodigoUnidGestora();
-		this.nomeUnidGestora = entity.getNomeUnidGestora();
-		this.cpfContador = entity.getCpfContador();
-		this.cpfGestor = entity.getCpfGestor();
-		this.anoReferencia = entity.getAnoReferencia();
-		this.mesReferencia = entity.getMesReferencia();
-		this.numeroEmpenho = entity.getNumeroEmpenho();
-		this.historicoEmpenho = entity.getHistoricoEmpenho();
-		this.dataEmisEmpenho = entity.getDataEmisEmpenho();
-		this.codigoUnidOrcamentaria = entity.getCodigoUnidOrcamentaria();
-		this.nomeUnidOrcamentaria = entity.getNomeUnidOrcamentaria();
-		this.cpfCnpjCredor = entity.getCpfCnpjCredor();
-		this.nomeCredor = entity.getNomeCredor();
-		this.valorEmpenho = entity.getValorEmpenho();
-		this.valorLiquidado = entity.getValorLiquidado();
-		this.valorPago = entity.getValorPago();
+	public LayoutXmlVO() {
+		// TODO Auto-generated constructor stub
 	}
 
+	
 	public String getCodigoUnidGestora() {
 		return codigoUnidGestora;
 	}
@@ -174,6 +158,14 @@ public class LayoutXmlVO extends BaseVO{
 
 	public void setCodigoUnidOrcamentaria(String codigoUnidOrcamentaria) {
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

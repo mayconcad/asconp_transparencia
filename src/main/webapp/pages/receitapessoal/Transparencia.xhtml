@@ -20,20 +20,33 @@
 		<p:outputLabel value="Município/Câmara" for="empresa"
 		styleClass="grid_3" />
 		<p:outputLabel value="#{ReceitaPessoalController.getNomeEmpresa()}" id="empresa"
-		styleClass="grid_4" />
+		styleClass="grid_3" />
 		
 		<div style="float: left;">
 		<p:outputLabel value="Exercício" for="exercicioSelectOM"
 			styleClass="grid_2"/>
 		</div>
 		
-		<div class="grid_3" style="float: left;">
+		<div class="grid_2" style="float: left;">
 			<p:selectOneMenu id="exercicioSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ReceitaPessoalController.exercicio}">
 <!-- 				<f:selectItem itemLabel="Selecione" value="#{null}"/> -->
 				<f:selectItems value="#{ReceitaPessoalController.exercicios}" />
 <!-- 				<p:ajax event="change" process="@this" update="@form" /> -->
+			</p:selectOneMenu>
+		</div>
+		<div style="float: left;">
+		<p:outputLabel value="Mês" for="mesSelectOM"
+			styleClass="grid_1"/>
+</div>
+		<div class="grid_2" style="float: left;">
+			<p:selectOneMenu id="mesSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ReceitaPessoalController.mesEnum}">
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
+				<f:selectItems value="#{ReceitaPessoalController.meses}" />
+<!-- 				<p:ajax event="change" process="@this" /> -->
 			</p:selectOneMenu>
 		</div>
 		<p:outputLabel value="Nome/CPF" for="nomeIT"

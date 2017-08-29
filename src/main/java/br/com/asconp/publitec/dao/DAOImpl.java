@@ -204,4 +204,26 @@ public class DAOImpl implements DAO {
 		return list;
 	}
 
+	@Override
+	public <V extends BaseEntity> List<V> find(
+			Class<? extends BaseEntity> klass, String sqlAfteWhere) {
+		List<V> list = null;
+		try {
+			manager.getTransaction().begin();
+			StringBuffer sb = new StringBuffer();
+			
+			sb.append("SELECT x FROM " + klass.getSimpleName() + " x WHERE ");			
+			sb.append(sqlAfteWhere);
+
+			Query query = manager.createQuery(sb.toString());
+			
+			list = query.getResultList();
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+	}
+
 }

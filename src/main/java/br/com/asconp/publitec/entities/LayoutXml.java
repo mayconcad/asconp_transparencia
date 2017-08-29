@@ -9,51 +9,55 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.asconp.publitec.vos.LayoutXmlVO;
+
 @Entity
 @Table(name="pub_despesa")
 public class LayoutXml extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private long id;
+	public long id;
 	@Column
-	private String 
+	public String 
 	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
 	codigoUnidGestora;
 	@Column
-	private String nomeUnidGestora;
+	public String nomeUnidGestora;
 	@Column
-	private String cpfContador;
+	public String cpfContador;
 	@Column
-	private String cpfGestor;
+	public String cpfGestor;
 	@Column
-	private String anoReferencia;
+	public String anoReferencia;
 	@Column
-	private String mesReferencia;
+	public String mesReferencia;
 	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
 	@Column
-	private String numeroEmpenho;
+	public String numeroEmpenho;
 	@Column
-	private String historicoEmpenho;
+	public String historicoEmpenho;
 	@Column
-	private String dataEmisEmpenho;
+	public String dataEmisEmpenho;
 	@Column
-	private String codigoUnidOrcamentaria;
+	public String codigoUnidOrcamentaria;
 	@Column
-	private String nomeUnidOrcamentaria;
+	public String nomeUnidOrcamentaria;
 	@Column
-	private String cpfCnpjCredor;
+	public String cpfCnpjCredor;
 	@Column
-	private String nomeCredor;
+	public String nomeCredor;
 	@Column
-	private String valorEmpenho;
+	public String valorEmpenho;
 	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
 	@Column
-	private String valorLiquidado;
+	public String valorLiquidado;
 	@Column
-	private String valorPago;
+	public String valorPago;
 	
-	private List<GestorXml> gestores;
+	//private List<GestorXml> gestores;
+	
+	
 
 	public String getCodigoUnidGestora() {
 		return codigoUnidGestora;
@@ -183,13 +187,13 @@ public class LayoutXml extends BaseEntity{
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
 	}
 
-	public List<GestorXml> getGestores() {
-		return gestores;
-	}
-
-	public void setGestores(List<GestorXml> gestores) {
-		this.gestores = gestores;
-	}
+//	public List<GestorXml> getGestores() {
+//		return gestores;
+//	}
+//
+//	public void setGestores(List<GestorXml> gestores) {
+//		this.gestores = gestores;
+//	}
 
 	
 }
