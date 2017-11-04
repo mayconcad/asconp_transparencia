@@ -6,17 +6,17 @@ public class ReceitaPessoalVO extends BaseVO {
 	
 	//private final long serialVersionUID = 2878321609647514057L;
 
-	private long id;
+	public long id;
 
-	private String cpf;
+	public String cpf;
 	
-	private String nome;
+	public String nome;
 	
-	private String lotacao;
+	public String lotacao;
 	
-	private String cargo;
+	public String cargo;
 	
-	private String remuneracao;
+	public String remuneracao;
 	
 	//private String cpfLink;
 	

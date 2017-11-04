@@ -27,4 +27,6 @@ public interface DAO extends Serializable {
 			Class<V> voClass, Object... parameters);
 
 	void delete(BaseEntity entity);
+	
+	void closeClonection();
 }

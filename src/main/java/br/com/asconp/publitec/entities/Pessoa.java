@@ -10,15 +10,15 @@ public class Pessoa extends BaseEntity{
 	//indica que este atributo se trata da chave primária da tabela e de identificador unico
 	@Id
 	@GeneratedValue
-	private Integer id;
+	public Integer id;
 
-	private String nome;
+	public String nome;
 
-	private String cpf;
+	public String cpf;
 
-	private String rg;
+	public String rg;
 
-	private String endereco;
+	public String endereco;
 
 	public Integer getId() {
 		return id;

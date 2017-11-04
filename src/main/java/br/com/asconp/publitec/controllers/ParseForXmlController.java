@@ -23,8 +23,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.primefaces.component.inputtext.InputText;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -36,13 +34,10 @@ import org.xml.sax.SAXException;
 
 import br.com.asconp.publitec.dao.DAO;
 import br.com.asconp.publitec.dao.DAOImpl;
-import br.com.asconp.publitec.entities.BaseEntity;
 import br.com.asconp.publitec.entities.LayoutXml;
-import br.com.asconp.publitec.entities.ReceitaPessoal;
 import br.com.asconp.publitec.enums.EmpresaEnum;
 import br.com.asconp.publitec.enums.MesEnum;
 import br.com.asconp.publitec.vos.LayoutXmlVO;
-import br.com.asconp.publitec.vos.ReceitaPessoalVO;
 
 @ManagedBean(name = "ParseForXmlController")
 @ViewScoped
@@ -93,17 +88,30 @@ public class ParseForXmlController extends BaseController {
 
 	public void buscar() {
 		
-		if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() > 0){
-			layoutXmlList=dao.find(LayoutXml.class,  " x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+getMesEnum().ordinal()+1+"' AND x.anoReferencia = '"+getExercicio()+"'");
+		if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
+			layoutXmlList=dao.find(LayoutXml.class,   "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"' AND x.anoReferencia = '"+getExercicio()+"'");
 			return;
-		}else if(UtilsModel.hasValue(nome) && !UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() > 0){
-			layoutXmlList=dao.find(LayoutXml.class,  " x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+getMesEnum().ordinal()+1+"'");
+		}else if(UtilsModel.hasValue(nome) && !UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
+			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"'");
 			return;
-		}else if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && (!UtilsModel.hasValue(mesEnum) || mesEnum.ordinal() == 0)){
-			layoutXmlList=dao.find(LayoutXml.class, " x.nomeCredor like '%"+getNome()+"%' AND x.anoReferencia = '"+getExercicio()+"'");
+		}else if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && !UtilsModel.hasValue(mesEnum)){
+			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%' AND x.anoReferencia = '"+getExercicio()+"'");
 			return;
 		}else if(UtilsModel.hasValue(nome)){
-			layoutXmlList=dao.find(LayoutXml.class, " x.nomeCredor like '%"+getNome()+"%'");
+			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%'");
+			return;
+		}
+		else if(UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(exercicio) ){
+			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"' AND x.anoReferencia = '"+getExercicio()+"'");
+			if(layoutXmlList != null && !layoutXmlList.isEmpty())
+			return;
+		}else if(UtilsModel.hasValue(mesEnum) ){
+			if(layoutXmlList != null && !layoutXmlList.isEmpty())
+			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"'");
+			return;
+		}else if(UtilsModel.hasValue(exercicio) ){
+			if(layoutXmlList != null && !layoutXmlList.isEmpty())
+			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.anoReferencia = '"+getExercicio()+"'");
 			return;
 		}
 		
@@ -198,7 +206,10 @@ public class ParseForXmlController extends BaseController {
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Element element = (Element) nodeList.item(i);
 				LayoutXml layoutXml = new LayoutXml();
-
+				
+				layoutXml.setAnoReferencia(cal.get(Calendar.YEAR)+"");
+				layoutXml.setMesReferencia(String.format("%02d",mesEnum.ordinal() + 1));
+				
 				String numeroEmpenho = element
 						.getElementsByTagName("emp:numeroEmpenho").item(0)
 						.getTextContent();
@@ -229,6 +240,7 @@ public class ParseForXmlController extends BaseController {
 				layoutXml.setCodigoUnidOrcamentaria(codUnidOrcamentaria);
 				layoutXml
 						.setNomeUnidOrcamentaria(getNomeUnidadeGestora(document));
+				layoutXml.setCodigoUnidGestora(layoutXml.getNomeUnidOrcamentaria().substring(0, 6));
 
 				String cpfCnpjCredor = element
 						.getElementsByTagName("emp:cpfCnpjCredor").item(0)
@@ -458,11 +470,34 @@ public class ParseForXmlController extends BaseController {
 							.convertBigDecimalToString(new BigDecimal(
 									numEmpPagamento.get(numEmp))));
 				despesa.setNumeroEmpenho(despesa.getNumeroEmpenho().split("_")[0]);
-				despesa.setNomeCredor(despesa.getCpfCnpjCredor());
+				if(despesa.getCpfCnpjCredor() != null && !"".equals(despesa.getCpfCnpjCredor())){
+					String[] split = despesa.getCpfCnpjCredor().split("-");
+					despesa.setNomeCredor(split != null && split.length > 1 ? despesa.getCpfCnpjCredor().split("-")[1] : "");
+				}
 				
-				List<LayoutXml> layoutXmlList2 = dao.find(LayoutXml.class, " x.nomeCredor like '%"+despesa.getCpfCnpjCredor()+"%' AND x.mesReferencia = '"+despesa.getMesReferencia()+"' AND x.anoReferencia = '"+despesa.getAnoReferencia()+"'");
-				if(layoutXmlList2 != null && layoutXmlList2.isEmpty())
+				
+				List<LayoutXml> layoutXmlList2=null;
+				if(UtilsModel.hasValue(despesa.getCpfCnpjCredor()))					
+					layoutXmlList2 = dao.find(LayoutXml.class, " x.cpfCnpjCredor = '"+despesa.getCpfCnpjCredor()+"' AND x.codigoUnidOrcamentaria = '"+despesa.getCodigoUnidOrcamentaria()+"' AND x.numeroEmpenho = '"+despesa.getNumeroEmpenho()+"' AND x.codigoUnidGestora = '"+despesa.getCodigoUnidGestora()+"' AND x.mesReferencia = '"+despesa.getMesReferencia()+"' AND x.anoReferencia = '"+despesa.getAnoReferencia()+"'");
+				else
+					layoutXmlList2 = dao.find(LayoutXml.class, " x.codigoUnidOrcamentaria = '"+despesa.getCodigoUnidOrcamentaria()+"' AND x.numeroEmpenho = '"+despesa.getNumeroEmpenho()+"' AND x.codigoUnidGestora = '"+despesa.getCodigoUnidGestora()+"' AND x.mesReferencia = '"+despesa.getMesReferencia()+"' AND x.anoReferencia = '"+despesa.getAnoReferencia()+"'");
+					
+				if(layoutXmlList2 != null && !layoutXmlList2.isEmpty()){
+					LayoutXml entidade=layoutXmlList2.get(0);
+					despesa.setId(entidade.getId());					
+					despesa.setCpfCnpjCredor(entidade.getCpfCnpjCredor());
+					despesa.setDataEmisEmpenho(entidade.getDataEmisEmpenho());
+					despesa.setHistoricoEmpenho(entidade.getHistoricoEmpenho());
+					despesa.setNomeCredor(entidade.getNomeCredor());
+					despesa.setValorEmpenho(entidade.getValorEmpenho());
+					despesa.setValorLiquidado(entidade.getValorLiquidado());
+					despesa.setValorPago(entidade.getValorPago());
+					dao.update(despesa, LayoutXmlVO.class);
+					//dao.closeClonection();
+				}else{
 					dao.create(despesa, LayoutXmlVO.class);
+					//dao.closeClonection();
+				}
 			}
 			setFileNameExporter("Despesa_empresa_ano_mes");
 
@@ -479,12 +514,15 @@ public class ParseForXmlController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void disabilitaNome(final AjaxBehaviorEvent event){
 		getNomeIT().setDisabled(false);
-		if(exercicio != null && !"".equals(exercicio))
+		if(exercicio != null && !"".equals(exercicio)){
 		getNomeIT().setDisabled(true);
+		getNomeIT().setValue("");
+		}
 		
 	}
 

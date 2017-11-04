@@ -1,46 +1,32 @@
 package br.com.asconp.publitec.controllers;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import br.com.asconp.publitec.dao.DAO;
 import br.com.asconp.publitec.dao.DAOImpl;
-import br.com.asconp.publitec.entities.LayoutXml;
 import br.com.asconp.publitec.entities.ReceitaPessoal;
 import br.com.asconp.publitec.enums.EmpresaEnum;
 import br.com.asconp.publitec.enums.MesEnum;
 import br.com.asconp.publitec.vos.ReceitaPessoalVO;
+
+
 
 @ManagedBean(name = "ReceitaPessoalController")
 @ViewScoped
@@ -63,7 +49,7 @@ public class ReceitaPessoalController extends BaseController {
 	
 	private boolean exibeMes;
 
-	public List<ReceitaPessoalVO> layoutXmlList;
+	public List<ReceitaPessoal> layoutXmlList;
 
 	Calendar calDataAtual = Calendar.getInstance();
 	
@@ -82,23 +68,39 @@ public class ReceitaPessoalController extends BaseController {
 
 	public void buscar() {
 		
-		
-		if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
-			int mess=getMesEnum().ordinal()+1;
-			String mes = mess > 9 ? mess+"" : "0"+mess;
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " AND x.mes = '"+mes+"'"+" AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
-		}else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()))
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
-		else if(UtilsModel.hasValue( getNomeCPF()))
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%'");
-		else if(UtilsModel.hasValue(getCargo()))
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%'");
-		else if(UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
-			int mess=getMesEnum().ordinal()+1;
-			String mes = mess > 9 ? mess+"" : "0"+mess;
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " AND x.mes = '"+mes+"'");
-		}else
-			layoutXmlList = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"'");
+		layoutXmlList=new ArrayList<ReceitaPessoal>();
+		if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()) && UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class, " x.mes like '%"+String.format("%02d",getMesEnum().ordinal()+1)+"%' AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class, " x.mes like '%"+String.format("%02d",getMesEnum().ordinal()+1)+"%' AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue( getCargo()) && UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class, " x.mes like '%"+String.format("%02d",getMesEnum().ordinal()+1)+"%' AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%'");
+		else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue(getCargo()) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%'");
+		else if( UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(getExercicio()))
+			layoutXmlList = dao.find(ReceitaPessoal.class, " x.mes like '%"+String.format("%02d",getMesEnum().ordinal()+1)+"%' AND x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"'");
+		else if(UtilsModel.hasValue( getNomeCPF()) && UtilsModel.hasValue(getCargo()))
+			layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"' AND x.cargo like '%"+getCargo()+"%' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue(getNomeCPF()))
+			layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND (x.nome like '%"+getNomeCPF()+"%' OR x.cpf like '%"+getNomeCPF()+"%')");
+		else if(UtilsModel.hasValue(getCargo())){
+				layoutXmlList = dao.find(ReceitaPessoal.class,  " x.numunidadegestora = '"+codmunicipio+"' AND x.cargo like '%"+getCargo()+"%'");
+		}else 
+			layoutXmlList = dao.find(ReceitaPessoal.class, " x.numunidadegestora = '"+codmunicipio+"' AND x.ano = '"+getExercicio()+"'");
+			
+//			for(ReceitaPessoalVO r : layoutXmlList){
+//				if(!UtilsModel.hasValue(r.getNome())){
+//					List<ReceitaPessoalVO> find = dao.find(ReceitaPessoal.class, ReceitaPessoalVO.class, " x.cpf = '"+r.getCpf()+"' AND x.ano=2017");
+//					if(find != null && find.isEmpty()){
+//						r.setNome(find.get(0).getNome());
+//						r.setCargo(find.get(0).getCargo());
+//					}
+//				}
+//			}
 
 		/*Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -392,12 +394,12 @@ public class ReceitaPessoalController extends BaseController {
 		}
 	}
 
-	public List<ReceitaPessoalVO> getLayoutXmlList() {
+	public List<ReceitaPessoal> getLayoutXmlList() {
 
 		return layoutXmlList;
 	}
 
-	public void setLayoutXmlList(List<ReceitaPessoalVO> layoutXmlList) {
+	public void setLayoutXmlList(List<ReceitaPessoal> layoutXmlList) {
 		this.layoutXmlList = layoutXmlList;
 	}
 
@@ -494,8 +496,8 @@ public class ReceitaPessoalController extends BaseController {
 
 	public MesEnum[] getMeses() {
 
-		return MesEnum.values();
-		/*if (exercicio == null || exercicio == "" || getEmpresaEnum() == null)
+		//return MesEnum.values();
+		if (exercicio == null || exercicio == "" || getEmpresaEnum() == null)
 			return new MesEnum[0];
 
 		Calendar cal = Calendar.getInstance();
@@ -506,7 +508,8 @@ public class ReceitaPessoalController extends BaseController {
 		// .getCurrentInstance().getExternalContext().getContext();
 		// String caminho = servletContext.getRealPath(File.separator);
 
-		String caminho = System.getProperty("user.home").concat(File.separator).concat(codmunicipio).concat(File.separator);
+		String caminho = System.getProperty("user.home").concat(File.separator)
+				.concat(codmunicipio).concat(File.separator);
 		//
 		// if(empresaEnum ==null)
 		// return new MesEnum[]{};
@@ -526,7 +529,7 @@ public class ReceitaPessoalController extends BaseController {
 			mess[meses.indexOf(mesEnum)] = mesEnum;
 		}
 
-		return mess;*/
+		return mess;
 	}
 
 	public String getNomeEmpresa() {

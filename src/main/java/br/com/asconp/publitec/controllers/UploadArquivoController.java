@@ -65,6 +65,7 @@ import org.xml.sax.SAXException;
 
 
 
+
 import br.com.asconp.publitec.dao.DAO;
 import br.com.asconp.publitec.dao.DAOImpl;
 import br.com.asconp.publitec.entities.LayoutXml;
@@ -201,7 +202,7 @@ public class UploadArquivoController extends BaseController {
 					.append(File.separator).append(cal.get(Calendar.YEAR))
 					.append(File.separator);
 
-			filePath.append(String.format("%02d", MesEnum.JAN.ordinal() + 1))
+			filePath.append(String.format("%02d", getMesEnum().ordinal() + 1))
 					.append(File.separator);
 			
 			File file0 = new File(filePath.toString()
@@ -235,7 +236,7 @@ public class UploadArquivoController extends BaseController {
 						.getElementsByTagName("mesReferencia").item(0)
 						.getTextContent();
 				if(UtilsModel.hasValue(mesReferencia))
-					layoutXml.setMes( mesReferencia);
+					layoutXml.setMes( String.format("%02d",Integer.parseInt(mesReferencia)));
 				layoutXml.setCpf(cpf);
 				layoutXml.setAno(cal.get(Calendar.YEAR));
 				layoutXml.setNumunidadegestora(empresaEnum.getCodigo());
@@ -305,10 +306,13 @@ public class UploadArquivoController extends BaseController {
 				Map<String,Object> params=new HashMap<String, Object>();
 				params.put("nome", entidade.getNome().trim());
 				params.put("cpf", entidade.getCpf().trim());
+				params.put("mes", entidade.getMes().trim());
 				params.put("numunidadegestora", entidade.getNumunidadegestora().trim());
 				List<ReceitaPessoalVO> find = dao.find(ReceitaPessoal.class, params,ReceitaPessoalVO.class ,false);
-				if(find == null || find.isEmpty())
-				dao.create(entidade, ReceitaPessoalVO.class);
+				if(find == null || find.isEmpty()){
+					dao.create(entidade, ReceitaPessoalVO.class);
+					//dao.closeClonection();
+				}
 			}
 
 		} catch (ParserConfigurationException e) {

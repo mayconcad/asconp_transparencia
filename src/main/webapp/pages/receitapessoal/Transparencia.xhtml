@@ -31,9 +31,9 @@
 			<p:selectOneMenu id="exercicioSelectOM"
 				itemLabel="#{wd['dialog.optionYes']}"
 				value="#{ReceitaPessoalController.exercicio}">
-<!-- 				<f:selectItem itemLabel="Selecione" value="#{null}"/> -->
+				<f:selectItem itemLabel="Selecione" value="#{null}"/>
 				<f:selectItems value="#{ReceitaPessoalController.exercicios}" />
-<!-- 				<p:ajax event="change" process="@this" update="@form" /> -->
+				<p:ajax event="change" process="@this" update="@form" />
 			</p:selectOneMenu>
 		</div>
 		<div style="float: left;">
@@ -46,7 +46,7 @@
 				value="#{ReceitaPessoalController.mesEnum}">
 				<f:selectItem itemLabel="Selecione" value="#{null}"/>
 				<f:selectItems value="#{ReceitaPessoalController.meses}" />
-<!-- 				<p:ajax event="change" process="@this" /> -->
+				<p:ajax event="change" process="@this" />
 			</p:selectOneMenu>
 		</div>
 		<p:outputLabel value="Nome/CPF" for="nomeIT"

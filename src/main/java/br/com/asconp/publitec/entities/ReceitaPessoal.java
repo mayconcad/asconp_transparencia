@@ -15,31 +15,31 @@ public class ReceitaPessoal extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private long id;
+	public long id;
 
 	@Column
-	private String cpf;
+	public String cpf;
 	
 	@Column
-	private String nome;
+	public String nome;
 	
 	@Column
-	private String lotacao;
+	public String lotacao;
 	
 	@Column
-	private String cargo;
+	public String cargo;
 	
 	@Column
-	private String remuneracao;
+	public String remuneracao;
 	
 	@Column
-	private String numunidadegestora;
+	public String numunidadegestora;
 	
 	@Column
-	private int ano;
+	public int ano;
 	
 	@Column
-	private String mes;
+	public String mes;
 	
 	
 	//private String cpfLink;

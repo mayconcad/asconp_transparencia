@@ -31,7 +31,7 @@ import br.com.asconp.publitec.enums.MesEnum;
 
 @ManagedBean(name = "ParseReceitaForXmlController")
 @ViewScoped
-public class ParseReceitaForXmlController extends BaseController {
+public class ParseReceitaForXmlController_OLD extends BaseController {
 
 	private EmpresaEnum empresaEnum;
 
