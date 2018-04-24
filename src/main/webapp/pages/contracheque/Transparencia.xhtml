@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="searchForm" styleClass="container_24">
+		<p:messages id="messages" />
+		<div style="float: left; text-align: top !important;">
+			<a href="#{ContraChequeController.linkVoltar}"
+				class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
+		</div>
+		<br />
+		<br />
+
+		<p:outputLabel value="Município/Câmara" for="empresa"
+			styleClass="grid_3" />
+		<p:outputLabel value="#{ContraChequeController.getNomeEmpresa()}"
+			id="empresa" styleClass="grid_3" />
+
+		<p:outputLabel value="Matrícula" for="matrIT" styleClass="grid_2" />
+		<div class="grid_4">
+			<p:inputText id="matrIT" value="#{ContraChequeController.matricula}"></p:inputText>
+		</div>
+		<p:outputLabel value="Senha" for="senhaIT" styleClass="grid_2" />
+		<div class="grid_4">
+			<p:inputText id="senhaIT" value="#{ContraChequeController.senha}"></p:inputText>
+		</div>
+
+		<div style="float: left;">
+			<p:outputLabel value="Ano" for="exercicioSelectOM"
+				styleClass="grid_2" />
+		</div>
+
+		<div class="grid_2" style="float: left;">
+			<p:selectOneMenu id="exercicioSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ContraChequeController.exercicio}">
+				<f:selectItem itemLabel="Selecione" value="#{null}" />
+				<f:selectItems value="#{ContraChequeController.exercicios}" />
+				<p:ajax event="change" process="@this" update="@form" />
+			</p:selectOneMenu>
+		</div>
+		<div style="float: left;">
+			<p:outputLabel value="Mês" for="mesSelectOM" styleClass="grid_1" />
+		</div>
+		<div class="grid_2" style="float: left;">
+			<p:selectOneMenu id="mesSelectOM"
+				itemLabel="#{wd['dialog.optionYes']}"
+				value="#{ContraChequeController.mesEnum}">
+				<f:selectItem itemLabel="Selecione" value="#{null}" />
+				<f:selectItems value="#{ContraChequeController.meses}" />
+				<p:ajax event="change" process="@this" />
+			</p:selectOneMenu>
+		</div>
+
+		<br />
+		<div class="clear"></div>
+		<br />
+
+		<div style="text-align: center; margin-top: 5px;">
+			<p:captcha id="captch" label="Captcha" language="pt_BR" theme="white"
+				validatorMessage="Captcha: Erro de Validação: O texto não confere!" />
+		</div>
+
+		<div class="g-recaptcha" data-sitekey="6LegKlUUAAAAALXful9APeeCl3gNe1BDJoZ9ucdP"></div>
+
+	</h:form>
+</ui:composition>

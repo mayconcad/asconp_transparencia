@@ -11,7 +11,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>ASCONP - Portal da Transparência</title>
 	<link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 	<!-- 	<script src='https://www.google.com/recaptcha/api.js'></script> -->
 </h:head>
 <style type="text/css">
@@ -95,7 +95,12 @@
 				<div class="clean" />
 			</div>
 		</div>
+<div style="text-align: center; margin-top: 5px;">
+			<p:captcha id="captch" label="Captcha" language="pt_BR" theme="white"
+				validatorMessage="Captcha: Erro de Validação: O texto não confere!" />
+		</div>
 
+		<div class="g-recaptcha" data-sitekey="6LegKlUUAAAAALXful9APeeCl3gNe1BDJoZ9ucdP"></div>
 		<p:messages id="messages" layout="table" style="color:red;font-weight:bold;" />
 	</h:form>
 	<!-- 12*60*1000 -->

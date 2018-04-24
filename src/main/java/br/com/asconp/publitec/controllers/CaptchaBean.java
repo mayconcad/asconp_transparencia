@@ -30,12 +30,12 @@ public class CaptchaBean extends BaseController {
 	}
 
 	public boolean validarCaptcha() {
-		//if (!getCaptcha().equals(getInputCaptcha())) {
-			//addErrorMessage("Os caracteres digitados não conferem! \nDigite-os corretamente.");
-			//setCaptcha(UtilsModel.gerarCaptcha(8));
-			//setInputCaptcha("");
-			//return false;
-		//}
+		if (!getCaptcha().equals(getInputCaptcha())) {
+			addErrorMessage("Os caracteres digitados não conferem! \nDigite-os corretamente.");
+			setCaptcha(UtilsModel.gerarCaptcha(8));
+			setInputCaptcha("");
+			return false;
+		}
 		return true;
 	}
 
