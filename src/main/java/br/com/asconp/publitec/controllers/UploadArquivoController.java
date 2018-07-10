@@ -54,38 +54,41 @@ public class UploadArquivoController extends BaseController {
 	private EmpresaEnum empresaEnum;
 
 	private MesEnum mesEnum;
-	
+
 	private String exercicio;
-	
-	private String tipoArquivo="ReceitaDespesa";
+
+	private String tipoArquivo = "ReceitaDespesa";
 
 	public List<LayoutXml> layoutXmlList;
 
 	private String login, password;
-	
-	Calendar calDataAtual=Calendar.getInstance();
-	
-	Boolean [] listFiles={false,false,false};
+
+	Calendar calDataAtual = Calendar.getInstance();
+	boolean arquivo1 = false;
+	boolean arquivo2 = false;
+	boolean arquivo3 = false;
 
 	@PostConstruct
 	public void init() {
 		calDataAtual.setTime(new Date());
 		empresaEnum = null;
 		mesEnum = null;
-		
+
 	}
 
 	public UploadArquivoController() {
 		LoginBean controllerInstance = UtilsView
 				.getControllerInstance(LoginBean.class);
-		if (/*controllerInstance.getUserName() == null
-				|| controllerInstance.getPassword() == null
-			|| !controllerInstance.getUserName().trim().equals("asconp") || !controllerInstance.getPassword().trim().equals("asconp2017")*/ false) {
-		
+		if (/*
+			 * controllerInstance.getUserName() == null ||
+			 * controllerInstance.getPassword() == null ||
+			 * !controllerInstance.getUserName().trim().equals("asconp") ||
+			 * !controllerInstance.getPassword().trim().equals("asconp2017")
+			 */false) {
+
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				context.getExternalContext().redirect(
-						"/publitec/login.xhtml");
+				context.getExternalContext().redirect("/publitec/login.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -95,16 +98,16 @@ public class UploadArquivoController extends BaseController {
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-		if (!UtilsModel.possuiValorValido(empresaEnum, mesEnum)) {
+		if (empresaEnum == null || mesEnum == null) {
 			FacesMessage message = new FacesMessage(
 					"Informe os campos Empresa e Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
-		} else if (!UtilsModel.possuiValorValido(empresaEnum)) {
+		} else if (empresaEnum == null) {
 			FacesMessage message = new FacesMessage("Informe a Empresa");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
-		} else if (!UtilsModel.possuiValorValido(mesEnum)) {
+		} else if (mesEnum == null) {
 			FacesMessage message = new FacesMessage("Informe o Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
@@ -120,38 +123,59 @@ public class UploadArquivoController extends BaseController {
 						"Arquivo(s) importado(s) com sucesso!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
-		}else{
+		} else {
 			FacesMessage message = new FacesMessage(
 					"Não fo possível realizar a importação do(s) arquivo(s)!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
-		String fileName=event.getFile().getFileName();
-		
-		
-			if("FolhaPagamento.xml".equals(fileName)){
-				listFiles[0]=true;
+		String fileName = event.getFile().getFileName();
+
+		int exercicioInt = Integer.parseInt(exercicio);
+		if (exercicioInt >= 2018) {
+
+			if ("FolhaPagamento.xml".equals(fileName)) {
+				arquivo1 = true;
 			}
-			if("Servidor.xml".equals(fileName) ){
-				listFiles[1]=true;
+			if ("CadastrosAuxiliaresSagresFolha.xml".equals(fileName)) {
+				arquivo2 = true;
 			}
-			if("Cargo.xml".equals(fileName) ){
-				listFiles[2]=true;
-			}		
-				
-		
-		if(listFiles[0] && listFiles[1] && listFiles[2])
-			if(UtilsModel.hasValue(getTipoArquivo()) && "Pessoal".equals(getTipoArquivo())){
+			if ("Historico.xml".equals(fileName)) {
+				arquivo3 = true;
+			}
+
+			if (arquivo1 && arquivo2 && arquivo3
+					&& "Pessoal".equals(getTipoArquivo())) {
+				processarArquivoPessoalApartir2018(exercicioInt);
+				arquivo1 = false;
+				arquivo2 = false;
+				arquivo3 = false;
+			}
+
+		} else {
+
+			if ("FolhaPagamento.xml".equals(fileName)) {
+				arquivo1 = true;
+			}
+			if ("Servidor.xml".equals(fileName)) {
+				arquivo1 = true;
+			}
+			if ("Cargo.xml".equals(fileName)) {
+				arquivo1 = true;
+			}
+
+			if (arquivo1 && arquivo2 && arquivo3
+					&& "Pessoal".equals(getTipoArquivo())) {
 				processarArquivoPessoal();
-				listFiles[0] = false;
-				listFiles[1] = false;
-				listFiles[2] = false;
+				arquivo1 = false;
+				arquivo2 = false;
+				arquivo3 = false;
 			}
-		
-		
+		}
+
 		init();
 		return;
 	}
-	
+
 	public void processarArquivoPessoal() {
 
 		Calendar cal = Calendar.getInstance();
@@ -159,9 +183,9 @@ public class UploadArquivoController extends BaseController {
 		cal.set(Calendar.YEAR, Integer.parseInt(exercicio));
 		ArrayList<ReceitaPessoal> receitasPessoal = new ArrayList<ReceitaPessoal>();
 		try {
-			DocumentBuilderFactory newInstance = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory newInstance = DocumentBuilderFactory
+					.newInstance();
 			newInstance.setNamespaceAware(true);
-
 
 			String caminho = System.getProperty("user.home").concat(
 					File.separator);
@@ -173,114 +197,112 @@ public class UploadArquivoController extends BaseController {
 
 			filePath.append(String.format("%02d", getMesEnum().ordinal() + 1))
 					.append(File.separator);
-			
-			File file0 = new File(filePath.toString()
-					+ "FolhaPagamento.xml");
-			InputStream inputStream0= new FileInputStream(file0);
-			Reader reader0 = new InputStreamReader(inputStream0,"UTF-8");
-			
+
+			File file0 = new File(filePath.toString() + "FolhaPagamento.xml");
+			InputStream inputStream0 = new FileInputStream(file0);
+			Reader reader0 = new InputStreamReader(inputStream0, "UTF-8");
+
 			InputSource is0 = new InputSource(reader0);
 			is0.setEncoding("UTF-8");
-			
-			DocumentBuilder builder = newInstance
-					.newDocumentBuilder();
 
-			Document document = builder.parse(is0);		
+			DocumentBuilder builder = newInstance.newDocumentBuilder();
+
+			Document document = builder.parse(is0);
 
 			NodeList nodeList = document.getElementsByTagName("FolhaPagamento");
-			
+
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Element element = (Element) nodeList.item(i);
 				ReceitaPessoal layoutXml = new ReceitaPessoal();
 
-				String cpf = element
-						.getElementsByTagName("cpf").item(0)
+				String cpf = element.getElementsByTagName("cpf").item(0)
 						.getTextContent();
-				
-				String numeroCargo=element
+
+				String numeroCargo = element
 						.getElementsByTagName("numeroCargo").item(0)
 						.getTextContent();
-				
-				String mesReferencia=element
+
+				String mesReferencia = element
 						.getElementsByTagName("mesReferencia").item(0)
 						.getTextContent();
-				if(UtilsModel.hasValue(mesReferencia))
-					layoutXml.setMes( String.format("%02d",Integer.parseInt(mesReferencia)));
+				if (UtilsModel.hasValue(mesReferencia))
+					layoutXml.setMes(String.format("%02d",
+							Integer.parseInt(mesReferencia)));
 				layoutXml.setCpf(cpf);
 				layoutXml.setAno(cal.get(Calendar.YEAR));
 				layoutXml.setNumunidadegestora(empresaEnum.getCodigo());
-				
-				
-				File file = new File(filePath.toString()+ "/Cargo.xml");
-				InputStream inputStream= new FileInputStream(file);
-				Reader reader = new InputStreamReader(inputStream,"UTF-8");
+
+				File file = new File(filePath.toString() + "/Cargo.xml");
+				InputStream inputStream = new FileInputStream(file);
+				Reader reader = new InputStreamReader(inputStream, "UTF-8");
 
 				InputSource is = new InputSource(reader);
-				
-				File file2 = new File(filePath.toString()+ "/Servidor.xml");
-				InputStream inputStream2= new FileInputStream(file2);
-				Reader reader2 = new InputStreamReader(inputStream2,"UTF-8");
+
+				File file2 = new File(filePath.toString() + "/Servidor.xml");
+				InputStream inputStream2 = new FileInputStream(file2);
+				Reader reader2 = new InputStreamReader(inputStream2, "UTF-8");
 
 				InputSource is2 = new InputSource(reader2);
 
-				
-//				SAXBuilder saxBuilder = new SAXBuilder();
-//				org.jdom2.Document doc;
-//				try {
-//					doc = saxBuilder.build(is);
-//
-//				org.jdom2.Element rootElement = (org.jdom2.Element) doc
-//						.getRootElement();
-//				for (org.jdom2.Element elementList : rootElement.getChildren()) {				   
-//				   
-//					for(org.jdom2.Element elementCargo : elementList.getChildren() ){
-//				    if("numero".equals(elementCargo.getName())){
-//				    	if(numeroCargo.equals(elementCargo.getValue()))
-//				    		System.out.println(elementCargo.getValue());
-//				    }
-//					}
-//				}
-//				
-//				} catch (JDOMException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				layoutXml.setCargo("Cargo - ");
-//				layoutXml.setNome("Nome - ");
-				layoutXml.setCargo(getCargoFuncionario(builder.parse(is),numeroCargo));
-				layoutXml.setNome(getNomeFuncionario(builder.parse(is2),cpf));
-				
+				// SAXBuilder saxBuilder = new SAXBuilder();
+				// org.jdom2.Document doc;
+				// try {
+				// doc = saxBuilder.build(is);
+				//
+				// org.jdom2.Element rootElement = (org.jdom2.Element) doc
+				// .getRootElement();
+				// for (org.jdom2.Element elementList :
+				// rootElement.getChildren()) {
+				//
+				// for(org.jdom2.Element elementCargo :
+				// elementList.getChildren() ){
+				// if("numero".equals(elementCargo.getName())){
+				// if(numeroCargo.equals(elementCargo.getValue()))
+				// System.out.println(elementCargo.getValue());
+				// }
+				// }
+				// }
+				//
+				// } catch (JDOMException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				// layoutXml.setCargo("Cargo - ");
+				// layoutXml.setNome("Nome - ");
+				layoutXml.setCargo(getCargoFuncionario(builder.parse(is),
+						numeroCargo));
+				layoutXml.setNome(getNomeFuncionario(builder.parse(is2), cpf));
+
 				layoutXml.setRemuneracao(UtilsModel
 						.convertBigDecimalToString(new BigDecimal(element
-						.getElementsByTagName("remuneracaoLiquida").item(0)
-						.getTextContent())));	
-				
-				
+								.getElementsByTagName("remuneracaoLiquida")
+								.item(0).getTextContent())));
+
 				NodeList nodeList2 = document
 						.getElementsByTagName("unidadeGestora");
-			
-				 Element element2 = (Element) nodeList2.item(0);
-				 String lotacao = element2
-							.getElementsByTagName("descricao")
-							.item(0).getTextContent();
-					layoutXml.setLotacao(lotacao);
-								
-					receitasPessoal.add(layoutXml);			
 
-				
+				Element element2 = (Element) nodeList2.item(0);
+				String lotacao = element2.getElementsByTagName("descricao")
+						.item(0).getTextContent();
+				layoutXml.setLotacao(lotacao);
+
+				receitasPessoal.add(layoutXml);
+
 			}
-			
-			DAO dao= new DAOImpl();
-			for(ReceitaPessoal entidade : receitasPessoal){
-				Map<String,Object> params=new HashMap<String, Object>();
+
+			DAO dao = new DAOImpl();
+			for (ReceitaPessoal entidade : receitasPessoal) {
+				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("nome", entidade.getNome().trim());
 				params.put("cpf", entidade.getCpf().trim());
 				params.put("mes", entidade.getMes().trim());
-				params.put("numunidadegestora", entidade.getNumunidadegestora().trim());
-				List<ReceitaPessoalVO> find = dao.find(ReceitaPessoal.class, params,ReceitaPessoalVO.class ,false);
-				if(find == null || find.isEmpty()){
+				params.put("numunidadegestora", entidade.getNumunidadegestora()
+						.trim());
+				List<ReceitaPessoalVO> find = dao.find(ReceitaPessoal.class,
+						params, ReceitaPessoalVO.class, false);
+				if (find == null || find.isEmpty()) {
 					dao.create(entidade, ReceitaPessoalVO.class);
-					//dao.closeClonection();
+					// dao.closeClonection();
 				}
 			}
 
@@ -295,9 +317,10 @@ public class UploadArquivoController extends BaseController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();		
+			e.printStackTrace();
 		}
 	}
+
 	private String getCargoFuncionario(Document document, String numeroCargo) {
 
 		String result = "";
@@ -305,20 +328,18 @@ public class UploadArquivoController extends BaseController {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element) nodeList.item(i);
 
-			String cpfCnpjCred = element
-					.getElementsByTagName("numero").item(0)
+			String cpfCnpjCred = element.getElementsByTagName("numero").item(0)
 					.getTextContent();
 			if (cpfCnpjCred.equals(numeroCargo)) {
-				result = element
-						.getElementsByTagName("nome")
-						.item(0).getTextContent();
+				result = element.getElementsByTagName("nome").item(0)
+						.getTextContent();
 				break;
 			}
 		}
 
 		return result;
 	}
-	
+
 	private String getNomeFuncionario(Document document, String cpf) {
 
 		String result = "";
@@ -326,13 +347,11 @@ public class UploadArquivoController extends BaseController {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element) nodeList.item(i);
 
-			String cpfCnpjCred = element
-					.getElementsByTagName("cpf").item(0)
+			String cpfCnpjCred = element.getElementsByTagName("cpf").item(0)
 					.getTextContent();
 			if (cpfCnpjCred.equals(cpf)) {
-				result = element
-						.getElementsByTagName("nome")
-						.item(0).getTextContent();
+				result = element.getElementsByTagName("nome").item(0)
+						.getTextContent();
 				break;
 			}
 		}
@@ -347,11 +366,12 @@ public class UploadArquivoController extends BaseController {
 		cal.setTime(new Date());
 		cal.set(Calendar.YEAR, Integer.parseInt(exercicio));
 		try {
-			//Caminho do servidor
-//			ServletContext servletContext = (ServletContext) FacesContext
-//					.getCurrentInstance().getExternalContext().getContext();
-//			String caminho = servletContext.getRealPath(File.separator);
-			String caminho = System.getProperty("user.home").concat(File.separator);
+			// Caminho do servidor
+			// ServletContext servletContext = (ServletContext) FacesContext
+			// .getCurrentInstance().getExternalContext().getContext();
+			// String caminho = servletContext.getRealPath(File.separator);
+			String caminho = System.getProperty("user.home").concat(
+					File.separator);
 
 			StringBuilder filePath = new StringBuilder();
 			filePath.append(caminho).append(getEmpresaEnum().getCodigo())
@@ -360,7 +380,7 @@ public class UploadArquivoController extends BaseController {
 			if (!Paths.get(filePath.toString()).toFile().exists()) {
 				new File(filePath.toString()).mkdir();
 			}
-			filePath.append(cal.get(Calendar.YEAR)).append(File.separator);			
+			filePath.append(cal.get(Calendar.YEAR)).append(File.separator);
 			// StringUtils.leftPad(mesEnum.ordinal()+1, 2, "0")
 			if (!Paths.get(filePath.toString()).toFile().exists()) {
 				new File(filePath.toString()).mkdir();
@@ -382,107 +402,110 @@ public class UploadArquivoController extends BaseController {
 			addErrorMessage("Ocorreu um erro ao salvar o arquivo!");
 			return false;
 		}
-		if(UtilsModel.hasValue(getTipoArquivo()) && !"Pessoal".equals(getTipoArquivo())){
-		// verificar o conteudo do arquivo se a empresa selecionada corresponde
-		// a empresa do arquivo
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder();
-//caminho do servidor
-//			ServletContext servletContext = (ServletContext) FacesContext
-//					.getCurrentInstance().getExternalContext().getContext();
-//			String caminho = servletContext.getRealPath(File.separator);
-			String caminho = System.getProperty("user.home").concat(File.separator);
-			
-			StringBuilder filePath = new StringBuilder();
-			filePath.append(caminho).append(getEmpresaEnum().getCodigo())
-					.append(File.separator).append(cal.get(Calendar.YEAR))
-					.append(File.separator);
+		if (UtilsModel.hasValue(getTipoArquivo())
+				&& !"Pessoal".equals(getTipoArquivo())) {
+			// verificar o conteudo do arquivo se a empresa selecionada
+			// corresponde
+			// a empresa do arquivo
+			try {
+				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+						.newDocumentBuilder();
+				// caminho do servidor
+				// ServletContext servletContext = (ServletContext) FacesContext
+				// .getCurrentInstance().getExternalContext().getContext();
+				// String caminho = servletContext.getRealPath(File.separator);
+				String caminho = System.getProperty("user.home").concat(
+						File.separator);
 
-			filePath.append(numeroMes).append(File.separator);
+				StringBuilder filePath = new StringBuilder();
+				filePath.append(caminho).append(getEmpresaEnum().getCodigo())
+						.append(File.separator).append(cal.get(Calendar.YEAR))
+						.append(File.separator);
 
-			Document document = builder.parse(filePath.toString()
-					+ "/EmpenhoseRP.xml");
+				filePath.append(numeroMes).append(File.separator);
 
-			NodeList nodeList = document
-					.getElementsByTagName("emp:PrestacaoContas");
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Element element = (Element) nodeList.item(i);
+				Document document = builder.parse(filePath.toString()
+						+ "/EmpenhoseRP.xml");
 
-				String codUnidGestora = element
-						.getElementsByTagName("aux:codigoUnidGestora").item(0)
-						.getTextContent();
-				String anoRef = element
-						.getElementsByTagName("aux:anoReferencia").item(0)
-						.getTextContent();
-				String mesRef = element
-						.getElementsByTagName("aux:mesReferencia").item(0)
-						.getTextContent();
-				String urlDir = empresaEnum.getCodigo() + "" + File.separator
-						+ cal.get(Calendar.YEAR) + File.separator + numeroMes
-						+ File.separator;
-				if (!exercicio.equals(anoRef)) {
-					Paths.get(caminho + urlDir).toFile().delete();
-					FacesMessage message = new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Arquivo(s) NÃO importado(s) (O ano de referência informado não corresponde ao do(s) arquivo(s))!",
-							"");
-					FacesContext.getCurrentInstance().addMessage(null, message);
-					break;
+				NodeList nodeList = document
+						.getElementsByTagName("emp:PrestacaoContas");
+				for (int i = 0; i < nodeList.getLength(); i++) {
+					Element element = (Element) nodeList.item(i);
+
+					String codUnidGestora = element
+							.getElementsByTagName("aux:codigoUnidGestora")
+							.item(0).getTextContent();
+					String anoRef = element
+							.getElementsByTagName("aux:anoReferencia").item(0)
+							.getTextContent();
+					String mesRef = element
+							.getElementsByTagName("aux:mesReferencia").item(0)
+							.getTextContent();
+					String urlDir = empresaEnum.getCodigo() + ""
+							+ File.separator + cal.get(Calendar.YEAR)
+							+ File.separator + numeroMes + File.separator;
+					if (!exercicio.equals(anoRef)) {
+						Paths.get(caminho + urlDir).toFile().delete();
+						FacesMessage message = new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Arquivo(s) NÃO importado(s) (O ano de referência informado não corresponde ao do(s) arquivo(s))!",
+								"");
+						FacesContext.getCurrentInstance().addMessage(null,
+								message);
+						break;
+					}
+					if (!empresaEnum.getCodigo().equals(codUnidGestora)) {
+						Paths.get(caminho + urlDir).toFile().delete();
+						FacesMessage message = new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Arquivo(s) NÃO importado(s) (A unidade gestora informada não corresponde a do(s) arquivo(s))!",
+								"");
+						FacesContext.getCurrentInstance().addMessage(null,
+								message);
+						break;
+					}
+					if (!numeroMes.equals(String.format("%02d",
+							Integer.parseInt(mesRef)))) {
+						Paths.get(caminho + urlDir).toFile().delete();
+						FacesMessage message = new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Arquivo(s) NÃO importado(s) (O mês de referência informado não corresponde ao do(s) arquivo(s))!",
+								"");
+						FacesContext.getCurrentInstance().addMessage(null,
+								message);
+						break;
+					}
 				}
-				if (!empresaEnum.getCodigo().equals(codUnidGestora)) {
-					Paths.get(caminho + urlDir).toFile().delete();
-					FacesMessage message = new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Arquivo(s) NÃO importado(s) (A unidade gestora informada não corresponde a do(s) arquivo(s))!",
-							"");
-					FacesContext.getCurrentInstance().addMessage(null, message);
-					break;
-				}
-				if (!numeroMes.equals(String.format("%02d",
-						Integer.parseInt(mesRef)))) {
-					Paths.get(caminho + urlDir).toFile().delete();
-					FacesMessage message = new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Arquivo(s) NÃO importado(s) (O mês de referência informado não corresponde ao do(s) arquivo(s))!",
-							"");
-					FacesContext.getCurrentInstance().addMessage(null, message);
-					break;
-				}
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		}
 
 		return true;
 	}
 
-	public String[] getExercicios(){
-		List<String> exercicios=new ArrayList<String>();
-		
-		for(int i = 2012; i <= calDataAtual.get(Calendar.YEAR); i++){
-			exercicios.add(i+"");
+	public String[] getExercicios() {
+		List<String> exercicios = new ArrayList<String>();
+
+		for (int i = 2012; i <= calDataAtual.get(Calendar.YEAR); i++) {
+			exercicios.add(i + "");
 		}
-		String[] exers=new String[exercicios.size()];
+		String[] exers = new String[exercicios.size()];
 		int x = 0;
 		for (String ano : exercicios) {
 			exers[x] = ano;
 			x++;
 		}
-		
+
 		return exers;
 	}
-	
-	
-	
 
 	public List<LayoutXml> getLayoutXmlList() {
 		layoutXmlList = new ArrayList<LayoutXml>();
@@ -491,8 +514,7 @@ public class UploadArquivoController extends BaseController {
 					.newDocumentBuilder();
 
 			String property = System.getProperty("user.home");
-			String dir = System.getProperty("wtp.deploy")
-					+ "/publitec";
+			String dir = System.getProperty("wtp.deploy") + "/publitec";
 			// URL url = new URL( dir+"/CadastrosAuxiliares.xml" );
 			Document document = builder.parse(dir + "/CadastrosAuxiliares.xml");
 
@@ -630,8 +652,7 @@ public class UploadArquivoController extends BaseController {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}	
-	
+	}
 
 	public String getExercicio() {
 		return exercicio;
@@ -648,11 +669,155 @@ public class UploadArquivoController extends BaseController {
 	public void setTipoArquivo(String tipoArquivo) {
 		this.tipoArquivo = tipoArquivo;
 	}
-	
+
+	//
+	// @Override
+	// public void onTabChanged(TabChangeEvent event) {
+	// }
+
+	public void processarArquivoPessoalApartir2018(int exercicio) {
+
+		ArrayList<ReceitaPessoal> receitasPessoal = new ArrayList<ReceitaPessoal>();
+
+		try {
+
+			DocumentBuilderFactory newInstance = DocumentBuilderFactory
+					.newInstance();
+			newInstance.setNamespaceAware(true);
+
+			String caminho = System.getProperty("user.home").concat(
+					File.separator);
+
+			StringBuilder filePath = new StringBuilder();
+			filePath.append(caminho).append(empresaEnum.getCodigo())
+					.append(File.separator).append(exercicio)
+					.append(File.separator);
+
+			filePath.append(String.format("%02d", getMesEnum().ordinal() + 1))
+					.append(File.separator);
+
+			File file0 = new File(filePath.toString() + "FolhaPagamento.xml");
+			InputStream inputStream0 = new FileInputStream(file0);
+			Reader reader0 = new InputStreamReader(inputStream0, "UTF-8");
+
+			InputSource is0 = new InputSource(reader0);
+			is0.setEncoding("UTF-8");
+
+			DocumentBuilder builder = newInstance.newDocumentBuilder();
+
+			Document document = builder.parse(is0);
+
+			String[] mesUnidGestora = mescarregaMesReferencia(document);
+
+			NodeList nodeList = document
+					.getElementsByTagName("fol:servidorFolha");
+
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element element = (Element) nodeList.item(i);
+				ReceitaPessoal layoutXml = new ReceitaPessoal();
+
+				String cpf = element.getElementsByTagName("fol:cpfServidor")
+						.item(0).getTextContent();
+
+				String numeroCargo = element
+						.getElementsByTagName("fol:matricula").item(0)
+						.getTextContent();
+				layoutXml.setRemuneracao(UtilsModel
+						.convertBigDecimalToString(new BigDecimal(element
+								.getElementsByTagName("fol:remuneracaoLiquida")
+								.item(0).getTextContent())));
+				if (UtilsModel.hasValue(mesUnidGestora[0]))
+					layoutXml.setMes(String.format("%02d",
+							Integer.parseInt(mesUnidGestora[0])));
+				layoutXml.setCpf(cpf);
+				layoutXml.setAno(exercicio);
+				layoutXml.setNumunidadegestora(empresaEnum.getCodigo());
+
+				File file = new File(filePath.toString()
+						+ "/CadastrosAuxiliaresSagresFolha.xml");
+				InputStream inputStream = new FileInputStream(file);
+				Reader reader = new InputStreamReader(inputStream, "UTF-8");
+
+				InputSource is = new InputSource(reader);
+
+				layoutXml.setCargo(getCargoFuncionario(builder.parse(is),
+						numeroCargo));
+
+//				File file2 = new File(filePath.toString() + "/Servidor.xml");
+//				InputStream inputStream2 = new FileInputStream(file2);
+//				Reader reader2 = new InputStreamReader(inputStream2, "UTF-8");
 //
-//	@Override
-//	public void onTabChanged(TabChangeEvent event) {
-//	}
-	
+//				InputSource is2 = new InputSource(reader2);
+//
+//				layoutXml.setNome(getNomeFuncionario(builder.parse(is2), cpf));
+				
+				layoutXml.setNome("-");
+				
+
+//				NodeList nodeList2 = document
+//						.getElementsByTagName("unidadeGestora");
+//
+//				Element element2 = (Element) nodeList2.item(0);
+//				String lotacao = element2.getElementsByTagName("descricao")
+//						.item(0).getTextContent();
+				layoutXml.setLotacao(mesUnidGestora[2]);
+
+				receitasPessoal.add(layoutXml);
+
+			}
+
+			DAO dao = new DAOImpl();
+			for (ReceitaPessoal entidade : receitasPessoal) {
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("nome", entidade.getNome().trim());
+				params.put("cpf", entidade.getCpf().trim());
+				params.put("mes", entidade.getMes().trim());
+				params.put("numunidadegestora", entidade.getNumunidadegestora()
+						.trim());
+				List<ReceitaPessoalVO> find = dao.find(ReceitaPessoal.class,
+						params, ReceitaPessoalVO.class, false);
+				if (find == null || find.isEmpty()) {
+					dao.create(entidade, ReceitaPessoalVO.class);
+					// dao.closeClonection();
+				}
+			}
+
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private String[] mescarregaMesReferencia(Document document) {
+		NodeList nodeList = document
+				.getElementsByTagName("fol:PrestacaoContas");
+
+		Element element = (Element) nodeList.item(0);
+
+		String mesReferencia = element
+				.getElementsByTagName("aux:mesReferencia").item(0)
+				.getTextContent();
+		
+		String codigoUnidGestora = element
+				.getElementsByTagName("aux:codigoUnidGestora").item(0)
+				.getTextContent();
+		String nomeUnidGestora = element
+				.getElementsByTagName("aux:nomeUnidGestora").item(0)
+				.getTextContent();
+		
+		
+		
+		return new String[]{mesReferencia, codigoUnidGestora, nomeUnidGestora};
+
+	}
 
 }

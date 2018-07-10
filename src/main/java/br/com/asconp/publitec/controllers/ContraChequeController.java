@@ -27,7 +27,7 @@ import br.com.asconp.publitec.enums.MesEnum;
 
 
 
-@ManagedBean(name = "ReceitaPessoalController")
+@ManagedBean(name = "ContraChequeController")
 @ViewScoped
 public class ContraChequeController extends BaseController {
 
