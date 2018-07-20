@@ -28,7 +28,7 @@ public class DAOImpl implements DAO {
 	public <V extends BaseVO> V create(BaseEntity entity, Class<V> voClass) {
 
 		try {
-			if(!manager.getTransaction().isActive())
+//			if(!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
 			manager.persist(entity);
 			manager.getTransaction().commit();
@@ -51,7 +51,7 @@ public class DAOImpl implements DAO {
 	public <V extends BaseVO> V update(BaseEntity entity, Class<V> voClass)
 			{
 		try {
-			if(!manager.getTransaction().isActive())
+//			if(!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
 			manager.merge(entity);
 			manager.getTransaction().commit();
@@ -72,7 +72,7 @@ public class DAOImpl implements DAO {
 	@Override
 	public <V extends BaseVO> V load(BaseEntity entity, Class<V> voClass) {
 		try {
-			if(!manager.getTransaction().isActive())
+//			if(!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
 			manager.refresh(entity);
 			manager.getTransaction().commit();
@@ -98,7 +98,7 @@ public class DAOImpl implements DAO {
 			Map<String, Object> params, Class<V> voClass, boolean clausuleOR) {
 		List<V> list = null;
 		try {
-			if(!manager.getTransaction().isActive())
+//			if(!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
 			StringBuffer sb = new StringBuffer();
 			String result = null;
@@ -158,7 +158,7 @@ public class DAOImpl implements DAO {
 
 	@Override
 	public void delete(BaseEntity entity) {
-		if(!manager.getTransaction().isActive())
+//		if(!manager.getTransaction().isActive())
 		manager.getTransaction().begin();
 		manager.remove(entity);
 		manager.getTransaction().commit();

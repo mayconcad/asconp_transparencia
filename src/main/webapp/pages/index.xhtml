@@ -18,7 +18,7 @@
 		<p:layoutUnit position="center" closable="false" resizable="false" id="centerLayout" rendered="true">
 			<a name="focus" />
 <!-- 			<p:messages rendered="#{appController.rendered}" id="messagesSystem" closable="true" autoUpdate="true" severity="error, fatal, warn" showDetail="true" showSummary="false" /> -->
-			<p:growl id="growlSystem" severity="info" autoUpdate="true" life="60000" />
+			<p:growl id="growlSystem" severity="info" life="60000" ><p:autoUpdate /></p:growl>
 			<ui:include src="/sections/center.xhtml" />
 		</p:layoutUnit>
 
@@ -26,7 +26,7 @@
 			<p><b>
 				PUBLITEC
 				<!-- (build: #{appController.buildNumber}) -->
-				<span>PUBLITEC&copy; 2017</span>
+				<span>PUBLITEC&copy; 2018</span>
 			</b></p>
 		</p:layoutUnit>
 	</p:layout>

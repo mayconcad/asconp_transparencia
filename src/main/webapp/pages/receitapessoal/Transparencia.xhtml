@@ -10,124 +10,135 @@
 	xmlns:x="http://java.sun.com/jsf/composite/components">
 
 	<h:form id="searchForm" styleClass="container_24">
-		<p:messages id="messages"/>
+		<p:messages id="messages" />
 		<div style="float: left; text-align: top !important;">
-						<a href="#{ReceitaPessoalController.linkVoltar}"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
-					</div>
-					<br/>
-					<br/>
-		
-		<p:outputLabel value="Município/Câmara" for="empresa"
-		styleClass="grid_3" />
-		<p:outputLabel value="#{ReceitaPessoalController.getNomeEmpresa()}" id="empresa"
-		styleClass="grid_3" />
-		
-		<div style="float: left;">
-		<p:outputLabel value="Exercício" for="exercicioSelectOM"
-			styleClass="grid_2"/>
+			<a href="#{ReceitaPessoalController.linkVoltar}"
+				class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
 		</div>
-		
-		<div class="grid_2" style="float: left;">
-			<p:selectOneMenu id="exercicioSelectOM"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{ReceitaPessoalController.exercicio}">
-				<f:selectItem itemLabel="Selecione" value="#{null}"/>
-				<f:selectItems value="#{ReceitaPessoalController.exercicios}" />
-				<p:ajax event="change" process="@this" update="@form" />
-			</p:selectOneMenu>
-		</div>
-		<div style="float: left;">
-		<p:outputLabel value="Mês" for="mesSelectOM"
-			styleClass="grid_1"/>
-</div>
-		<div class="grid_2" style="float: left;">
-			<p:selectOneMenu id="mesSelectOM"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{ReceitaPessoalController.mesEnum}">
-				<f:selectItem itemLabel="Selecione" value="#{null}"/>
-				<f:selectItems value="#{ReceitaPessoalController.meses}" />
-				<p:ajax event="change" process="@this" />
-			</p:selectOneMenu>
-		</div>
-		<p:outputLabel value="Nome/CPF" for="nomeIT"
-			styleClass="grid_2"/>
-		<div class="grid_4">
-			<p:inputText id="nomeIT" value="#{ReceitaPessoalController.nomeCPF}"></p:inputText>
-		</div>
-		<p:outputLabel value="Cargo" for="cargoIT"
-			styleClass="grid_2"/>
-		<div class="grid_4">
-			<p:inputText id="cargoIT" value="#{ReceitaPessoalController.cargo}"></p:inputText>
-		</div>
+		<br />
+		<br />
+		<div class="ui-fluid">
+			<fieldset>
+				<legend>Filtros</legend>
 
-		
+				<p:panelGrid columns="10"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Município/Câmara" for="empresa" />
+					<p:outputLabel value="#{ReceitaPessoalController.getNomeEmpresa()}"
+						id="empresa" />
+
+					<p:outputLabel value="Exercício" for="exercicioSelectOM" />
+					<p:selectOneMenu id="exercicioSelectOM"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{ReceitaPessoalController.exercicio}">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{ReceitaPessoalController.exercicios}" />
+						<p:ajax event="change" process="@this" update="@form" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Mês" for="mesSelectOM" />
+					<p:selectOneMenu id="mesSelectOM"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{ReceitaPessoalController.mesEnum}">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{ReceitaPessoalController.meses}" />
+						<p:ajax event="change" process="@this" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Nome/CPF" for="nomeIT" />
+
+					<p:inputText id="nomeIT"
+						value="#{ReceitaPessoalController.nomeCPF}"></p:inputText>
+
+					<p:outputLabel value="Cargo" for="cargoIT" />
+
+					<p:inputText id="cargoIT" value="#{ReceitaPessoalController.cargo}"></p:inputText>
+				</p:panelGrid>
+			</fieldset>
+		</div>
 		<br />
 		<div class="clear"></div>
-		<br/>
+		<br />
 		<div style="text-align: center;">
-			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update=":ReceitaPessoalTabView:searchForm:searchResult" action="#{ReceitaPessoalController.buscar}" />
+			<p:commandButton id="searchBtn" icon="ui-icon-search"
+				value="Consultar"
+				update=":ReceitaPessoalTabView:searchForm:searchResult"
+				action="#{ReceitaPessoalController.buscar}" />
 		</div>
-				<p:blockUI block="searchForm" trigger="searchBtn">
+		<p:blockUI block="searchForm" trigger="searchBtn">
             	Carregando...<br />
-					<h:graphicImage library="images" name="ajax-loader.gif" />
-				</p:blockUI>
-				<br/><br/>
-				<fieldset>
+			<h:graphicImage library="images" name="ajax-loader.gif" />
+		</p:blockUI>
+		<br />
+		<br />
+		<div class="ui-fluid">
+			<fieldset>
 				<legende>Resultados da Consulta</legende>
-				<br/>
-		<p:dataTable id="searchResult" value="#{ReceitaPessoalController.layoutXmlList}" var="layoutXml" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
-			rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true" rowsPerPageTemplate="5,10,15" rows="10" resizableColumns="true" scrollable="true" draggableColumns="true"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-		<f:facet name="header">
-            <h:commandLink>
-                <p:graphicImage value="/resources/images/excel.png" width="24"/>
-                <p:dataExporter type="xls" target="searchResult" fileName="#{ReceitaPessoalController.fileNameExporter}" />
-            </h:commandLink>
- 
-            <h:commandLink>
-                <p:graphicImage value="/resources/images/pdf.png" width="24"/>
-                <p:dataExporter type="pdf" target="searchResult" fileName="#{ReceitaPessoalController.fileNameExporter}"/>
-            </h:commandLink>
- 
-            <h:commandLink>
-                <p:graphicImage value="/resources/images/csv.png" width="24"/>
-                <p:dataExporter type="csv" target="searchResult" fileName="#{ReceitaPessoalController.fileNameExporter}" />
-            </h:commandLink>
-            </f:facet>
-           
-             <p:column style="font-size:10px;">
-            <f:facet name="header">
-                <h:outputText value="CPF" />
-            </f:facet>
-            <h:outputText value="#{layoutXml.cpf}"/>
-<!--             <h:outputLink target="_blank" value="#{layoutXml.cpf}">#{layoutXml.cpf}</h:outputLink> -->
-        </p:column>
-          <p:column style="font-size:10px; white-space:normal !important;" width="200">
-            <f:facet name="header">
-                <h:outputText value="Nome" />
-            </f:facet>
-            <h:outputText value="#{layoutXml.nome}"/>
-        </p:column>
-        <p:column style="font-size:10px;">
-            <f:facet name="header">
-                <h:outputText value="Lotação" />
-            </f:facet>
-            <h:outputText value="#{layoutXml.lotacao}" />
-        </p:column>
-        <p:column style="font-size:10px; white-space:normal !important;" width="200">
-            <f:facet name="header">
-                <h:outputText value="Cargo" />
-            </f:facet>
-            <h:outputText value="#{layoutXml.cargo}" />
-        </p:column>
-        <p:column style="font-size:10px; white-space:normal !important;" width="200">
-            <f:facet name="header">
-                <h:outputText value="Remuneração Líquida(R$)" />
-            </f:facet>
-            <h:outputText value="#{layoutXml.remuneracao}" />
-        </p:column>
-         
-            </p:dataTable>
-            </fieldset>
+				<br />
+				<p:dataTable id="searchResult" reflow="true"
+					value="#{ReceitaPessoalController.layoutXmlList}" var="layoutXml"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+					rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true"
+					rowsPerPageTemplate="5,10,15" rows="10" resizableColumns="true"
+					scrollable="true" draggableColumns="true"
+					currentPageReportTemplate="{currentPage} de {totalPages}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/excel.png" width="24" />
+							<p:dataExporter type="xls" target="searchResult"
+								fileName="#{ReceitaPessoalController.fileNameExporter}" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/pdf.png" width="24" />
+							<p:dataExporter type="pdf" target="searchResult"
+								fileName="#{ReceitaPessoalController.fileNameExporter}" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/csv.png" width="24" />
+							<p:dataExporter type="csv" target="searchResult"
+								fileName="#{ReceitaPessoalController.fileNameExporter}" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="CPF" />
+						</f:facet>
+						<h:outputText value="#{layoutXml.cpf}" />
+						<!--             <h:outputLink target="_blank" value="#{layoutXml.cpf}">#{layoutXml.cpf}</h:outputLink> -->
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{layoutXml.nome}" />
+					</p:column>
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Lotação" />
+						</f:facet>
+						<h:outputText value="#{layoutXml.lotacao}" />
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="Cargo" />
+						</f:facet>
+						<h:outputText value="#{layoutXml.cargo}" />
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="Remuneração Líquida(R$)" />
+						</f:facet>
+						<h:outputText value="#{layoutXml.remuneracao}" />
+					</p:column>
+
+				</p:dataTable>
+			</fieldset>
+		</div>
 	</h:form>
 </ui:composition>

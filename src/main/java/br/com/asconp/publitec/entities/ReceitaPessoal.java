@@ -8,42 +8,40 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="pub_receita_pessoal")
+@Table(name = "pub_receita_pessoal")
 public class ReceitaPessoal extends BaseEntity {
-	
-	//private static final long serialVersionUID = -6736734717512375671L;
-	
+
+	// private static final long serialVersionUID = -6736734717512375671L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	public long id;
 
 	@Column
 	public String cpf;
-	
+
 	@Column
 	public String nome;
-	
+
 	@Column
 	public String lotacao;
-	
+
 	@Column
 	public String cargo;
-	
+
 	@Column
 	public String remuneracao;
-	
+
 	@Column
 	public String numunidadegestora;
-	
+
 	@Column
 	public int ano;
-	
+
 	@Column
 	public String mes;
-	
-	
-	//private String cpfLink;
-		
+
+	// private String cpfLink;
 
 	public long getId() {
 		return id;
@@ -53,13 +51,13 @@ public class ReceitaPessoal extends BaseEntity {
 		this.id = id;
 	}
 
-//	public String getCpfLink() {
-//		return cpfLink;
-//	}
-//
-//	public void setCpfLink(String cpfLink) {
-//		this.cpfLink = cpfLink;
-//	}
+	// public String getCpfLink() {
+	// return cpfLink;
+	// }
+	//
+	// public void setCpfLink(String cpfLink) {
+	// this.cpfLink = cpfLink;
+	// }
 
 	public String getCpf() {
 		return cpf;
@@ -90,6 +88,8 @@ public class ReceitaPessoal extends BaseEntity {
 	}
 
 	public void setCargo(String cargo) {
+		if (cargo == null)
+			this.cargo = "";
 		this.cargo = cargo;
 	}
 
@@ -125,11 +125,8 @@ public class ReceitaPessoal extends BaseEntity {
 		this.mes = mes;
 	}
 
-	
-	
-//	public long getSerialversionuid() {
-//		return serialVersionUID;
-//	}
-	
+	// public long getSerialversionuid() {
+	// return serialVersionUID;
+	// }
 
 }

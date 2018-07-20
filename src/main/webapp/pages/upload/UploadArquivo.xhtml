@@ -9,69 +9,103 @@
 	xmlns:m="http://code.google.com/p/gmaps4jsf/"
 	xmlns:x="http://java.sun.com/jsf/composite/components">
 
-	<h:form id="criarForm" styleClass="container_24">
-		<p:messages id="messages"/>
-		
-		<fieldset>
-		<legend>Selecione os Itens</legend>
-		<div style="float: left;">
-		<p:outputLabel value="Município/Câmara" for="empresa"
-			styleClass="grid_3" />
+	<h:form id="criarForm" styleClass="container_24" enctype="multipart/form-data">
+		<p:messages id="messages" />
+
+		<div class="ui-fluid">
+			<fieldset>
+				<legend>Selecione os Itens</legend>
+
+				<p:panelGrid columns="10"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Município/Câmara" for="empresa2" />
+					<p:selectOneMenu id="empresa2"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{UploadArquivoController.empresaEnum}" required="true">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{UploadArquivoController.getEmpresas()}" />
+						<p:ajax event="change" process="@this" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="Exercício" for="exercicioSelectOM2" />
+					<p:selectOneMenu id="exercicioSelectOM2"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{UploadArquivoController.exercicio}" required="true">
+						<f:selectItems value="#{UploadArquivoController.exercicios}" />
+						<p:ajax event="change" process="@this" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Mês" for="mes2" />
+					<p:selectOneMenu id="mes2" itemLabel="#{wd['dialog.optionYes']}"
+						value="#{UploadArquivoController.mesEnum}" required="true">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{UploadArquivoController.getMeses()}" />
+						<p:ajax event="change" process="@this" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Tipo" for="fileTypeOR2" />
+					<p:selectOneRadio id="fileTypeOR2" required="true"
+						value="#{UploadArquivoController.tipoArquivo}">
+						<f:selectItem itemLabel="Receita/Despesa"
+							itemValue="ReceitaDespesa" />
+						<f:selectItem itemLabel="Pessoal" itemValue="Pessoal" />
+						<p:ajax event="change" process="@this" />
+					</p:selectOneRadio>
+
+				</p:panelGrid>
+				<p:panelGrid columns="10"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Importar Arquivos" for="arquivoUploadFile2" />
+					<p:fileUpload id="arquivoUploadFile2" multiple="true"
+						required="true" label="Selecione os Arquivos"
+						cancelLabel="Cancelar" uploadLabel="Fazer Upload"
+						fileUploadListener="#{UploadArquivoController.handleFileUpload}"
+						process="empresa2 mes2 fileTypeOR2" update="messages"
+						allowTypes="/(\.|\/)(xml)$/"></p:fileUpload>
+				</p:panelGrid>
+			</fieldset>
 		</div>
-		<div class="grid_6" style="float: left;">
-			<p:selectOneMenu id="empresa"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{UploadArquivoController.empresaEnum}" required="true">
-					<f:selectItem itemLabel="Selecione" value="#{null}" />
-				<f:selectItems value="#{UploadArquivoController.getEmpresas()}" />
-				<p:ajax event="change" process="@this" />
-			</p:selectOneMenu>
-		</div>
-		<div style="float: left;">
-		<p:outputLabel value="Exercício" for="exercicioSelectOM"
-			styleClass="grid_2"/>
-		</div>
-		<div class="grid_2" style="float: left;">
-			<p:selectOneMenu id="exercicioSelectOM"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{UploadArquivoController.exercicio}" required="true">
-				<f:selectItems value="#{UploadArquivoController.exercicios}" />
-				<p:ajax event="change" process="@this" />
-			</p:selectOneMenu>
-		</div>
-		<div style="float: left;">
-		<p:outputLabel value="Mês" for="mes"
-			styleClass="grid_1" />
-		</div>
-		<div class="grid_3" style="float: left;">
-			<p:selectOneMenu id="mes"
-				itemLabel="#{wd['dialog.optionYes']}"
-				value="#{UploadArquivoController.mesEnum}" required="true">
-					<f:selectItem itemLabel="Selecione" value="#{null}" />
-				<f:selectItems value="#{UploadArquivoController.getMeses()}" />
-				<p:ajax event="change" process="@this" />
-			</p:selectOneMenu>
-		</div>
-	
-		<div class="grid_1" style="float: left;">
-		<p:outputLabel value="Tipo" for="fileTypeOR"
-				 />
-		</div>
-		<div class="grid_5" style="float: left; font-size: 14px;">
-			<p:selectOneRadio id="fileTypeOR" 	value="#{UploadArquivoController.tipoArquivo}">
-				<f:selectItem itemLabel="Receita/Despesa" itemValue="ReceitaDespesa"  />
-				<f:selectItem itemLabel="Pessoal" itemValue="Pessoal" />	
-				<p:ajax event="change" process="@this" />			
-			</p:selectOneRadio>
-		</div>
-		</fieldset>
-		<br />
-		<div class="clear"></div>
-<!-- 		<p:spacer height="30"/> -->
-		<br/>
-		<div >
-			<p:fileUpload id="arquivoUploadFile" multiple="true" label="Selecione os Arquivos" cancelLabel="Cancelar" uploadLabel="Importar Arquivos" fileUploadListener="#{UploadArquivoController.handleFileUpload}" process="empresa mes" update="messages" allowTypes="/(\.|\/)(xml)$/" ></p:fileUpload>
-		</div>
-				<div class="clear" />				
+
+
+		<!-- 		<label id="receitaDiv">[FolhaPagamento][CadastrosAuxiliaresSagresFolha]</label> -->
+		<!-- 		<label id="pessoalDiv">[FolhaPagamento][CArgo]</label> -->
+
+		<div class="clear" />
+		<p:idleMonitor timeout="180000" onidle="idleDialog.show()" />
+
+		<p:dialog header="Expirou! " resizable="false" closable="false"
+			id="idleDialog" width="300" height="110">
+			<!-- 		onShow="logoutFunction()"> -->
+			<div style="text-align: center;">
+				<h:outputText value="Sua Sessão Expirou!" />
+			</div>
+			<br />
+			<div style="text-align: center;">
+				<a href="#{request.contextPath}/pages//upload/Upload.xhtml">Clique
+					para recarregar a página</a>
+			</div>
+		</p:dialog>
 	</h:form>
+	<script type="text/javascript">
+		/*  <![CDATA[ */
+
+		function reactToChangedRadio2(e) {
+			//alert(document.getElementById('criarForm:fileTypeOR'));
+			document.getElementById('receitaDiv').style.visibility = 'hidden';
+			document.getElementById('pessoalDiv').style.visibility = 'visible';
+			var myval;
+			for (i = 0; i < 3; i++) {
+				if (document.forms['UploadTabView:criarForm']['UploadTabView:criarForm:fileTypeOR'][i].checked == true) {
+					myval = document.forms['UploadTabView:criarForm']['UploadTabView:criarForm:fileTypeOR'].text
+							/ value;
+				}
+			}
+			alert("val = " + myval);
+		}
+		/*    ]]> */
+	</script>
 </ui:composition>

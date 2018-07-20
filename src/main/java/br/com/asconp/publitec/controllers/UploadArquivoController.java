@@ -21,16 +21,19 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.omnifaces.util.Ajax;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -73,6 +76,7 @@ public class UploadArquivoController extends BaseController {
 		calDataAtual.setTime(new Date());
 		empresaEnum = null;
 		mesEnum = null;
+		Ajax.update(":UploadTabView");
 
 	}
 
@@ -97,7 +101,7 @@ public class UploadArquivoController extends BaseController {
 		setPassword(controllerInstance.getPassword());
 	}
 
-	public void handleFileUpload(FileUploadEvent event) {
+	public void handleFileUpload(FileUploadEvent event) throws IOException {
 		if (empresaEnum == null || mesEnum == null) {
 			FacesMessage message = new FacesMessage(
 					"Informe os campos Empresa e Mês");
@@ -112,64 +116,68 @@ public class UploadArquivoController extends BaseController {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		}
+		try {
+			if (salvarArquivo(event.getFile())) {
 
-		if (salvarArquivo(event.getFile())) {
-
-			// FacesMessage message = new
-			// FacesMessage(event.getFile().getFileName() + " foi importado.");
-			// FacesContext.getCurrentInstance().addMessage(null, message);
-			if (FacesContext.getCurrentInstance().getMessageList().size() == 0) {
+				if (FacesContext.getCurrentInstance().getMessageList().size() == 0) {
+					FacesMessage message = new FacesMessage(
+							"Arquivo(s) importado(s) com sucesso!");
+					FacesContext.getCurrentInstance().addMessage(null, message);
+				}
+			} else {
 				FacesMessage message = new FacesMessage(
-						"Arquivo(s) importado(s) com sucesso!");
+						"Não fo possível realizar a importação do(s) arquivo(s)!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
-		} else {
-			FacesMessage message = new FacesMessage(
-					"Não fo possível realizar a importação do(s) arquivo(s)!");
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-		String fileName = event.getFile().getFileName();
+			String fileName = event.getFile().getFileName();
 
-		int exercicioInt = Integer.parseInt(exercicio);
-		if (exercicioInt >= 2018) {
+			int exercicioInt = Integer.parseInt(exercicio);
+			if (exercicioInt >= 2018) {
 
-			if ("FolhaPagamento.xml".equals(fileName)) {
-				arquivo1 = true;
-			}
-			if ("CadastrosAuxiliaresSagresFolha.xml".equals(fileName)) {
-				arquivo2 = true;
-			}
-			if ("Historico.xml".equals(fileName)) {
-				arquivo3 = true;
-			}
+				if ("FolhaPagamento.xml".equals(fileName)) {
+					arquivo1 = true;
+				}
+				if ("CadastrosAuxiliaresSagresFolha.xml".equals(fileName)) {
+					arquivo2 = true;
+				}
+				if ("Historicos.xml".equals(fileName)) {
+					arquivo3 = true;
+				}
 
-			if (arquivo1 && arquivo2 && arquivo3
-					&& "Pessoal".equals(getTipoArquivo())) {
-				processarArquivoPessoalApartir2018(exercicioInt);
-				arquivo1 = false;
-				arquivo2 = false;
-				arquivo3 = false;
-			}
+				if (arquivo1 && arquivo2 && arquivo3
+						&& "Pessoal".equals(getTipoArquivo())) {
+					processarArquivoPessoalApartir2018(exercicioInt);
+					arquivo1 = false;
+					arquivo2 = false;
+					arquivo3 = false;
+				}
 
-		} else {
+			} else {
 
-			if ("FolhaPagamento.xml".equals(fileName)) {
-				arquivo1 = true;
-			}
-			if ("Servidor.xml".equals(fileName)) {
-				arquivo1 = true;
-			}
-			if ("Cargo.xml".equals(fileName)) {
-				arquivo1 = true;
-			}
+				if ("FolhaPagamento.xml".equals(fileName)) {
+					arquivo1 = true;
+				}
+				if ("Servidor.xml".equals(fileName)) {
+					arquivo1 = true;
+				}
+				if ("Cargo.xml".equals(fileName)) {
+					arquivo1 = true;
+				}
 
-			if (arquivo1 && arquivo2 && arquivo3
-					&& "Pessoal".equals(getTipoArquivo())) {
-				processarArquivoPessoal();
-				arquivo1 = false;
-				arquivo2 = false;
-				arquivo3 = false;
+				if (arquivo1 && arquivo2 && arquivo3
+						&& "Pessoal".equals(getTipoArquivo())) {
+					processarArquivoPessoal();
+					arquivo1 = false;
+					arquivo2 = false;
+					arquivo3 = false;
+				}
 			}
+		} catch (Exception e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().redirect(
+					"/publitec/pages/upload/Upload.xhtml");
+			addErrorMessage("Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
+			return;
 		}
 
 		init();
@@ -293,6 +301,7 @@ public class UploadArquivoController extends BaseController {
 			DAO dao = new DAOImpl();
 			for (ReceitaPessoal entidade : receitasPessoal) {
 				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("ano", entidade.getAno());
 				params.put("nome", entidade.getNome().trim());
 				params.put("cpf", entidade.getCpf().trim());
 				params.put("mes", entidade.getMes().trim());
@@ -303,6 +312,8 @@ public class UploadArquivoController extends BaseController {
 				if (find == null || find.isEmpty()) {
 					dao.create(entidade, ReceitaPessoalVO.class);
 					// dao.closeClonection();
+				}else{
+					dao.update(entidade, ReceitaPessoalVO.class);
 				}
 			}
 
@@ -352,6 +363,61 @@ public class UploadArquivoController extends BaseController {
 			if (cpfCnpjCred.equals(cpf)) {
 				result = element.getElementsByTagName("nome").item(0)
 						.getTextContent();
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	private String[] getCodCargoLotacFuncionarioApartir2018(Document document,
+			String cpf) {
+
+		String[] result = new String[2];
+		NodeList nodeList = document
+				.getElementsByTagName("his:HistoricoFuncional");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element element = (Element) nodeList.item(i);
+
+			String cpfServ = element.getElementsByTagName("his:cpfServidor")
+					.item(0).getTextContent();
+			if (cpf.equals(cpfServ)) {
+				result[0] = element.getElementsByTagName("gen:codigoCargo")
+						.item(0).getTextContent();
+				result[1] = element.getElementsByTagName("gen:codigoLotacao")
+						.item(0).getTextContent();
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	private String[] getNomeCargoFuncionarioApartir2018(Document document,
+			String codCargo, String cpfServidor) {
+
+		String[] result = new String[2];
+		NodeList nodeList = document.getElementsByTagName("aux:Cargo");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element element = (Element) nodeList.item(i);
+
+			String codCarg = element.getElementsByTagName("aux:codigoCargo")
+					.item(0).getTextContent();
+			if (codCargo != null && codCargo.equals(codCarg)) {
+				result[0] = element.getElementsByTagName("aux:nomeDoCargo")
+						.item(0).getTextContent();
+				break;
+			}
+		}
+		NodeList nodeList2 = document.getElementsByTagName("aux:Servidor");
+		for (int i = 0; i < nodeList2.getLength(); i++) {
+			Element element = (Element) nodeList2.item(i);
+
+			String cpfServ = element.getElementsByTagName("aux:cpfServidor")
+					.item(0).getTextContent();
+			if (cpfServidor != null && cpfServidor.equals(cpfServ)) {
+				result[1] = element.getElementsByTagName("aux:nomeServidor")
+						.item(0).getTextContent();
 				break;
 			}
 		}
@@ -507,93 +573,6 @@ public class UploadArquivoController extends BaseController {
 		return exers;
 	}
 
-	public List<LayoutXml> getLayoutXmlList() {
-		layoutXmlList = new ArrayList<LayoutXml>();
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder();
-
-			String property = System.getProperty("user.home");
-			String dir = System.getProperty("wtp.deploy") + "/publitec";
-			// URL url = new URL( dir+"/CadastrosAuxiliares.xml" );
-			Document document = builder.parse(dir + "/CadastrosAuxiliares.xml");
-
-			/*
-			 * NodeList nodeList = document.getElementsByTagName(
-			 * "aux:ConciliacaoBancaria" );
-			 * 
-			 * for ( int i = 0; i < nodeList.getLength(); i++ ) { Element
-			 * element = (Element) nodeList.item( i ); LayoutXml layoutXml = new
-			 * LayoutXml();
-			 * 
-			 * layoutXml.setCodigoBanco( element.getElementsByTagName(
-			 * "aux:codigoBanco" ).item( 0 ).getTextContent() );
-			 * layoutXml.setCodigoAgencia( element.getElementsByTagName(
-			 * "aux:codigoAgencia" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * //NodeList childNodes = element.getChildNodes();
-			 * 
-			 * layoutXmlList.add( layoutXml ); }
-			 */
-
-			// NodeList nodeList = document.getElementsByTagName( "aux:Gestor"
-			// );
-			//
-			// for ( int i = 0; i < nodeList.getLength(); i++ ) {
-			// Element element = (Element) nodeList.item( i );
-			// LayoutXml layoutXml = new LayoutXml();
-			//
-			// layoutXml.setCpfAgenPolitico( element.getElementsByTagName(
-			// "aux:cpfAgenPolitico" ).item( 0 ).getTextContent() );
-			// layoutXml.setCodigoUnidOrcamentaria(
-			// element.getElementsByTagName( "aux:codigoUnidOrcamentaria"
-			// ).item( 0 ).getTextContent() );
-			// NodeList childNodes = document.getElementsByTagName(
-			// "aux:numeroAtoQueNomeGestor" );
-			//
-			// List<GestorXml> gestores=new ArrayList<GestorXml>();
-			//
-			// for (int i2 = 0; i2 < childNodes.getLength(); i2++) {
-			// Element element2 = (Element) childNodes.item( i2 );
-			// GestorXml gestor=new GestorXml();
-			//
-			// gestor.setNumero(element2.getElementsByTagName( "gen:numero"
-			// ).item( 0 ).getTextContent());
-			// gestor.setAno(element2.getElementsByTagName( "gen:ano" ).item( 0
-			// ).getTextContent());
-			//
-			// gestores.add(gestor);
-			// }
-			//
-			// layoutXml.setGestores(gestores);
-			// NodeList childNodes = element.getChildNodes();
-
-			// layoutXmlList.add( layoutXml );
-			// }
-
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return layoutXmlList;
-	}
-
 	public void setLayoutXmlList(List<LayoutXml> layoutXmlList) {
 		this.layoutXmlList = layoutXmlList;
 	}
@@ -719,9 +698,9 @@ public class UploadArquivoController extends BaseController {
 				String cpf = element.getElementsByTagName("fol:cpfServidor")
 						.item(0).getTextContent();
 
-				String numeroCargo = element
-						.getElementsByTagName("fol:matricula").item(0)
-						.getTextContent();
+				// String numeroCargo = element
+				// .getElementsByTagName("fol:matricula").item(0)
+				// .getTextContent();
 				layoutXml.setRemuneracao(UtilsModel
 						.convertBigDecimalToString(new BigDecimal(element
 								.getElementsByTagName("fol:remuneracaoLiquida")
@@ -733,34 +712,30 @@ public class UploadArquivoController extends BaseController {
 				layoutXml.setAno(exercicio);
 				layoutXml.setNumunidadegestora(empresaEnum.getCodigo());
 
-				File file = new File(filePath.toString()
-						+ "/CadastrosAuxiliaresSagresFolha.xml");
+				File file = new File(filePath.toString() + "/Historicos.xml");
 				InputStream inputStream = new FileInputStream(file);
 				Reader reader = new InputStreamReader(inputStream, "UTF-8");
 
 				InputSource is = new InputSource(reader);
 
-				layoutXml.setCargo(getCargoFuncionario(builder.parse(is),
-						numeroCargo));
+				String[] codCargoLot = getCodCargoLotacFuncionarioApartir2018(
+						builder.parse(is), cpf);
 
-//				File file2 = new File(filePath.toString() + "/Servidor.xml");
-//				InputStream inputStream2 = new FileInputStream(file2);
-//				Reader reader2 = new InputStreamReader(inputStream2, "UTF-8");
-//
-//				InputSource is2 = new InputSource(reader2);
-//
-//				layoutXml.setNome(getNomeFuncionario(builder.parse(is2), cpf));
-				
-				layoutXml.setNome("-");
-				
+				File file2 = new File(filePath.toString()
+						+ "/CadastrosAuxiliaresSagresFolha.xml");
+				InputStream inputStream2 = new FileInputStream(file2);
+				Reader reader2 = new InputStreamReader(inputStream2, "UTF-8");
+				InputSource is2 = new InputSource(reader2);
+				Document parser = builder.parse(is2);
+				String[] cargoNomeServ = getNomeCargoFuncionarioApartir2018(
+						parser, codCargoLot[0], cpf);
+				layoutXml.setCargo(cargoNomeServ[0]);
 
-//				NodeList nodeList2 = document
-//						.getElementsByTagName("unidadeGestora");
-//
-//				Element element2 = (Element) nodeList2.item(0);
-//				String lotacao = element2.getElementsByTagName("descricao")
-//						.item(0).getTextContent();
-				layoutXml.setLotacao(mesUnidGestora[2]);
+				String nomeLotac = getNomeLotacaoApartir2018(
+						parser, codCargoLot[1]);
+				layoutXml.setNome(cargoNomeServ[1]);				
+				layoutXml.setLotacao(nomeLotac);
+				//layoutXml.setLotacao(mesUnidGestora[2]);
 
 				receitasPessoal.add(layoutXml);
 
@@ -769,6 +744,7 @@ public class UploadArquivoController extends BaseController {
 			DAO dao = new DAOImpl();
 			for (ReceitaPessoal entidade : receitasPessoal) {
 				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("ano", entidade.getAno());
 				params.put("nome", entidade.getNome().trim());
 				params.put("cpf", entidade.getCpf().trim());
 				params.put("mes", entidade.getMes().trim());
@@ -779,6 +755,8 @@ public class UploadArquivoController extends BaseController {
 				if (find == null || find.isEmpty()) {
 					dao.create(entidade, ReceitaPessoalVO.class);
 					// dao.closeClonection();
+				}else{
+					dao.update(entidade, ReceitaPessoalVO.class);
 				}
 			}
 
@@ -797,6 +775,25 @@ public class UploadArquivoController extends BaseController {
 		}
 	}
 
+	private String getNomeLotacaoApartir2018(Document document, String codLotac) {
+		String result = "";
+		NodeList nodeList = document
+				.getElementsByTagName("aux:lotacao");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element element = (Element) nodeList.item(i);
+
+			String codLot = element.getElementsByTagName("aux:codigoLotacao")
+					.item(0).getTextContent();
+			if (codLotac != null && codLotac.equals(codLot)) {
+				result = element.getElementsByTagName("aux:nomeLotacao")
+						.item(0).getTextContent();				
+				break;
+			}
+		}
+
+		return result;
+	}
+
 	private String[] mescarregaMesReferencia(Document document) {
 		NodeList nodeList = document
 				.getElementsByTagName("fol:PrestacaoContas");
@@ -806,17 +803,15 @@ public class UploadArquivoController extends BaseController {
 		String mesReferencia = element
 				.getElementsByTagName("aux:mesReferencia").item(0)
 				.getTextContent();
-		
+
 		String codigoUnidGestora = element
 				.getElementsByTagName("aux:codigoUnidGestora").item(0)
 				.getTextContent();
 		String nomeUnidGestora = element
 				.getElementsByTagName("aux:nomeUnidGestora").item(0)
 				.getTextContent();
-		
-		
-		
-		return new String[]{mesReferencia, codigoUnidGestora, nomeUnidGestora};
+
+		return new String[] { mesReferencia, codigoUnidGestora, nomeUnidGestora };
 
 	}
 
