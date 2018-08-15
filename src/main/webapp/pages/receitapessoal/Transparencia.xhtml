@@ -13,7 +13,7 @@
 		<p:messages id="messages" />
 		<div style="float: left; text-align: top !important;">
 			<a href="#{ReceitaPessoalController.linkVoltar}"
-				class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
+				class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"> Voltar </a>
 		</div>
 		<br />
 		<br />
@@ -63,6 +63,9 @@
 				value="Consultar"
 				update=":ReceitaPessoalTabView:searchForm:searchResult"
 				action="#{ReceitaPessoalController.buscar}" />
+				<p:commandButton id="clearBtn" icon="ui-icon-refresh"
+				value="Limpar" update=":ReceitaPessoalTabView:searchForm:searchResult"
+				action="#{ReceitaPessoalController.limpar}" />
 		</div>
 		<p:blockUI block="searchForm" trigger="searchBtn">
             	Carregando...<br />

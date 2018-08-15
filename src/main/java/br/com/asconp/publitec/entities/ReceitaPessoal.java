@@ -72,6 +72,8 @@ public class ReceitaPessoal extends BaseEntity {
 	}
 
 	public void setNome(String nome) {
+		if(nome == null)
+			this.nome="";
 		this.nome = nome;
 	}
 

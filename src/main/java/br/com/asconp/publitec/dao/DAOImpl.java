@@ -28,10 +28,14 @@ public class DAOImpl implements DAO {
 	public <V extends BaseVO> V create(BaseEntity entity, Class<V> voClass) {
 
 		try {
-//			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
+			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			manager.persist(entity);
 			manager.getTransaction().commit();
+			
 			//manager.close();
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("");
@@ -48,13 +52,16 @@ public class DAOImpl implements DAO {
 	}
 
 	@Override
-	public <V extends BaseVO> V update(BaseEntity entity, Class<V> voClass)
-			{
+	public <V extends BaseVO> V update(BaseEntity entity, Class<V> voClass) {
 		try {
-//			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
+			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			manager.merge(entity);
 			manager.getTransaction().commit();
+			//if (manager.isOpen())
 			//manager.close();
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("");
@@ -72,10 +79,14 @@ public class DAOImpl implements DAO {
 	@Override
 	public <V extends BaseVO> V load(BaseEntity entity, Class<V> voClass) {
 		try {
-//			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
+			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			manager.refresh(entity);
 			manager.getTransaction().commit();
+			//if (manager.isOpen())
 			//manager.close();
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("");
@@ -98,8 +109,11 @@ public class DAOImpl implements DAO {
 			Map<String, Object> params, Class<V> voClass, boolean clausuleOR) {
 		List<V> list = null;
 		try {
-//			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
+			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			StringBuffer sb = new StringBuffer();
 			String result = null;
 			sb.append("SELECT x FROM " + klass.getSimpleName() + " x ");
@@ -107,10 +121,10 @@ public class DAOImpl implements DAO {
 				sb.append(" WHERE ");
 				for (String map : params.keySet()) {
 					if (map != null) {
-						if(clausuleOR)
-							sb.append("x." + map +" like :"+ map + " OR ");
+						if (clausuleOR)
+							sb.append("x." + map + " like :" + map + " OR ");
 						else
-						sb.append("x." + map + " like :" +map + " AND ");
+							sb.append("x." + map + " like :" + map + " AND ");
 					}
 				}
 				result = sb.substring(0, sb.length() - 4);
@@ -133,6 +147,7 @@ public class DAOImpl implements DAO {
 			e.printStackTrace();
 
 		}
+		//if (manager.isOpen())
 		//manager.close();
 		return list;
 	}
@@ -158,11 +173,15 @@ public class DAOImpl implements DAO {
 
 	@Override
 	public void delete(BaseEntity entity) {
-//		if(!manager.getTransaction().isActive())
-		manager.getTransaction().begin();
+		if (!manager.isOpen())
+			manager = JPAPersistence.getEntityManager();
+		
+		if (!manager.getTransaction().isActive())
+			manager.getTransaction().begin();
 		manager.remove(entity);
 		manager.getTransaction().commit();
-
+		//if (manager.isOpen())
+		//manager.close();
 	}
 
 	public void rollback() {
@@ -172,7 +191,7 @@ public class DAOImpl implements DAO {
 
 	private <V extends BaseVO> V converterToVO(BaseEntity entity, Class<V> vo) {
 
-		V voInstance=null;
+		V voInstance = null;
 		try {
 			voInstance = vo.newInstance();
 			for (Field fieldVO : voInstance.getClass().getDeclaredFields()) {
@@ -196,21 +215,26 @@ public class DAOImpl implements DAO {
 			Class<V> voClass, String sqlAfteWhere) {
 		List<V> list = null;
 		try {
-			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
-			StringBuffer sb = new StringBuffer();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
 			
-			sb.append("SELECT x FROM " + klass.getSimpleName() + " x WHERE ");			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
+			StringBuffer sb = new StringBuffer();
+
+			sb.append("SELECT x FROM " + klass.getSimpleName() + " x WHERE ");
 			sb.append(sqlAfteWhere);
 
 			Query query = manager.createQuery(sb.toString());
-			
+
 			list = query.getResultList();
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
+		//if (manager.isOpen())
+		//manager.close();
 		return list;
 	}
 
@@ -219,21 +243,26 @@ public class DAOImpl implements DAO {
 			Class<? extends BaseEntity> klass, String sqlAfteWhere) {
 		List<V> list = null;
 		try {
-			if(!manager.getTransaction().isActive())
-			manager.getTransaction().begin();
-			StringBuffer sb = new StringBuffer();
+			if (!manager.isOpen())
+				manager = JPAPersistence.getEntityManager();
 			
-			sb.append("SELECT x FROM " + klass.getSimpleName() + " x WHERE ");			
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
+			StringBuffer sb = new StringBuffer();
+
+			sb.append("SELECT x FROM " + klass.getSimpleName() + " x WHERE ");
 			sb.append(sqlAfteWhere);
 
 			Query query = manager.createQuery(sb.toString());
-			
+
 			list = query.getResultList();
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
+		//if (manager.isOpen())
+			//manager.close();
 		return list;
 	}
 

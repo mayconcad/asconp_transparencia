@@ -79,6 +79,19 @@ public class DemonstrativoReceitaController extends BaseController {
 	public void init() {
 		calDataAtual.setTime(new Date());
 	}
+	
+	public void limpar(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect(
+					"/publitec/pages/receita/Receita.xhtml?codmunicipio="+codmunicipio);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 
 	public List<DemonstrativoReceita> getReceitas() {
 		return receitas;
@@ -597,6 +610,10 @@ String codigo="";
 			setEmpresaEnum(EmpresaEnum.Luzilandia);
 			return EmpresaEnum.Luzilandia.toString();
 		}
+		case "101126": {
+			setEmpresaEnum(EmpresaEnum.CM_MATIAS_OLIMPIO);
+			return EmpresaEnum.CM_MATIAS_OLIMPIO.toString();
+		}
 		case "101146": {
 			setEmpresaEnum(EmpresaEnum.CM_PAJEU);
 			return EmpresaEnum.CM_PAJEU.toString();
@@ -848,6 +865,9 @@ String codigo="";
 		switch (codmunicipio) {
 		case "201120": {
 			return "http://www.publitecportais.org/portal_transparencia/luzilandia/index-old.html";
+		}
+		case "101126": {
+			return "http://www.publitecportais.org/portal_transparencia/matiasolimpio/index.html";
 		}
 		case "101146": {
 			return "http://www.publitecportais.org/portal_transparencia/pajeu/index.html";

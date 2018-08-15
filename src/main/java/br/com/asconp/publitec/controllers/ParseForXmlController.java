@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -80,6 +81,18 @@ public class ParseForXmlController extends BaseController {
 	public void init() {
 		calDataAtual.setTime(new Date());
 		dao=new DAOImpl();
+	}
+	
+	public void limpar(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect(
+					"/publitec/pages/despesa/Despesa.xhtml?codmunicipio="+codmunicipio);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public ParseForXmlController() {
@@ -516,6 +529,7 @@ public class ParseForXmlController extends BaseController {
 		}
 		
 	}
+	
 	
 	public void disabilitaNome(final AjaxBehaviorEvent event){
 		getNomeIT().setDisabled(false);
@@ -971,6 +985,10 @@ public class ParseForXmlController extends BaseController {
 			setEmpresaEnum(EmpresaEnum.Luzilandia);
 			return EmpresaEnum.Luzilandia.toString();
 		}
+		case "101126": {
+			setEmpresaEnum(EmpresaEnum.CM_MATIAS_OLIMPIO);
+			return EmpresaEnum.CM_MATIAS_OLIMPIO.toString();
+		}
 		case "101146": {
 			setEmpresaEnum(EmpresaEnum.CM_PAJEU);
 			return EmpresaEnum.CM_PAJEU.toString();
@@ -1075,6 +1093,9 @@ public class ParseForXmlController extends BaseController {
 		switch (codmunicipio) {
 		case "201120": {
 			return "http://www.publitecportais.org/portal_transparencia/luzilandia/index-old.html";
+		}
+		case "101126": {
+			return "http://www.publitecportais.org/portal_transparencia/matiasolimpio/index.html";
 		}
 		case "101146": {
 			return "http://www.publitecportais.org/portal_transparencia/pajeu/index.html";

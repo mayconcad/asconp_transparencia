@@ -58,6 +58,9 @@
 		<br/>
 		<div style="text-align: center;">
 			<p:commandButton id="searchBtn" icon="ui-icon-search" value="Consultar" update=":ReceitaTabView:searchForm:searchResult" action="#{DemonstrativoReceitaController.buscar}" />
+			<p:commandButton id="clearBtn" icon="ui-icon-refresh"
+				value="Limpar" update=":ReceitaTabView:searchForm:searchResult"
+				action="#{DemonstrativoReceitaController.limpar}" />
 		</div>
 				<p:blockUI block="searchForm" trigger="searchBtn">
             	Carregando...<br />

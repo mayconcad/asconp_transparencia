@@ -103,16 +103,16 @@ public class UploadArquivoController extends BaseController {
 
 	public void handleFileUpload(FileUploadEvent event) throws IOException {
 		if (empresaEnum == null || mesEnum == null) {
-			FacesMessage message = new FacesMessage(
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
 					"Informe os campos Empresa e Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		} else if (empresaEnum == null) {
-			FacesMessage message = new FacesMessage("Informe a Empresa");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Informe a Empresa");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		} else if (mesEnum == null) {
-			FacesMessage message = new FacesMessage("Informe o Mês");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Informe o Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		}
@@ -125,8 +125,8 @@ public class UploadArquivoController extends BaseController {
 					FacesContext.getCurrentInstance().addMessage(null, message);
 				}
 			} else {
-				FacesMessage message = new FacesMessage(
-						"Não fo possível realizar a importação do(s) arquivo(s)!");
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
+						"Não foi possível realizar a importação do(s) arquivo(s)!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
 			String fileName = event.getFile().getFileName();
@@ -176,7 +176,12 @@ public class UploadArquivoController extends BaseController {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().redirect(
 					"/publitec/pages/upload/Upload.xhtml");
-			addErrorMessage("Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
+			// addErrorMessage("Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
+			if (FacesContext.getCurrentInstance().getMessageList().size() == 0) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
+						"Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			}
 			return;
 		}
 
@@ -312,7 +317,7 @@ public class UploadArquivoController extends BaseController {
 				if (find == null || find.isEmpty()) {
 					dao.create(entidade, ReceitaPessoalVO.class);
 					// dao.closeClonection();
-				}else{
+				} else {
 					dao.update(entidade, ReceitaPessoalVO.class);
 				}
 			}
@@ -731,11 +736,11 @@ public class UploadArquivoController extends BaseController {
 						parser, codCargoLot[0], cpf);
 				layoutXml.setCargo(cargoNomeServ[0]);
 
-				String nomeLotac = getNomeLotacaoApartir2018(
-						parser, codCargoLot[1]);
-				layoutXml.setNome(cargoNomeServ[1]);				
+				String nomeLotac = getNomeLotacaoApartir2018(parser,
+						codCargoLot[1]);
+				layoutXml.setNome(cargoNomeServ[1]);
 				layoutXml.setLotacao(nomeLotac);
-				//layoutXml.setLotacao(mesUnidGestora[2]);
+				// layoutXml.setLotacao(mesUnidGestora[2]);
 
 				receitasPessoal.add(layoutXml);
 
@@ -745,7 +750,7 @@ public class UploadArquivoController extends BaseController {
 			for (ReceitaPessoal entidade : receitasPessoal) {
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("ano", entidade.getAno());
-				params.put("nome", entidade.getNome().trim());
+				// params.put("nome", entidade.getNome().trim());
 				params.put("cpf", entidade.getCpf().trim());
 				params.put("mes", entidade.getMes().trim());
 				params.put("numunidadegestora", entidade.getNumunidadegestora()
@@ -755,7 +760,7 @@ public class UploadArquivoController extends BaseController {
 				if (find == null || find.isEmpty()) {
 					dao.create(entidade, ReceitaPessoalVO.class);
 					// dao.closeClonection();
-				}else{
+				} else {
 					dao.update(entidade, ReceitaPessoalVO.class);
 				}
 			}
@@ -777,8 +782,7 @@ public class UploadArquivoController extends BaseController {
 
 	private String getNomeLotacaoApartir2018(Document document, String codLotac) {
 		String result = "";
-		NodeList nodeList = document
-				.getElementsByTagName("aux:lotacao");
+		NodeList nodeList = document.getElementsByTagName("aux:lotacao");
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element) nodeList.item(i);
 
@@ -786,7 +790,7 @@ public class UploadArquivoController extends BaseController {
 					.item(0).getTextContent();
 			if (codLotac != null && codLotac.equals(codLot)) {
 				result = element.getElementsByTagName("aux:nomeLotacao")
-						.item(0).getTextContent();				
+						.item(0).getTextContent();
 				break;
 			}
 		}

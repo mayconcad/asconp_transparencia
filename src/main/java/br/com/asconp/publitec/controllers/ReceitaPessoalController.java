@@ -1,6 +1,7 @@
 package br.com.asconp.publitec.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.w3c.dom.Document;
@@ -61,6 +63,19 @@ public class ReceitaPessoalController extends BaseController {
 		dao=new DAOImpl();
 	
 	}
+	
+	public void limpar(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect(
+					"/publitec/pages/receitapessoal/ReceitaPessoal.xhtml?codmunicipio="+codmunicipio);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 
 	public ReceitaPessoalController() {
 		// TODO Auto-generated constructor stub
@@ -538,6 +553,10 @@ public class ReceitaPessoalController extends BaseController {
 			setEmpresaEnum(EmpresaEnum.Luzilandia);
 			return EmpresaEnum.Luzilandia.toString();
 		}
+		case "101126": {
+			setEmpresaEnum(EmpresaEnum.CM_MATIAS_OLIMPIO);
+			return EmpresaEnum.CM_MATIAS_OLIMPIO.toString();
+		}
 		case "101146": {
 			setEmpresaEnum(EmpresaEnum.CM_PAJEU);
 			return EmpresaEnum.CM_PAJEU.toString();
@@ -631,6 +650,9 @@ public class ReceitaPessoalController extends BaseController {
 		switch (codmunicipio) {
 		case "201120": {
 			return "http://www.publitecportais.org/portal_transparencia/luzilandia/index-old.html";
+		}
+		case "101126": {
+			return "http://www.publitecportais.org/portal_transparencia/matiasolimpio/index.html";
 		}
 		case "101146": {
 			return "http://www.publitecportais.org/portal_transparencia/pajeu/index.html";

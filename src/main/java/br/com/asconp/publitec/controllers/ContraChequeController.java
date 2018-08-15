@@ -355,6 +355,10 @@ public class ContraChequeController extends BaseController {
 			setEmpresaEnum(EmpresaEnum.Luzilandia);
 			return EmpresaEnum.Luzilandia.toString();
 		}
+		case "101126": {
+			setEmpresaEnum(EmpresaEnum.CM_MATIAS_OLIMPIO);
+			return EmpresaEnum.CM_MATIAS_OLIMPIO.toString();
+		}
 		case "101146": {
 			setEmpresaEnum(EmpresaEnum.CM_PAJEU);
 			return EmpresaEnum.CM_PAJEU.toString();
@@ -456,6 +460,9 @@ public class ContraChequeController extends BaseController {
 		switch (codmunicipio) {
 		case "201120": {
 			return "http://www.publitecportais.org/portal_transparencia/luzilandia/index-old.html";
+		}
+		case "101126": {
+			return "http://www.publitecportais.org/portal_transparencia/matiasolimpio/index.html";
 		}
 		case "101146": {
 			return "http://www.publitecportais.org/portal_transparencia/pajeu/index.html";
