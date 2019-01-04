@@ -5,10 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
-
-
 import br.com.asconp.publitec.controllers.UtilsModel;
 
 public class FinancialLaunchingReportVO extends BaseVO {

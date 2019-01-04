@@ -1,16 +1,38 @@
-package br.com.asconp.publitec.entities;
+package br.com.asconp.publitec.vos;
 
-public class LayoutReceitaXml {
 
-	private String 
-	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
-	codigoUnidGestora,nomeUnidGestora,cpfContador,cpfGestor,anoReferencia,mesReferencia,
-	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
-	numeroEmpenho,historicoEmpenho,dataEmisEmpenho,codigoUnidOrcamentaria,nomeUnidOrcamentaria,cpfCnpjCredor, nomeCredor,valorEmpenho,
-	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
-	valorLiquidado, valorPago;
+public class DiariaVO extends BaseVO{
 	
 
+	public long id;
+	public String 
+	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
+	codigoUnidGestora;
+	public String nomeUnidGestora;
+	public String cpfContador;
+	public String cpfGestor;
+	public String anoReferencia;
+	public String mesReferencia;
+	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
+	public String numeroEmpenho;
+	public String historicoEmpenho;
+	public String dataEmisEmpenho;
+	public String codigoUnidOrcamentaria;
+	public String nomeUnidOrcamentaria;
+	public String cpfCnpjCredor;
+	public String nomeCredor;
+	public String valorEmpenho;
+	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
+	public String valorLiquidado;
+	public String valorPago;
+	
+	
+	public DiariaVO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
 	public String getCodigoUnidGestora() {
 		return codigoUnidGestora;
 	}
@@ -139,4 +161,13 @@ public class LayoutReceitaXml {
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
 	}
 	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 }

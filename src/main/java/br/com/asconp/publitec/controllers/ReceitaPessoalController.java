@@ -26,7 +26,6 @@ import br.com.asconp.publitec.dao.DAOImpl;
 import br.com.asconp.publitec.entities.ReceitaPessoal;
 import br.com.asconp.publitec.enums.EmpresaEnum;
 import br.com.asconp.publitec.enums.MesEnum;
-import br.com.asconp.publitec.vos.ReceitaPessoalVO;
 
 
 
@@ -652,7 +651,7 @@ public class ReceitaPessoalController extends BaseController {
 			return "http://www.publitecportais.org/portal_transparencia/luzilandia/index-old.html";
 		}
 		case "101126": {
-			return "http://www.publitecportais.org/portal_transparencia/matiasolimpio/index.html";
+			return "http://www.publitecportais.org/portal_transparencia/cm_matias_olimpio/index.html";
 		}
 		case "101146": {
 			return "http://www.publitecportais.org/portal_transparencia/pajeu/index.html";

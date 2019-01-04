@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/"
+	xmlns:x="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="searchForm" styleClass="container_24">
+		<p:messages id="messages" />
+		<div style="float: left; text-align: top !important;">
+			<a href="#{DiariaController.linkVoltar}"
+				class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">Voltar</a>
+		</div>
+		<br />
+		<br />
+		<div class="ui-fluid">
+			<fieldset>
+				<legend>Filtros</legend>
+
+				<p:panelGrid columns="10"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Município/Câmara: " for="empresa"
+						style="float: left;" />
+
+					<p:outputLabel value="#{DiariaController.getNomeEmpresa()}"
+						id="empresa" />
+					<p:outputLabel value="Exercício" for="exercicioSelectOM" />
+					<p:selectOneMenu id="exercicioSelectOM"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{DiariaController.exercicio}">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{DiariaController.exercicios}" />
+						<p:ajax event="change" process="@this" update="@form"
+							listener="#{DiariaController.disabilitaNome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Mês" for="mesSelectOM" />
+
+					<p:selectOneMenu id="mesSelectOM"
+						itemLabel="#{wd['dialog.optionYes']}"
+						value="#{DiariaController.mesEnum}">
+						<f:selectItem itemLabel="Selecione" value="#{null}" />
+						<f:selectItems value="#{DiariaController.meses}" />
+						<!-- 				<p:ajax event="change" process="@this" /> -->
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Nome" for="nomeIT" />
+
+					<p:inputText id="nomeIT" value="#{DiariaController.nome}"
+						binding="#{DiariaController.nomeIT}"></p:inputText>
+				</p:panelGrid>
+			</fieldset>
+		</div>
+		<br />
+		<div class="clear"></div>
+		<br />
+		<div style="text-align: center;">
+			<p:commandButton id="searchBtn" icon="ui-icon-search"
+				value="Consultar" update=":DiariaTabView:searchForm:searchResult"
+				action="#{DiariaController.buscar}" />
+				<p:commandButton id="clearBtn" icon="ui-icon-refresh"
+				value="Limpar" update=":DiariaTabView:searchForm:searchResult"
+				action="#{DiariaController.limpar}" />
+		</div>
+
+		<p:blockUI block="searchForm" trigger="searchBtn">
+            	Carregando...<br />
+			<h:graphicImage library="images" name="ajax-loader.gif" />
+		</p:blockUI>
+		<br />
+		<br />
+		<div class="ui-fluid">
+			<fieldset>
+				<legende>Resultados da Consulta</legende>
+				<br />
+				<p:dataTable id="searchResult" reflow="true"
+					value="#{DiariaController.diarias}" var="diaria"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+					rowIndexVar="rowIx" emptyMessage="Sem Resultados" paginator="true"
+					rowsPerPageTemplate="5,10,15" rows="10" resizableColumns="true"
+					scrollable="true" draggableColumns="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					currentPageReportTemplate="{currentPage} de {totalPages}">
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/excel.png" width="24" />
+							<p:dataExporter type="xls" target="searchResult"
+								fileName="#{DiariaController.fileNameExporter}" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/pdf.png" width="24" />
+							<p:dataExporter type="pdf" target="searchResult"
+								fileName="#{DiariaController.fileNameExporter}" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/csv.png" width="24" />
+							<p:dataExporter type="csv" target="searchResult"
+								fileName="#{DiariaController.fileNameExporter}" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Nº Empenho" />
+						</f:facet>
+						<h:outputText value="#{diaria.numeroEmpenho}" />
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="Descricao" />
+						</f:facet>
+						<h:outputText value="#{diaria.historicoEmpenho}" />
+					</p:column>
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Data" />
+						</f:facet>
+						<h:outputText value="#{diaria.dataEmisEmpenho}" />
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="Unid. Orçamentária" />
+						</f:facet>
+						<h:outputText
+							value="#{diaria.codigoUnidOrcamentaria}-#{diaria.nomeUnidOrcamentaria}" />
+					</p:column>
+					<p:column style="font-size:10px; white-space:normal !important;"
+						width="200">
+						<f:facet name="header">
+							<h:outputText value="CNPJ/CPF" />
+						</f:facet>
+						<h:outputText value="#{diaria.cpfCnpjCredor}" />
+					</p:column>
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Valor Diária" />
+						</f:facet>
+						<h:outputText value="#{diaria.valorEmpenho}" />
+					</p:column>
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Valor Liquidado" />
+						</f:facet>
+						<h:outputText value="#{diaria.valorLiquidado}" />
+					</p:column>
+					<p:column style="font-size:10px;">
+						<f:facet name="header">
+							<h:outputText value="Valor Pago" />
+						</f:facet>
+						<h:outputText value="#{diaria.valorPago}" />
+					</p:column>
+					
+				</p:dataTable>
+			</fieldset>
+		</div>
+	</h:form>
+</ui:composition>

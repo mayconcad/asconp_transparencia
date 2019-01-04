@@ -15,6 +15,6 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
 		
 		<resource-bundle>
 			<base-name>entities</base-name>
-			<var>lbl</var>		
+			<var>lb</var>		
 		</resource-bundle>
 </faces-config>

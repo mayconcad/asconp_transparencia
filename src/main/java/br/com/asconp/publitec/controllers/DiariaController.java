@@ -35,14 +35,14 @@ import org.xml.sax.SAXException;
 
 import br.com.asconp.publitec.dao.DAO;
 import br.com.asconp.publitec.dao.DAOImpl;
-import br.com.asconp.publitec.entities.LayoutXml;
+import br.com.asconp.publitec.entities.Diaria;
 import br.com.asconp.publitec.enums.EmpresaEnum;
 import br.com.asconp.publitec.enums.MesEnum;
-import br.com.asconp.publitec.vos.LayoutXmlVO;
+import br.com.asconp.publitec.vos.DiariaVO;
 
-@ManagedBean(name = "ParseForXmlController")
+@ManagedBean(name = "DiariaController")
 @ViewScoped
-public class ParseForXmlController extends BaseController {
+public class DiariaController extends BaseController {
 
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class ParseForXmlController extends BaseController {
 	private MesEnum mesEnum;
 
 	private String exercicio;
-	
+
 	public String nome;
 
 	private String fileNameExporter;
@@ -63,31 +63,31 @@ public class ParseForXmlController extends BaseController {
 
 	private String linkVoltar;
 
-	// private ExcelOptions excelOpt;
-	//
-	// private PDFOptions pdfOpt;
-
 	private boolean exibeMes;
 
-	public List<LayoutXml> layoutXmlList;
-	
+	public List<Diaria> diarias;
+
 	public InputText nomeIT;
 
-	Calendar calDataAtual = Calendar.getInstance();	
+	Calendar calDataAtual = Calendar.getInstance();
 
-	DAO dao=null;
+	DAO dao = null;
 
 	@PostConstruct
 	public void init() {
 		calDataAtual.setTime(new Date());
-		dao=new DAOImpl();
+		dao = new DAOImpl();
+	}
+
+	public DiariaController() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	public void limpar(){
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			context.getExternalContext().redirect(
-					"/publitec/pages/despesa/Despesa.xhtml?codmunicipio="+codmunicipio);
+					"/publitec/pages/diaria/Diaria.xhtml?codmunicipio="+codmunicipio);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,81 +95,77 @@ public class ParseForXmlController extends BaseController {
 		
 	}
 
-	public ParseForXmlController() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public void buscar() {
-		
-		if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
-			layoutXmlList=dao.find(LayoutXml.class,   "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"' AND x.anoReferencia = '"+getExercicio()+"'");
+
+		if (UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio)
+				&& UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0) {
+			diarias = dao.find(
+					Diaria.class,
+					"x.codigoUnidGestora = '" + codmunicipio
+							+ "' AND x.nomeCredor like '%" + getNome()
+							+ "%' AND x.mesReferencia = '"
+							+ String.format("%02d", getMesEnum().ordinal() + 1)
+							+ "' AND x.anoReferencia = '" + getExercicio()
+							+ "'");
 			return;
-		}else if(UtilsModel.hasValue(nome) && !UtilsModel.hasValue(exercicio) && UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0){
-			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.nomeCredor like '%"+getNome()+"%' AND x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"'");
+		} else if (UtilsModel.hasValue(nome) && !UtilsModel.hasValue(exercicio)
+				&& UtilsModel.hasValue(mesEnum) && mesEnum.ordinal() >= 0) {
+			diarias = dao.find(
+					Diaria.class,
+					"x.codigoUnidGestora = '" + codmunicipio
+							+ "' AND  x.nomeCredor like '%" + getNome()
+							+ "%' AND x.mesReferencia = '"
+							+ String.format("%02d", getMesEnum().ordinal() + 1)
+							+ "'");
 			return;
-		}else if(UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio) && !UtilsModel.hasValue(mesEnum)){
-			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%' AND x.anoReferencia = '"+getExercicio()+"'");
+		} else if (UtilsModel.hasValue(nome) && UtilsModel.hasValue(exercicio)
+				&& !UtilsModel.hasValue(mesEnum)) {
+			diarias = dao.find(Diaria.class, "x.codigoUnidGestora = '"
+					+ codmunicipio + "' AND x.nomeCredor like '%" + getNome()
+					+ "%' AND x.anoReferencia = '" + getExercicio() + "'");
 			return;
-		}else if(UtilsModel.hasValue(nome)){
-			layoutXmlList=dao.find(LayoutXml.class, "x.codigoUnidGestora = '"+codmunicipio+"' AND x.nomeCredor like '%"+getNome()+"%'");
+		} else if (UtilsModel.hasValue(nome)) {
+			diarias = dao.find(Diaria.class, "x.codigoUnidGestora = '"
+					+ codmunicipio + "' AND x.nomeCredor like '%" + getNome()
+					+ "%'");
+			return;
+		} else if (UtilsModel.hasValue(mesEnum)
+				&& UtilsModel.hasValue(exercicio)) {
+			diarias = dao.find(
+					Diaria.class,
+					"x.codigoUnidGestora = '" + codmunicipio
+							+ "' AND  x.mesReferencia = '"
+							+ String.format("%02d", getMesEnum().ordinal() + 1)
+							+ "' AND x.anoReferencia = '" + getExercicio()
+							+ "'");
+			if (diarias != null && !diarias.isEmpty())
+				return;
+		} else if (UtilsModel.hasValue(mesEnum)) {
+			if (diarias != null && !diarias.isEmpty())
+				diarias = dao.find(
+						Diaria.class,
+						"x.codigoUnidGestora = '"
+								+ codmunicipio
+								+ "' AND  x.mesReferencia = '"
+								+ String.format("%02d",
+										getMesEnum().ordinal() + 1) + "'");
+			return;
+		} else if (UtilsModel.hasValue(exercicio)) {
+			if (diarias != null && !diarias.isEmpty())
+				diarias = dao.find(Diaria.class, "x.codigoUnidGestora = '"
+						+ codmunicipio + "' AND  x.anoReferencia = '"
+						+ getExercicio() + "'");
 			return;
 		}
-		else if(UtilsModel.hasValue(mesEnum) && UtilsModel.hasValue(exercicio) ){
-			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"' AND x.anoReferencia = '"+getExercicio()+"'");
-			if(layoutXmlList != null && !layoutXmlList.isEmpty())
-			return;
-		}else if(UtilsModel.hasValue(mesEnum) ){
-			if(layoutXmlList != null && !layoutXmlList.isEmpty())
-			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.mesReferencia = '"+String.format("%02d",getMesEnum().ordinal()+1)+"'");
-			return;
-		}else if(UtilsModel.hasValue(exercicio) ){
-			if(layoutXmlList != null && !layoutXmlList.isEmpty())
-			layoutXmlList=dao.find(LayoutXml.class,  "x.codigoUnidGestora = '"+codmunicipio+"' AND  x.anoReferencia = '"+getExercicio()+"'");
-			return;
-		}
-		
-		//if(!layoutXmlList.isEmpty()){
-		/*for(int i=0; i < layoutXmlListVO.size(); i++){
-			
-			LayoutXmlVO entity = layoutXmlListVO.get(i);
-			LayoutXml layout = new LayoutXml();
-			
-			layout.setCodigoUnidGestora(entity.getCodigoUnidGestora());
-			layout.setNomeUnidGestora(entity.getNomeUnidGestora());
-			layout.setCpfContador(entity.getCpfContador());
-			layout.setCpfGestor(entity.getCpfGestor());
-			layout.setAnoReferencia( entity.getAnoReferencia());
-			layout.setMesReferencia(entity.getMesReferencia());
-			layout.setNumeroEmpenho(entity.getNumeroEmpenho());
-			layout.setHistoricoEmpenho( entity.getHistoricoEmpenho());
-			layout.setDataEmisEmpenho(entity.getDataEmisEmpenho());
-			layout.setCodigoUnidOrcamentaria(entity.getCodigoUnidOrcamentaria());
-			layout.setNomeUnidOrcamentaria(entity.getNomeUnidOrcamentaria());
-			layout.setCpfCnpjCredor( entity.getCpfCnpjCredor());
-			layout.setNomeCredor(entity.getNomeCredor());
-			layout.setValorEmpenho(entity.getValorEmpenho());
-			layout.setValorLiquidado( entity.getValorLiquidado());
-			layout.setValorPago(entity.getValorPago());
-			
-			layoutXmlList.add(layout);
-		}*/
-		//	return;
-		//}
-			
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.set(Calendar.YEAR, Integer.parseInt(exercicio));
-		layoutXmlList = new ArrayList<LayoutXml>();
+		diarias = new ArrayList<Diaria>();
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
-
-			// String property = System.getProperty("user.home");
-			// String dir =
-			// System.getProperty("wtp.deploy")+"/asconp_transparencia";
-			// ServletContext servletContext = (ServletContext) FacesContext
-			// .getCurrentInstance().getExternalContext().getContext();
-			// String caminho = servletContext.getRealPath(File.separator);
 
 			String caminho = System.getProperty("user.home").concat(
 					File.separator);
@@ -185,31 +181,6 @@ public class ParseForXmlController extends BaseController {
 			Document document = builder.parse(filePath.toString()
 					+ "/EmpenhoseRP.xml");
 
-			/*
-			 * NodeList nodeList = document.getElementsByTagName(
-			 * "aux:ConciliacaoBancaria" );
-			 * 
-			 * for ( int i = 0; i < nodeList.getLength(); i++ ) { Element
-			 * element = (Element) nodeList.item( i ); LayoutXml layoutXml = new
-			 * LayoutXml();
-			 * 
-			 * layoutXml.setCodigoBanco( element.getElementsByTagName(
-			 * "aux:codigoBanco" ).item( 0 ).getTextContent() );
-			 * layoutXml.setCodigoAgencia( element.getElementsByTagName(
-			 * "aux:codigoAgencia" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * layoutXml.setNumeroConta( element.getElementsByTagName(
-			 * "aux:numeroContBancaria" ).item( 0 ).getTextContent() );
-			 * 
-			 * //NodeList childNodes = element.getChildNodes();
-			 * 
-			 * layoutXmlList.add( layoutXml ); }
-			 */
-
 			Map<String, String> numEmpLiquidacao = new HashMap<String, String>();
 			Map<String, String> numEmpPagamento = new HashMap<String, String>();
 
@@ -218,18 +189,40 @@ public class ParseForXmlController extends BaseController {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Element element = (Element) nodeList.item(i);
-				LayoutXml layoutXml = new LayoutXml();
-				
-				layoutXml.setAnoReferencia(cal.get(Calendar.YEAR)+"");
-				layoutXml.setMesReferencia(String.format("%02d",mesEnum.ordinal() + 1));
-				
+				Diaria diaria = new Diaria();
+
+				String codCatEco = element
+						.getElementsByTagName("emp:codigoCateEconomica")
+						.item(0).getTextContent();
+				String codNatDes = element
+						.getElementsByTagName("emp:codigoNatuDespesa").item(0)
+						.getTextContent();
+
+				String codModApl = element
+						.getElementsByTagName("emp:codigoModaAplicacao")
+						.item(0).getTextContent();
+
+				String codEleDes = element
+						.getElementsByTagName("emp:codigoElemDespesa").item(0)
+						.getTextContent();
+
+				if (codCatEco == null || !"3".equals(codCatEco)
+						&& codNatDes == null || !"3".equals(codNatDes)
+						&& codModApl == null || !"90".equals(codModApl)
+						&& codEleDes == null || !"14".equals(codEleDes))
+					continue;
+
+				diaria.setAnoReferencia(cal.get(Calendar.YEAR) + "");
+				diaria.setMesReferencia(String.format("%02d",
+						mesEnum.ordinal() + 1));
+
 				String numeroEmpenho = element
 						.getElementsByTagName("emp:numeroEmpenho").item(0)
 						.getTextContent();
 
 				// substituido por concatenacao de num empehno e codunidorc
 				// layoutXml.setNumeroEmpenho(numeroEmpenho);
-				layoutXml.setHistoricoEmpenho(element
+				diaria.setHistoricoEmpenho(element
 						.getElementsByTagName("emp:historicoEmpenho").item(0)
 						.getTextContent());
 
@@ -237,7 +230,7 @@ public class ParseForXmlController extends BaseController {
 					Date date = sdf.parse(element
 							.getElementsByTagName("emp:dataEmisEmpenho")
 							.item(0).getTextContent());
-					layoutXml.setDataEmisEmpenho(sdf2.format(date));
+					diaria.setDataEmisEmpenho(sdf2.format(date));
 
 				} catch (DOMException e) {
 					// TODO Auto-generated catch block
@@ -250,19 +243,19 @@ public class ParseForXmlController extends BaseController {
 				String codUnidOrcamentaria = element
 						.getElementsByTagName("emp:codigoUnidOrcamentaria")
 						.item(0).getTextContent();
-				layoutXml.setCodigoUnidOrcamentaria(codUnidOrcamentaria);
-				layoutXml
-						.setNomeUnidOrcamentaria(getNomeUnidadeGestora(document));
-				layoutXml.setCodigoUnidGestora(layoutXml.getNomeUnidOrcamentaria().substring(0, 6));
+				diaria.setCodigoUnidOrcamentaria(codUnidOrcamentaria);
+				diaria.setNomeUnidOrcamentaria(getNomeUnidadeGestora(document));
+				diaria.setCodigoUnidGestora(diaria.getNomeUnidOrcamentaria()
+						.substring(0, 6));
 
 				String cpfCnpjCredor = element
 						.getElementsByTagName("emp:cpfCnpjCredor").item(0)
 						.getTextContent();
-				layoutXml.setCpfCnpjCredor(getNomeCredor(
+				diaria.setCpfCnpjCredor(getNomeCredor(
 						builder.parse(filePath.toString()
 								+ "/CadastrosAuxiliares.xml"), cpfCnpjCredor));
 
-				layoutXml.setValorEmpenho(UtilsModel
+				diaria.setValorEmpenho(UtilsModel
 						.convertBigDecimalToString(new BigDecimal(element
 								.getElementsByTagName("emp:valorEmpenho")
 								.item(0).getTextContent())));
@@ -272,14 +265,10 @@ public class ParseForXmlController extends BaseController {
 
 				NodeList nodeList2 = document2
 						.getElementsByTagName("lan:LancamentoContabil");
-				boolean encontrouValor = false;
-
-				// loop again if has child nodes
-				// printDataNode(nodeList2);
-
+				
 				String chaveEmpUnidOrc = numeroEmpenho + "_"
 						+ codUnidOrcamentaria;
-				layoutXml.setNumeroEmpenho(chaveEmpUnidOrc);
+				diaria.setNumeroEmpenho(chaveEmpUnidOrc);
 				for (int x = 0; x < nodeList2.getLength(); x++) {
 
 					String valorLancadoValido = "";
@@ -343,134 +332,14 @@ public class ParseForXmlController extends BaseController {
 										valorLancadoValido);
 						}
 
-					// /nao funciona
-					// String historicoRegiContabil = element2
-					// .getElementsByTagName("lan:historicoRegiContabil")
-					// .item(0).getTextContent();
-
-					/*
-					 * if (historicoRegiContabil.contains("EMP:")) {
-					 * historicoRegiContabil = historicoRegiContabil
-					 * .split("EMP:")[1]; historicoRegiContabil =
-					 * historicoRegiContabil.trim() .split(" ")[0]; String
-					 * valorLancado = element2
-					 * .getElementsByTagName("lan:valorLancado")
-					 * .item(0).getTextContent();
-					 * 
-					 * Node liquidacaoEmpenho = element2.getElementsByTagName(
-					 * "cc:LiquidacaoEmpenho").item(0);
-					 * 
-					 * if (liquidacaoEmpenho != null) { String
-					 * codigoContContabil = element2 .getElementsByTagName(
-					 * "cc:codigoContContabil").item(0) .getTextContent(); if
-					 * ("62213".equals(codigoContContabil.substring(0, 5))) { if
-					 * (!numEmpLiquidacao .containsKey(numeroEmpenho))
-					 * numEmpLiquidacao.put(numeroEmpenho, valorLancado); } }
-					 * 
-					 * Node domicilioBancario = element2.getElementsByTagName(
-					 * "cc:DomicilioBancario").item(0); if (domicilioBancario !=
-					 * null) { String codigoContContabil = element2
-					 * .getElementsByTagName( "cc:codigoContContabil").item(0)
-					 * .getTextContent(); if
-					 * ("11111".equals(codigoContContabil.substring(0, 5))) { if
-					 * (!numEmpPagamento.containsKey(numeroEmpenho))
-					 * numEmpPagamento.put(numeroEmpenho, valorLancado); } } }
-					 * else if (historicoRegiContabil.contains("EMPENHO:")) {
-					 * historicoRegiContabil = historicoRegiContabil
-					 * .split("EMPENHO:")[1]; historicoRegiContabil =
-					 * historicoRegiContabil.trim() .split(" ")[0]; String
-					 * valorLancado = element2
-					 * .getElementsByTagName("lan:valorLancado")
-					 * .item(0).getTextContent();
-					 * 
-					 * Node liquidacaoEmpenho = element2.getElementsByTagName(
-					 * "cc:LiquidacaoEmpenho").item(0);
-					 * 
-					 * if (liquidacaoEmpenho != null) { String
-					 * codigoContContabil = element2 .getElementsByTagName(
-					 * "cc:codigoContContabil").item(0) .getTextContent(); if
-					 * ("62213".equals(codigoContContabil.substring(0, 5))) { if
-					 * (!numEmpLiquidacao .containsKey(numeroEmpenho))
-					 * numEmpLiquidacao.put(numeroEmpenho, valorLancado); } }
-					 * 
-					 * Node domicilioBancario = element2.getElementsByTagName(
-					 * "cc:DomicilioBancario").item(0); if (domicilioBancario !=
-					 * null) { String codigoContContabil = element2
-					 * .getElementsByTagName( "cc:codigoContContabil").item(0)
-					 * .getTextContent(); if
-					 * ("11111".equals(codigoContContabil.substring(0, 5))) { if
-					 * (!numEmpPagamento.containsKey(numeroEmpenho))
-					 * numEmpPagamento.put(numeroEmpenho, valorLancado); } } }
-					 */
 				}
 
-				/*
-				 * carregarValoresLiqPagto NodeList nodeList3 =
-				 * document2.getElementsByTagName("cc:EmissaoEmpenho"); for (int
-				 * y = 0; y < nodeList3.getLength(); y++) { Element element3 =
-				 * (Element) nodeList3.item(y); String codUnidOrc = element3
-				 * .getElementsByTagName("cc:codigoUnidOrcamentaria").item(0)
-				 * .getTextContent(); String numeroEmp = element3
-				 * .getElementsByTagName("cc:numeroEmpenho").item(0)
-				 * .getTextContent();
-				 * 
-				 * if(numeroEmpenho == numeroEmp &&
-				 * codUnidOrcamentaria==codUnidOrc){ encontrouValor=true; break;
-				 * } } if(encontrouValor){
-				 * layoutXml.setValorPago(UtilsModel.convertBigDecimalToString
-				 * (new BigDecimal(valorPagEmpenho))); }
-				 * 
-				 * }
-				 */
-
-				// NodeList childNodes = document
-				// .getElementsByTagName("aux:numeroAtoQueNomeGestor");
-				//
-				// List<GestorXml> gestores = new ArrayList<GestorXml>();
-				//
-				// for (int i2 = 0; i2 < childNodes.getLength(); i2++) {
-				// Element element2 = (Element) childNodes.item(i2);
-				// GestorXml gestor = new GestorXml();
-				//
-				// gestor.setNumero(element2
-				// .getElementsByTagName("gen:numero").item(0)
-				// .getTextContent());
-				// gestor.setAno(element2.getElementsByTagName("gen:ano")
-				// .item(0).getTextContent());
-				//
-				// gestores.add(gestor);
-				// }
-				//
-				// layoutXml.setGestores(gestores);
-
-				/** INICIO COM JDOM */
-
-				//SAXBuilder saxBuilder = new SAXBuilder();
-				//org.jdom2.Document doc = saxBuilder.build(filePath.toString()
-					//	+ "/LancamentosContabeis.xml");
-
-				//org.jdom2.Element rootElement = (org.jdom2.Element) doc
-					//	.getRootElement();
-
-				// String valorLancado = obterValorLancado(codUnidOrcamentaria,
-				// rootElement.getChildren());
-
-				/** FIM COM JDOM */
-
-				// if(layoutXml.getCpfCnpjCredor() != null &&
-				// !layoutXml.getCpfCnpjCredor().isEmpty() )
-				layoutXmlList.add(layoutXml);
-
-				// if (layoutXmlList.size() == 2)
-				// break;
+				diarias.add(diaria);
 
 			}
 
-			for (LayoutXml despesa : layoutXmlList) {
-				// String numEmp =
-				// "0".equals(despesa.getNumeroEmpenho().substring(0, 1)) ?
-				// despesa.getNumeroEmpenho().substring(1,despesa.getNumeroEmpenho().length())
-				// : despesa.getNumeroEmpenho();
+			for (Diaria despesa : diarias) {
+				
 				String numEmp = despesa.getNumeroEmpenho();
 				if (!numEmpLiquidacao.isEmpty()
 						&& numEmpLiquidacao.get(numEmp) != null)
@@ -483,21 +352,45 @@ public class ParseForXmlController extends BaseController {
 							.convertBigDecimalToString(new BigDecimal(
 									numEmpPagamento.get(numEmp))));
 				despesa.setNumeroEmpenho(despesa.getNumeroEmpenho().split("_")[0]);
-				if(despesa.getCpfCnpjCredor() != null && !"".equals(despesa.getCpfCnpjCredor())){
+				if (despesa.getCpfCnpjCredor() != null
+						&& !"".equals(despesa.getCpfCnpjCredor())) {
 					String[] split = despesa.getCpfCnpjCredor().split("-");
-					despesa.setNomeCredor(split != null && split.length > 1 ? despesa.getCpfCnpjCredor().split("-")[1] : "");
+					despesa.setNomeCredor(split != null && split.length > 1 ? despesa
+							.getCpfCnpjCredor().split("-")[1] : "");
 				}
-				
-				
-				List<LayoutXml> layoutXmlList2=null;
-				if(UtilsModel.hasValue(despesa.getCpfCnpjCredor()))					
-					layoutXmlList2 = dao.find(LayoutXml.class, " x.cpfCnpjCredor = '"+despesa.getCpfCnpjCredor()+"' AND x.codigoUnidOrcamentaria = '"+despesa.getCodigoUnidOrcamentaria()+"' AND x.numeroEmpenho = '"+despesa.getNumeroEmpenho()+"' AND x.codigoUnidGestora = '"+despesa.getCodigoUnidGestora()+"' AND x.mesReferencia = '"+despesa.getMesReferencia()+"' AND x.anoReferencia = '"+despesa.getAnoReferencia()+"'");
+
+				List<Diaria> diarias2 = null;
+				if (UtilsModel.hasValue(despesa.getCpfCnpjCredor()))
+					diarias2 = dao.find(
+							Diaria.class,
+							" x.cpfCnpjCredor = '" + despesa.getCpfCnpjCredor()
+									+ "' AND x.codigoUnidOrcamentaria = '"
+									+ despesa.getCodigoUnidOrcamentaria()
+									+ "' AND x.numeroEmpenho = '"
+									+ despesa.getNumeroEmpenho()
+									+ "' AND x.codigoUnidGestora = '"
+									+ despesa.getCodigoUnidGestora()
+									+ "' AND x.mesReferencia = '"
+									+ despesa.getMesReferencia()
+									+ "' AND x.anoReferencia = '"
+									+ despesa.getAnoReferencia() + "'");
 				else
-					layoutXmlList2 = dao.find(LayoutXml.class, " x.codigoUnidOrcamentaria = '"+despesa.getCodigoUnidOrcamentaria()+"' AND x.numeroEmpenho = '"+despesa.getNumeroEmpenho()+"' AND x.codigoUnidGestora = '"+despesa.getCodigoUnidGestora()+"' AND x.mesReferencia = '"+despesa.getMesReferencia()+"' AND x.anoReferencia = '"+despesa.getAnoReferencia()+"'");
-					
-				if(layoutXmlList2 != null && !layoutXmlList2.isEmpty()){
-					LayoutXml entidade=layoutXmlList2.get(0);
-					despesa.setId(entidade.getId());					
+					diarias2 = dao.find(
+							Diaria.class,
+							" x.codigoUnidOrcamentaria = '"
+									+ despesa.getCodigoUnidOrcamentaria()
+									+ "' AND x.numeroEmpenho = '"
+									+ despesa.getNumeroEmpenho()
+									+ "' AND x.codigoUnidGestora = '"
+									+ despesa.getCodigoUnidGestora()
+									+ "' AND x.mesReferencia = '"
+									+ despesa.getMesReferencia()
+									+ "' AND x.anoReferencia = '"
+									+ despesa.getAnoReferencia() + "'");
+
+				if (diarias2 != null && !diarias2.isEmpty()) {
+					Diaria entidade = diarias2.get(0);
+					despesa.setId(entidade.getId());
 					despesa.setCpfCnpjCredor(entidade.getCpfCnpjCredor());
 					despesa.setDataEmisEmpenho(entidade.getDataEmisEmpenho());
 					despesa.setHistoricoEmpenho(entidade.getHistoricoEmpenho());
@@ -505,14 +398,14 @@ public class ParseForXmlController extends BaseController {
 					despesa.setValorEmpenho(entidade.getValorEmpenho());
 					despesa.setValorLiquidado(entidade.getValorLiquidado());
 					despesa.setValorPago(entidade.getValorPago());
-					dao.update(despesa, LayoutXmlVO.class);
-					//dao.closeClonection();
-				}else{
-					dao.create(despesa, LayoutXmlVO.class);
-					//dao.closeClonection();
+					dao.update(despesa, DiariaVO.class);
+					// dao.closeClonection();
+				} else {
+					dao.create(despesa, DiariaVO.class);
+					// dao.closeClonection();
 				}
 			}
-			setFileNameExporter("Despesa_empresa_ano_mes");
+			setFileNameExporter("Diaria_empresa_ano_mes");
 
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -527,17 +420,16 @@ public class ParseForXmlController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	public void disabilitaNome(final AjaxBehaviorEvent event){
+
+	public void disabilitaNome(final AjaxBehaviorEvent event) {
 		getNomeIT().setDisabled(false);
-		if(exercicio != null && !"".equals(exercicio)){
-		getNomeIT().setDisabled(true);
-		getNomeIT().setValue("");
+		if (exercicio != null && !"".equals(exercicio)) {
+			getNomeIT().setDisabled(true);
+			getNomeIT().setValue("");
 		}
-		
+
 	}
 
 	private void carregarValoresLiqPagto(Map<String, String> numEmpLiquidacao,
@@ -849,15 +741,14 @@ public class ParseForXmlController extends BaseController {
 			setExibeMes(true);
 		}
 	}
-	
 
-	public List<LayoutXml> getLayoutXmlList() {
+	public List<Diaria> getDiarias() {
 
-		return layoutXmlList;
+		return diarias;
 	}
 
-	public void setLayoutXmlList(List<LayoutXml> layoutXmlList) {
-		this.layoutXmlList = layoutXmlList;
+	public void setDiarias(List<Diaria> diarias) {
+		this.diarias = diarias;
 	}
 
 	public EmpresaEnum getEmpresaEnum() {
@@ -1070,8 +961,6 @@ public class ParseForXmlController extends BaseController {
 	public void setExercicio(String exercicio) {
 		this.exercicio = exercicio;
 	}
-	
-	
 
 	public InputText getNomeIT() {
 		return nomeIT;

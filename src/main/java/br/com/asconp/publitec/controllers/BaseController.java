@@ -8,13 +8,8 @@ import java.sql.Statement;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-
-import org.omnifaces.util.Ajax;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.tabview.Tab;
-import org.primefaces.component.tabview.TabView;
-import org.primefaces.event.TabChangeEvent;
 
 //classe com funcionalidades comuns a todos os controllers e que ser estendida por eles
 public abstract class BaseController implements Serializable {

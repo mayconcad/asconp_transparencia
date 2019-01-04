@@ -11,8 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.event.TabChangeEvent;
-
 import br.com.asconp.publitec.enums.ReportType;
 import ar.com.fdvs.dj.domain.DynamicReport;
 

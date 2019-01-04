@@ -10,46 +10,45 @@ import javax.persistence.Table;
 @Entity
 @Table(name="pub_despesa")
 public class LayoutXml extends BaseEntity{
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	public long id;
+	private long id;
 	@Column
-	public String 
+	private String 
 	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
 	codigoUnidGestora;
 	@Column
-	public String nomeUnidGestora;
+	private String nomeUnidGestora;
 	@Column
-	public String cpfContador;
+	private String cpfContador;
 	@Column
-	public String cpfGestor;
+	private String cpfGestor;
 	@Column
-	public String anoReferencia;
+	private String anoReferencia;
 	@Column
-	public String mesReferencia;
+	private String mesReferencia;
 	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
 	@Column
-	public String numeroEmpenho;
+	private String numeroEmpenho;
 	@Column
-	public String historicoEmpenho;
+	private String historicoEmpenho;
 	@Column
-	public String dataEmisEmpenho;
+	private String dataEmisEmpenho;
 	@Column
-	public String codigoUnidOrcamentaria;
+	private String codigoUnidOrcamentaria;
 	@Column
-	public String nomeUnidOrcamentaria;
+	private String nomeUnidOrcamentaria;
 	@Column
-	public String cpfCnpjCredor;
+	private String cpfCnpjCredor;
 	@Column
-	public String nomeCredor;
+	private String nomeCredor;
 	@Column
-	public String valorEmpenho;
+	private String valorEmpenho;
 	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
 	@Column
-	public String valorLiquidado;
+	private String valorLiquidado;
 	@Column
-	public String valorPago;
+	private String valorPago;
 	
 	//private List<GestorXml> gestores;
 	
@@ -190,14 +189,6 @@ public class LayoutXml extends BaseEntity{
 	public void setCodigoUnidOrcamentaria(String codigoUnidOrcamentaria) {
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
 	}
-
-//	public List<GestorXml> getGestores() {
-//		return gestores;
-//	}
-//
-//	public void setGestores(List<GestorXml> gestores) {
-//		this.gestores = gestores;
-//	}
 
 	
 }

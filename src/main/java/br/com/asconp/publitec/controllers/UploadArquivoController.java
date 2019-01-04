@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,7 +32,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -103,16 +102,19 @@ public class UploadArquivoController extends BaseController {
 
 	public void handleFileUpload(FileUploadEvent event) throws IOException {
 		if (empresaEnum == null || mesEnum == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "",
 					"Informe os campos Empresa e Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		} else if (empresaEnum == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Informe a Empresa");
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "", "Informe a Empresa");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		} else if (mesEnum == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Informe o Mês");
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "", "Informe o Mês");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;
 		}
@@ -125,7 +127,8 @@ public class UploadArquivoController extends BaseController {
 					FacesContext.getCurrentInstance().addMessage(null, message);
 				}
 			} else {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
+				FacesMessage message = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "",
 						"Não foi possível realizar a importação do(s) arquivo(s)!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
@@ -178,7 +181,8 @@ public class UploadArquivoController extends BaseController {
 					"/publitec/pages/upload/Upload.xhtml");
 			// addErrorMessage("Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
 			if (FacesContext.getCurrentInstance().getMessageList().size() == 0) {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",
+				FacesMessage message = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "",
 						"Ocorreu um erro ao processar os arquivos, repita novamente o procedimento!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
@@ -295,8 +299,10 @@ public class UploadArquivoController extends BaseController {
 						.getElementsByTagName("unidadeGestora");
 
 				Element element2 = (Element) nodeList2.item(0);
-				String lotacao = element2.getElementsByTagName("descricao")
-						.item(0).getTextContent();
+				String lotacao = "";
+				if (element2.getElementsByTagName("descricao").getLength() > 0)
+					lotacao = element2.getElementsByTagName("descricao")
+							.item(0).getTextContent();
 				layoutXml.setLotacao(lotacao);
 
 				receitasPessoal.add(layoutXml);
@@ -383,14 +389,16 @@ public class UploadArquivoController extends BaseController {
 				.getElementsByTagName("his:HistoricoFuncional");
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element) nodeList.item(i);
-
-			String cpfServ = element.getElementsByTagName("his:cpfServidor")
-					.item(0).getTextContent();
+			Node n = element.getElementsByTagName("his:cpfServidor").item(0);
+			String cpfServ = n == null ? "" : n.getTextContent();
 			if (cpf.equals(cpfServ)) {
-				result[0] = element.getElementsByTagName("gen:codigoCargo")
-						.item(0).getTextContent();
-				result[1] = element.getElementsByTagName("gen:codigoLotacao")
-						.item(0).getTextContent();
+				Node nc = element.getElementsByTagName("gen:codigoCargo").item(
+						0);
+				result[0] = nc == null ? "" : nc.getTextContent();
+				Node nl = element.getElementsByTagName("gen:codigoLotacao")
+						.item(0);
+				result[1] = nl == null ? "" : nl.getTextContent();
+
 				break;
 			}
 		}
@@ -696,6 +704,13 @@ public class UploadArquivoController extends BaseController {
 			NodeList nodeList = document
 					.getElementsByTagName("fol:servidorFolha");
 
+			StringBuilder filePathCA = new StringBuilder();
+			filePathCA = filePathCA.append(caminho)
+					.append(empresaEnum.getCodigo()).append(File.separator)
+					.append(exercicio).append(File.separator);
+
+			filePathCA.append("01").append(File.separator);
+
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Element element = (Element) nodeList.item(i);
 				ReceitaPessoal layoutXml = new ReceitaPessoal();
@@ -710,6 +725,7 @@ public class UploadArquivoController extends BaseController {
 						.convertBigDecimalToString(new BigDecimal(element
 								.getElementsByTagName("fol:remuneracaoLiquida")
 								.item(0).getTextContent())));
+				String[] codCargoLot = null;
 				if (UtilsModel.hasValue(mesUnidGestora[0]))
 					layoutXml.setMes(String.format("%02d",
 							Integer.parseInt(mesUnidGestora[0])));
@@ -723,12 +739,16 @@ public class UploadArquivoController extends BaseController {
 
 				InputSource is = new InputSource(reader);
 
-				String[] codCargoLot = getCodCargoLotacFuncionarioApartir2018(
+				codCargoLot = getCodCargoLotacFuncionarioApartir2018(
 						builder.parse(is), cpf);
 
-				File file2 = new File(filePath.toString()
+				// para arquivos 2018 em diante pegar dados de cargo e nome dos
+				// cadastros auxiliares de janeiro
+
+				File file2 = new File(filePathCA.toString()
 						+ "/CadastrosAuxiliaresSagresFolha.xml");
 				InputStream inputStream2 = new FileInputStream(file2);
+
 				Reader reader2 = new InputStreamReader(inputStream2, "UTF-8");
 				InputSource is2 = new InputSource(reader2);
 				Document parser = builder.parse(is2);
@@ -768,15 +788,23 @@ public class UploadArquivoController extends BaseController {
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new IllegalArgumentException(
+					"Ocorreu um erro a processar os arquivos, certifique que o conteúdo esteja intégro");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new IllegalArgumentException(
+					"Ocorreu um erro a processar os arquivos, certifique que o conteúdo esteja intégro");
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new IllegalArgumentException(
+					"Ocorreu um erro a processar os arquivos, certifique que o conteúdo esteja intégro");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new IllegalArgumentException(
+					"Ocorreu um erro a processar os arquivos, certifique que o conteúdo esteja intégro");
 		}
 	}
 

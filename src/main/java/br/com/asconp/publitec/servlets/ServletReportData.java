@@ -33,9 +33,11 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
 import net.sf.jasperreports.engine.export.JRTextExporter;
 import net.sf.jasperreports.engine.export.JRTextExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsAbstractExporterParameter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
 import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
@@ -73,7 +75,7 @@ public class ServletReportData extends HttpServlet {
 			String reportFileName = (String) session.getAttribute( "reportFileName" );
 
 			if ( reportFileName != null && !reportFileName.isEmpty() ) {
-				JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile( String.format( "%s/%s", (String) session.getAttribute( "reportPath" ), reportFileName ) );
+				JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile( String.format( "%s/%s", session.getAttribute( "reportPath" ), reportFileName ) );
 				jasperPrint = JasperFillManager.fillReport( jasperReport, parameters, dataSource != null ? dataSource : new JREmptyDataSource() );
 			} else
 				jasperPrint = JasperFillManager.fillReport( DynamicJasperHelper.generateJasperReport( report, new ClassicLayoutManager(), new HashMap() ), parameters, dataSource );
@@ -92,7 +94,7 @@ public class ServletReportData extends HttpServlet {
 					exporter = new JRHtmlExporter();
 					response.setContentType( "text/html" );
 					reportName = reportName.concat( ".html" );
-					request.getSession().setAttribute( ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, jasperPrint );
+					request.getSession().setAttribute( BaseHttpServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, jasperPrint );
 					exporter.setParameter( JRExporterParameter.OUTPUT_WRITER, response.getWriter() );
 
 					exporter.setParameter( JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, false );
@@ -101,14 +103,14 @@ public class ServletReportData extends HttpServlet {
 					exporter = new JRXlsExporter();
 					response.setContentType( "application/xls" );
 					reportName = reportName.concat( ".xls" );
-					exporter.setParameter( JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, false );
-					exporter.setParameter( JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, false );
-					exporter.setParameter( JRXlsExporterParameter.IS_DETECT_CELL_TYPE, true );
-					exporter.setParameter( JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true );
-					exporter.setParameter( JRXlsExporterParameter.MAXIMUM_ROWS_PER_SHEET, Integer.decode( "65000" ) );
-					exporter.setParameter( JRXlsExporterParameter.IS_IMAGE_BORDER_FIX_ENABLED, true );
-					exporter.setParameter( JRXlsExporterParameter.IGNORE_PAGE_MARGINS, true );
-					exporter.setParameter( JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, true );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, false );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, false );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_DETECT_CELL_TYPE, true );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true );
+					exporter.setParameter( JRXlsAbstractExporterParameter.MAXIMUM_ROWS_PER_SHEET, Integer.decode( "65000" ) );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_IMAGE_BORDER_FIX_ENABLED, true );
+					exporter.setParameter( JRExporterParameter.IGNORE_PAGE_MARGINS, true );
+					exporter.setParameter( JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, true );
 
 					break;
 				case CVS:

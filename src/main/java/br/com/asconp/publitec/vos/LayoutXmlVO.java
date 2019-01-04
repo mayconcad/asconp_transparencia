@@ -1,7 +1,5 @@
 package br.com.asconp.publitec.vos;
 
-import br.com.asconp.publitec.entities.LayoutXml;
-
 public class LayoutXmlVO extends BaseVO{
 	
 

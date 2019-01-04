@@ -1,18 +1,67 @@
 package br.com.asconp.publitec.entities;
 
-public class LayoutReceitaXml {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private String 
+@Entity
+@Table(name="pub_diaria")
+public class Diaria extends BaseEntity{
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	public long id;
+	@Column
+	public String 
 	//DAdos prefixo: emp:PrestacaoContas do arquivo EmpenhosRP.xml
-	codigoUnidGestora,nomeUnidGestora,cpfContador,cpfGestor,anoReferencia,mesReferencia,
+	codigoUnidGestora;
+	@Column
+	public String nomeUnidGestora;
+	@Column
+	public String cpfContador;
+	@Column
+	public String cpfGestor;
+	@Column
+	public String anoReferencia;
+	@Column
+	public String mesReferencia;
 	//Dados prefixo: emp:Empenho do arquivo EmpenhosRP.xml
-	numeroEmpenho,historicoEmpenho,dataEmisEmpenho,codigoUnidOrcamentaria,nomeUnidOrcamentaria,cpfCnpjCredor, nomeCredor,valorEmpenho,
+	@Column
+	public String numeroEmpenho;
+	@Column
+	public String historicoEmpenho;
+	@Column
+	public String dataEmisEmpenho;
+	@Column
+	public String codigoUnidOrcamentaria;
+	@Column
+	public String nomeUnidOrcamentaria;
+	@Column
+	public String cpfCnpjCredor;
+	@Column
+	public String nomeCredor;
+	@Column
+	public String valorEmpenho;
 	//Dados prefixo: lan:LancamentoContabil do arquivo LancamentosContabeis.xml
-	valorLiquidado, valorPago;
-	
+	@Column
+	public String valorLiquidado;
+	@Column
+	public String valorPago;	
+			
 
 	public String getCodigoUnidGestora() {
 		return codigoUnidGestora;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setCodigoUnidGestora(String codigoUnidGestora) {
@@ -138,5 +187,5 @@ public class LayoutReceitaXml {
 	public void setCodigoUnidOrcamentaria(String codigoUnidOrcamentaria) {
 		this.codigoUnidOrcamentaria = codigoUnidOrcamentaria;
 	}
-	
+
 }

@@ -5,8 +5,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.event.TabChangeEvent;
-
 @ManagedBean(name = "captchaBean")
 @SessionScoped
 public class CaptchaBean extends BaseController {
